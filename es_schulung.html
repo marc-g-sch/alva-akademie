@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALVA Akademie — Einstieg in den Mieterstrom</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0F1F3D; --navy2:#162848; --navy3:#1E3A5F;
+  --yellow:#FFFF00; --white:#FFFFFF;
+  --grey:#F3F4F6; --grey2:#E5E7EB; --mid:#6B7280; --dark:#1F2937;
+  --border:#E5E7EB; --ok:#16A34A; --ok-bg:#F0FDF4;
+  --err:#DC2626; --err-bg:#FEF2F2;
+  --blue:#3B82F6; --blue-bg:#EFF6FF;
+  --orange:#F97316; --orange-bg:#FFF7ED;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--grey);color:var(--dark);min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--navy);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:500;}
+.tb-logo{display:flex;align-items:center;gap:8px;}
+.tb-mark{width:18px;height:18px;background:var(--yellow);clip-path:polygon(50% 0%,0% 100%,100% 100%);}
+.tb-name{font-size:13px;font-weight:900;color:var(--white);letter-spacing:-.02em;}
+.tb-sep{width:1px;height:12px;background:rgba(255,255,255,.15);margin:0 8px;}
+.tb-course{font-size:12px;color:rgba(255,255,255,.4);}
+.tb-prog-wrap{display:flex;align-items:center;gap:10px;}
+.tb-prog-bar{width:120px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;}
+.tb-prog-fill{height:100%;background:var(--yellow);transition:width .5s;}
+.tb-prog-text{font-size:11px;color:rgba(255,255,255,.4);font-weight:600;}
+.tb-prog-text strong{color:var(--yellow);}
+
+/* ── SIDEBAR + LAYOUT ── */
+.app-layout{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 56px);}
+.sidebar{background:var(--white);border-right:1px solid var(--border);padding:20px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto;}
+.sidebar-section{margin-bottom:8px;}
+.sidebar-track{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);padding:12px 20px 6px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:all .14s;border-left:3px solid transparent;}
+.sidebar-item:hover{background:var(--grey);border-left-color:var(--grey2);}
+.sidebar-item.active{background:var(--blue-bg);border-left-color:var(--navy);}
+.sidebar-item.done{border-left-color:var(--ok);}
+.si-icon{font-size:16px;width:22px;text-align:center;flex-shrink:0;}
+.si-text{flex:1;}
+.si-title{font-size:13px;font-weight:600;color:var(--dark);line-height:1.2;}
+.sidebar-item.active .si-title{color:var(--navy);font-weight:700;}
+.si-sub{font-size:11px;color:var(--mid);margin-top:1px;}
+.si-check{font-size:12px;color:var(--ok);flex-shrink:0;}
+
+/* ── MAIN CONTENT ── */
+.main{padding:0;}
+.section-view{display:none;}
+.section-view.active{display:block;}
+
+/* Hero banner per section */
+.section-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);padding:48px 52px 56px;position:relative;overflow:hidden;}
+.section-hero::after{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,0,.07) 0%,transparent 70%);pointer-events:none;}
+.sh-track{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow);margin-bottom:10px;}
+.sh-title{font-size:clamp(24px,3vw,38px);font-weight:900;color:var(--white);letter-spacing:-.04em;line-height:1.08;margin-bottom:10px;}
+.sh-sub{font-size:15px;color:rgba(255,255,255,.5);max-width:560px;line-height:1.6;font-weight:300;}
+.sh-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
+.sh-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.65);font-size:11px;font-weight:600;padding:5px 12px;border-radius:99px;}
+
+/* ── CONTENT BODY ── */
+.content-body{max-width:760px;margin:0 auto;padding:48px 52px 80px;}
+
+/* Typography */
+.lh2{font-size:20px;font-weight:800;letter-spacing:-.03em;margin-bottom:14px;display:flex;align-items:center;gap:10px;color:var(--navy);}
+.lh2::before{content:'';display:block;width:4px;height:20px;background:var(--yellow);border-radius:2px;flex-shrink:0;}
+.lh3{font-size:16px;font-weight:700;letter-spacing:-.02em;margin:24px 0 10px;color:var(--navy);}
+.lp{font-size:15px;line-height:1.78;color:#374151;margin-bottom:14px;}
+.lp strong{color:var(--navy);}
+.lsec{margin-bottom:48px;}
+.kt{background:var(--yellow);color:var(--navy);padding:1px 6px;border-radius:3px;font-weight:700;font-size:.93em;}
+.kt2{background:var(--navy);color:var(--yellow);padding:1px 6px;border-radius:3px;font-weight:700;font-size:.93em;}
+
+/* Callouts */
+.callout{border-radius:8px;padding:18px 20px;margin:20px 0;display:flex;gap:14px;border-left:4px solid;}
+.ci{font-size:20px;flex-shrink:0;margin-top:2px;}
+.cb{flex:1;}
+.ct{font-weight:700;font-size:14px;margin-bottom:5px;}
+.cx{font-size:14px;line-height:1.68;}
+.callout.tip{background:#FFFBEB;border-color:#F59E0B;}
+.callout.tip .ct{color:#92400E;} .callout.tip .cx{color:#78350F;}
+.callout.eg{background:var(--ok-bg);border-color:var(--ok);}
+.callout.eg .ct{color:#14532D;} .callout.eg .cx{color:#166534;}
+.callout.warn{background:var(--orange-bg);border-color:var(--orange);}
+.callout.warn .ct{color:#9A3412;} .callout.warn .cx{color:#7C2D12;}
+.callout.dark{background:var(--navy);border-color:var(--yellow);}
+.callout.dark .ct{color:var(--yellow);} .callout.dark .cx{color:rgba(255,255,255,.8);}
+.callout.info{background:var(--blue-bg);border-color:var(--blue);}
+.callout.info .ct{color:#1E40AF;} .callout.info .cx{color:#1E3A8A;}
+
+/* Defs table */
+.defs{display:flex;flex-direction:column;gap:1px;margin:16px 0;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);}
+.def{display:grid;grid-template-columns:160px 1fr;background:var(--white);}
+.def:nth-child(odd){background:#FAFAFA;}
+.dt{font-size:13px;font-weight:700;padding:14px 16px;border-right:1px solid var(--border);color:var(--navy);line-height:1.4;}
+.dd{font-size:13.5px;line-height:1.68;padding:14px 16px;color:#374151;}
+@media(max-width:600px){.def{grid-template-columns:1fr;}.dt{border-right:none;border-bottom:1px solid var(--border);}}
+
+/* Flow */
+.flow{display:flex;flex-direction:column;margin:16px 0;}
+.fstep{display:flex;gap:14px;padding-bottom:24px;}
+.fstep:last-child{padding-bottom:0;}
+.fstep-l{display:flex;flex-direction:column;align-items:center;}
+.fnum{width:32px;height:32px;border-radius:50%;background:var(--yellow);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0;}
+.fline{width:2px;flex:1;background:var(--border);margin-top:6px;}
+.fstep:last-child .fline{display:none;}
+.fcontent{padding-top:5px;flex:1;}
+.ftitle{font-size:15px;font-weight:700;margin-bottom:4px;letter-spacing:-.01em;color:var(--navy);}
+.fdesc{font-size:13.5px;color:var(--mid);line-height:1.58;}
+
+/* Visual diagram boxes */
+.diagram{background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:24px;margin:20px 0;overflow:hidden;}
+.diagram-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mid);margin-bottom:16px;}
+
+/* Strommarkt diagram */
+.strom-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;}
+.sf-box{background:var(--navy);color:var(--white);border-radius:8px;padding:12px 16px;text-align:center;font-size:12px;font-weight:700;min-width:90px;flex:1;}
+.sf-box span{display:block;font-size:10px;color:rgba(255,255,255,.5);font-weight:400;margin-top:2px;}
+.sf-box.yellow{background:var(--yellow);color:var(--navy);}
+.sf-box.yellow span{color:rgba(0,0,0,.5);}
+.sf-arrow{font-size:18px;color:var(--mid);padding:0 6px;flex-shrink:0;}
+
+/* Stakeholder grid */
+.stake-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:16px 0;}
+.stake-card{border:1.5px solid var(--border);border-radius:8px;padding:16px;background:var(--white);}
+.stake-card.highlight{border-color:var(--yellow);background:#FFFBEB;}
+.stake-icon{font-size:24px;margin-bottom:8px;}
+.stake-name{font-size:13px;font-weight:800;margin-bottom:4px;color:var(--navy);}
+.stake-desc{font-size:12px;color:var(--mid);line-height:1.45;}
+
+/* Stat boxes */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:16px 0;}
+.stat-box{background:var(--navy);border-radius:8px;padding:16px;text-align:center;}
+.stat-n{font-size:26px;font-weight:900;color:var(--yellow);letter-spacing:-.03em;line-height:1;}
+.stat-l{font-size:11px;color:rgba(255,255,255,.5);line-height:1.4;margin-top:4px;}
+
+/* Vergleich table */
+.vtable{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px;}
+.vtable th{background:var(--navy);color:var(--white);padding:12px 14px;text-align:left;font-weight:700;font-size:12px;}
+.vtable th:first-child{border-radius:8px 0 0 0;}
+.vtable th:last-child{border-radius:0 8px 0 0;}
+.vtable td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5;}
+.vtable tr:nth-child(odd) td{background:#FAFAFA;}
+.vtable tr:last-child td{border-bottom:none;}
+.vtable .ok{color:var(--ok);font-weight:700;}
+.vtable .no{color:var(--err);font-weight:700;}
+
+/* Abrechnung visual */
+.rechnung-box{background:var(--white);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:16px 0;}
+.rb-header{background:var(--navy);padding:14px 20px;color:var(--white);}
+.rb-title{font-size:14px;font-weight:800;}
+.rb-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;}
+.rb-row{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--border);}
+.rb-row:last-child{border-bottom:none;}
+.rb-row.total{background:var(--navy);color:var(--white);}
+.rb-row.solar{background:#F0FDF4;}
+.rb-label{font-size:13.5px;font-weight:500;}
+.rb-row.total .rb-label{font-weight:800;color:var(--white);}
+.rb-row.solar .rb-label{color:var(--ok);}
+.rb-val{font-size:14px;font-weight:700;color:var(--navy);}
+.rb-row.total .rb-val{color:var(--yellow);}
+.rb-row.solar .rb-val{color:var(--ok);}
+.rb-detail{font-size:11px;color:var(--mid);margin-top:2px;}
+
+/* Continue button */
+.continue-btn{background:var(--navy);color:var(--white);border:none;border-radius:8px;padding:18px 36px;font-size:15px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:10px;letter-spacing:-.01em;margin-top:48px;}
+.continue-btn:hover{background:var(--yellow);color:var(--navy);}
+.continue-btn .arrow{transition:transform .18s;}
+.continue-btn:hover .arrow{transform:translateX(4px);}
+.section-nav{display:flex;gap:12px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
+.nav-prev{background:var(--white);color:var(--mid);border:1.5px solid var(--border);border-radius:8px;padding:14px 24px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .15s;}
+.nav-prev:hover{border-color:var(--navy);color:var(--navy);}
+.nav-next{background:var(--navy);color:var(--white);border:none;border-radius:8px;padding:14px 32px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .15s;flex:1;}
+.nav-next:hover{background:var(--yellow);color:var(--navy);}
+
+/* ── QUIZ ── */
+.quiz-view{background:var(--white);border-radius:12px;border:1.5px solid var(--border);margin:32px 52px 80px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.quiz-header{background:var(--navy);padding:24px 32px;}
+.qh-title{font-size:18px;font-weight:900;color:var(--white);letter-spacing:-.02em;margin-bottom:4px;}
+.qh-sub{font-size:13px;color:rgba(255,255,255,.45);}
+.qh-prog{display:flex;align-items:center;gap:12px;margin-top:16px;}
+.qh-prog-bar{flex:1;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;}
+.qh-prog-fill{height:100%;background:var(--yellow);transition:width .4s;}
+.qh-prog-text{font-size:11px;color:rgba(255,255,255,.45);white-space:nowrap;font-weight:600;}
+
+.quiz-body{padding:32px;}
+.q-num{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--mid);margin-bottom:10px;}
+.q-text{font-size:20px;font-weight:800;letter-spacing:-.03em;line-height:1.25;margin-bottom:8px;color:var(--navy);}
+.q-hint{font-size:13px;color:var(--mid);margin-bottom:20px;font-style:italic;}
+
+.opts{display:flex;flex-direction:column;gap:8px;}
+.opt{background:var(--grey);border:1.5px solid transparent;border-radius:8px;padding:14px 18px;font-size:14px;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;text-align:left;transition:all .13s;display:flex;align-items:center;gap:12px;color:var(--dark);}
+.opt-l{width:28px;height:28px;border-radius:6px;background:var(--white);border:1.5px solid var(--border);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .13s;color:var(--mid);}
+.opt:hover:not(:disabled){border-color:var(--navy);background:var(--white);}
+.opt:hover:not(:disabled) .opt-l{background:var(--navy);color:var(--yellow);border-color:var(--navy);}
+.opt.sel{border-color:var(--navy);background:var(--white);}
+.opt.sel .opt-l{background:var(--navy);color:var(--yellow);border-color:var(--navy);}
+.opt.correct{border-color:var(--ok);background:var(--ok-bg);}
+.opt.correct .opt-l{background:var(--ok);color:white;border-color:var(--ok);}
+.opt.wrong{border-color:var(--err);background:var(--err-bg);}
+.opt.wrong .opt-l{background:var(--err);color:white;border-color:var(--err);}
+.opt:disabled{cursor:default;}
+
+.qta{width:100%;background:var(--grey);border:1.5px solid transparent;border-radius:8px;padding:16px;font-size:14.5px;font-family:'Inter',sans-serif;color:var(--dark);resize:vertical;min-height:120px;outline:none;transition:border-color .13s;line-height:1.6;}
+.qta:focus{border-color:var(--navy);background:var(--white);}
+.qta:disabled{opacity:.65;}
+
+.tfl{display:flex;flex-direction:column;gap:8px;}
+.tfi{background:var(--grey);border-radius:8px;padding:14px;}
+.tfs{font-size:14px;font-weight:600;margin-bottom:10px;line-height:1.4;color:var(--navy);}
+.tfbs{display:flex;gap:8px;}
+.tfb{flex:1;padding:10px;background:var(--white);border:1.5px solid var(--border);border-radius:6px;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .13s;color:var(--mid);}
+.tfb:hover:not(:disabled){border-color:var(--navy);color:var(--navy);}
+.tfb.sel{border-color:var(--navy);color:var(--navy);}
+.tfb.correct{border-color:var(--ok);color:var(--ok);background:var(--ok-bg);}
+.tfb.wrong{border-color:var(--err);color:var(--err);background:var(--err-bg);}
+.tfb.reveal{border-color:var(--ok);color:var(--ok);background:var(--ok-bg);}
+.tfb:disabled{cursor:default;}
+
+.quiz-actions{display:flex;gap:10px;margin-top:20px;}
+.check-btn{background:var(--navy);color:var(--white);border:none;border-radius:8px;padding:14px 28px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .13s;flex:1;}
+.check-btn:hover{background:var(--yellow);color:var(--navy);}
+.check-btn:disabled{opacity:.4;cursor:default;}
+.next-q-btn{background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:8px;padding:14px 24px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .13s;display:none;}
+.next-q-btn.show{display:block;}
+.next-q-btn:hover{border-color:var(--navy);}
+
+/* AI Panel */
+.ai-panel{background:var(--navy);border-radius:8px;overflow:hidden;margin-top:16px;display:none;}
+.ai-panel.show{display:block;}
+.ai-head{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:9px;}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:var(--yellow);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ai-lbl{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--yellow);}
+.ai-msgs{padding:16px 18px;max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
+.aimsg{display:flex;gap:10px;}
+.aimsg-av{width:26px;height:26px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;font-weight:900;}
+.aimsg.coach .aimsg-av{background:var(--yellow);color:var(--navy);}
+.aimsg.user .aimsg-av{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);}
+.aimsg-bub{font-size:13.5px;line-height:1.7;color:rgba(255,255,255,.85);flex:1;padding-top:3px;}
+.aimsg.user .aimsg-bub{color:rgba(255,255,255,.45);}
+.typing{display:flex;gap:4px;padding-top:8px;}
+.typing span{width:5px;height:5px;background:var(--yellow);border-radius:50%;animation:bounce 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.2s;}.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-7px)}}
+.ai-inp-row{border-top:1px solid rgba(255,255,255,.07);padding:12px 18px;display:flex;gap:8px;}
+.ai-inp{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:9px 13px;color:white;font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .13s;}
+.ai-inp:focus{border-color:var(--yellow);}
+.ai-inp::placeholder{color:rgba(255,255,255,.22);}
+.ai-sbtn{background:var(--yellow);border:none;border-radius:6px;width:37px;height:37px;color:var(--navy);font-size:15px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ai-sbtn:hover{opacity:.85;}.ai-sbtn:disabled{opacity:.3;cursor:default;}
+
+/* Quiz score screen */
+.score-wrap{padding:48px 32px;text-align:center;}
+.score-em{font-size:56px;margin-bottom:16px;}
+.score-h{font-size:30px;font-weight:900;letter-spacing:-.04em;margin-bottom:8px;color:var(--navy);}
+.score-sub{font-size:14px;color:var(--mid);margin-bottom:28px;line-height:1.5;}
+.score-big{font-size:72px;font-weight:900;letter-spacing:-.06em;line-height:1;color:var(--navy);}
+.score-of{font-size:13px;color:var(--mid);margin-top:4px;margin-bottom:36px;font-weight:600;}
+.score-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.score-next{background:var(--navy);color:var(--white);border:none;border-radius:8px;padding:16px 32px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .15s;}
+.score-next:hover{background:var(--yellow);color:var(--navy);}
+.score-retry{background:none;color:var(--mid);border:1.5px solid var(--border);border-radius:8px;padding:16px 28px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;}
+.score-retry:hover{border-color:var(--navy);color:var(--navy);}
+
+/* Certificate */
+#cert-screen{display:none;padding:52px 32px;background:var(--grey);min-height:calc(100vh - 56px);}
+.cert-actions{display:flex;gap:10px;margin-bottom:32px;justify-content:center;}
+.cert-print-btn{background:var(--navy);color:var(--white);border:none;border-radius:8px;padding:13px 26px;font-size:13.5px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;}
+.cert-print-btn:hover{background:var(--yellow);color:var(--navy);}
+.cert-back-btn{background:none;color:var(--mid);border:1.5px solid var(--border);border-radius:8px;padding:13px 26px;font-size:13.5px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;}
+.cert-card{max-width:820px;margin:0 auto;background:var(--white);border:2px solid var(--navy);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.1);}
+.cert-top{background:var(--navy);padding:40px 48px;}
+.cert-logo-row{display:flex;align-items:center;gap:10px;margin-bottom:32px;}
+.cert-mark{width:30px;height:30px;background:var(--yellow);clip-path:polygon(50% 0%,0% 100%,100% 100%);}
+.cert-wm{font-size:18px;font-weight:900;color:var(--white);}
+.cert-ey{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--yellow);margin-bottom:8px;}
+.cert-title{font-size:clamp(24px,3.5vw,38px);font-weight:900;color:var(--white);letter-spacing:-.04em;line-height:1.06;}
+.cert-title .hl{color:var(--yellow);}
+.cert-body{padding:40px 48px;}
+.cert-pres{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--mid);margin-bottom:6px;}
+.cert-name{font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-.04em;border-bottom:3px solid var(--yellow);padding-bottom:16px;margin-bottom:20px;color:var(--navy);}
+.cert-details{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:28px;}
+.cert-dl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mid);margin-bottom:3px;}
+.cert-dv{font-size:15px;font-weight:800;color:var(--navy);}
+.cert-modules{margin-bottom:28px;}
+.cert-modules-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mid);margin-bottom:10px;}
+.cert-mod-list{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.cert-mod-item{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--navy);}
+.cert-mod-check{width:18px;height:18px;border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:var(--navy);flex-shrink:0;}
+.cert-footer{display:flex;align-items:flex-end;justify-content:space-between;padding-top:22px;border-top:2px solid var(--border);}
+.cert-sig-line{width:120px;height:2px;background:var(--navy);margin-bottom:5px;}
+.cert-sig-name{font-size:12px;font-weight:700;color:var(--navy);}
+.cert-sig-sub{font-size:11px;color:var(--mid);}
+.cert-seal{width:72px;height:72px;border-radius:50%;border:3px solid var(--navy);background:var(--yellow);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.cert-seal-t{font-size:7px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;line-height:1.4;color:var(--navy);}
+.cert-seal-y{font-size:12px;font-weight:900;color:var(--navy);}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:var(--white);padding:11px 22px;border-radius:8px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);display:none;pointer-events:none;border-left:3px solid var(--yellow);}
+
+@media(max-width:900px){
+  .app-layout{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .content-body{padding:32px 24px 60px;}
+  .section-hero{padding:32px 24px 40px;}
+  .quiz-view{margin:24px;}
+}
+@media print{.topbar,.sidebar,.quiz-view,.section-nav,.cert-actions{display:none!important;}.cert-card{box-shadow:none;}}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="tb-logo">
+    <div class="tb-mark"></div>
+    <div class="tb-name">ALVA Akademie</div>
+    <div class="tb-sep"></div>
+    <div class="tb-course">Einstieg in den Mieterstrom</div>
+  </div>
+  <div class="tb-prog-wrap">
+    <div class="tb-prog-bar"><div class="tb-prog-fill" id="topbar-prog" style="width:0%"></div></div>
+    <div class="tb-prog-text" id="topbar-text"><strong>0%</strong></div>
+  </div>
+</nav>
+
+<div id="toast" class="toast"></div>
+
+<!-- MAIN LAYOUT -->
+<div class="app-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <!-- CONTENT -->
+  <main id="main-content">
+  </main>
+</div>
+
+<div id="cert-screen" style="display:none;padding:52px 32px;background:#F3F4F6;min-height:calc(100vh - 56px);">
+  <div class="cert-actions">
+    <button class="cert-print-btn" onclick="window.print()">⬇ Als PDF speichern</button>
+    <button class="cert-back-btn" onclick="showSection(0)">← Zurück</button>
+  </div>
+  <div class="cert-card" id="cert-card"></div>
+</div>
+<div style="display:none">
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// COURSE DATA
+// ══════════════════════════════════════════════
+const SECTIONS = [
+  {
+    id: 'intro',
+    icon: '⚡',
+    title: 'Was ist Mieterstrom?',
+    subtitle: 'Das große Bild — in 10 Minuten verstehen',
+    chips: ['Grundlagen', 'Kein Vorwissen nötig', '~10 Min'],
+    content: `
+<div class="lsec">
+<h2 class="lh2">Strom — wie funktioniert das eigentlich?</h2>
+<p class="lp">Bevor wir zu Mieterstrom kommen, schauen wir uns kurz an wie der normale Strommarkt funktioniert. Stell dir vor, du wohnst in einer Wohnung in München. Du steckst das Ladekabel deines Handys ein — und Strom fließt. Aber woher kommt der eigentlich?</p>
+
+<div class="diagram">
+<div class="diagram-title">Der Weg des Stroms — vom Kraftwerk zur Steckdose</div>
+<div class="strom-flow">
+  <div class="sf-box">☀️ 💨 ⚡<br>Kraftwerk<span>Strom wird erzeugt</span></div>
+  <div class="sf-arrow">→</div>
+  <div class="sf-box">🗼 Übertragungs-netz<span>Fernleitungen 380kV</span></div>
+  <div class="sf-arrow">→</div>
+  <div class="sf-box">🏘️ Verteil-netz<span>Lokale Leitungen</span></div>
+  <div class="sf-arrow">→</div>
+  <div class="sf-box yellow">🏠 Deine Steckdose<span>Verbrauch in kWh</span></div>
+</div>
+</div>
+
+<p class="lp">Dieser Weg ist lang — und jeder Schritt kostet Geld. Die <strong>Netzentgelte</strong> machen etwa 25% deiner Stromrechnung aus. Du zahlst also quasi "Maut" für die Benutzung dieser langen Leitungen.</p>
+
+<div class="callout tip">
+<div class="ci">💡</div>
+<div class="cb"><div class="ct">Die Grundidee von Mieterstrom</div>
+<div class="cx">Was wenn der Strom gar nicht diesen langen Weg nehmen müsste? Was wenn eine Solaranlage direkt auf dem Dach des Hauses den Strom erzeugt — und er direkt in die Wohnungen darunter fließt? Dann entfallen die Netzentgelte für diesen Anteil. Genau das ist Mieterstrom!</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Mieterstrom — die einfache Erklärung</h2>
+<p class="lp">Ein Vermieter lässt auf seinem Mehrfamilienhaus eine Solaranlage bauen. Der erzeugte Strom fließt direkt zu seinen Mietern. Für diesen "kurzen Weg" fallen keine Netzentgelte an — das spart Geld, das an die Mieter weitergegeben wird.</p>
+
+<div class="flow">
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">1</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">PV-Anlage auf dem Dach</div>
+<div class="fdesc">Solarmodule auf dem Dach des Mehrfamilienhauses erzeugen Strom — tagsüber, wenn die Sonne scheint. Die Größe der Anlage wird in <span style="font-weight:700">kWp</span> (Kilowattpeak) angegeben.</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">2</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Strom fließt direkt in die Wohnungen</div>
+<div class="fdesc">Der Solarstrom fließt über die Hausleitungen direkt zu den Mietern — ohne öffentliches Netz. Kein langer Transportweg, keine Netzentgelte für diesen Anteil.</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">3</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Nachts oder bei Bewölkung: Reststrom aus dem Netz</div>
+<div class="fdesc">Wenn die Sonne nicht reicht (nachts, im Winter, bei bedecktem Himmel), bezieht der Mieter Strom aus dem normalen Netz. Der Mieterstrom-Anbieter (ALVA) kümmert sich darum — der Mieter merkt davon nichts.</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">4</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Eine Rechnung, ein Anbieter</div>
+<div class="fdesc">Der Mieter bekommt eine einzige Rechnung von ALVA — mit Solar- und Reststromanteil zusammen. Einfacher als normal!</div>
+</div></div>
+</div>
+
+<div class="callout dark">
+<div class="ci">📋</div>
+<div class="cb"><div class="ct">Gesetzliche Grundlage: §42a EnWG</div>
+<div class="cx">Mieterstrom ist gesetzlich geregelt. Der Mieterstrompreis darf maximal 90% des lokalen Grundversorgungstarifs betragen — der Mieter spart also mindestens 10%. Das ist kein Angebot, das ist <strong>Pflicht</strong>.</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Was sind kWp und kWh? — Die zwei wichtigsten Einheiten</h2>
+<p class="lp">Im Strombereich begegnen dir ständig diese zwei Abkürzungen. Du musst sie auseinanderhalten können:</p>
+
+<div class="defs">
+<div class="def">
+<div class="dt">kWp<br><small style="font-weight:400;color:var(--mid)">Kilowattpeak</small></div>
+<div class="dd"><strong>Leistung der PV-Anlage</strong> — wie viel Strom sie maximal erzeugen kann. "Wie groß ist die Anlage?" Eine 20 kWp Anlage erzeugt maximal 20 kW wenn die Sonne perfekt scheint.<br><br>Faustformel: <strong>1 kWp → ~900 kWh/Jahr</strong> in Deutschland. Eine 20 kWp Anlage erzeugt also ~18.000 kWh pro Jahr.</div>
+</div>
+<div class="def">
+<div class="dt">kWh<br><small style="font-weight:400;color:var(--mid)">Kilowattstunde</small></div>
+<div class="dd"><strong>Tatsächlich verbrauchte/erzeugte Energiemenge</strong> — "Wie viel Strom?" Das ist die Einheit auf deiner Stromrechnung. Ein Durchschnittshaushalt verbraucht 2.500–4.000 kWh pro Jahr.<br><br>Beispiel: Ein Föhn mit 1.000 Watt läuft 1 Stunde = 1 kWh verbraucht.</div>
+</div>
+</div>
+
+<div class="callout eg">
+<div class="ci">🧮</div>
+<div class="cb"><div class="ct">Praxisbeispiel</div>
+<div class="cx">Haus mit 10 Wohnungen, je 3.000 kWh/Jahr Verbrauch = 30.000 kWh Gesamtbedarf.<br>
+PV-Anlage mit 20 kWp erzeugt ~18.000 kWh/Jahr.<br>
+→ 18.000 / 30.000 = <strong>60% Autarkiequote</strong> — 60% des Stroms kommt direkt vom Dach, 40% aus dem Netz.</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Warum ist Mieterstrom günstiger?</h2>
+<p class="lp">Normale Stromrechnung: Du zahlst für Energie + Netznutzung + Steuern. Bei Mieterstrom entfällt ein Teil dieser Kosten:</p>
+
+<div class="vtable-wrap" style="overflow-x:auto;">
+<table class="vtable">
+<thead><tr><th>Kostenbestandteil</th><th>Normaler Netzstrom</th><th>Mieterstrom (Solaranteil)</th></tr></thead>
+<tbody>
+<tr><td><strong>Energiekosten</strong></td><td>~11 ct/kWh</td><td>~11 ct/kWh (+ Mieterstromzuschlag)</td></tr>
+<tr><td><strong>Netzentgelte</strong></td><td class="no">~8 ct/kWh ❌ zahlen</td><td class="ok">~0 ct/kWh ✅ entfällt!</td></tr>
+<tr><td><strong>Konzessionsabgabe</strong></td><td class="no">~1-2 ct/kWh ❌</td><td class="ok">~0 ct/kWh ✅ entfällt!</td></tr>
+<tr><td><strong>Stromsteuer</strong></td><td class="no">2,05 ct/kWh ❌</td><td class="ok">Oft entfällt ✅</td></tr>
+<tr><td><strong>Mehrwertsteuer</strong></td><td class="no">19% ❌</td><td class="no">19% ❌ bleibt immer!</td></tr>
+<tr><td style="font-weight:700">Typischer Gesamtpreis</td><td style="font-weight:700">~30 ct/kWh</td><td style="font-weight:700;color:var(--ok)">~21-24 ct/kWh</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout tip">
+<div class="ci">💰</div>
+<div class="cb"><div class="ct">Die Ersparnis in Zahlen</div>
+<div class="cx">Haushalt mit 3.000 kWh/Jahr, 60% Solaranteil (1.800 kWh Solar + 1.200 kWh Netz):<br>
+Normal: 3.000 × 30 ct = <strong>900€/Jahr</strong><br>
+Mieterstrom: 1.800 × 22 ct + 1.200 × 30 ct = 396€ + 360€ = <strong>756€/Jahr</strong><br>
+Ersparnis: <strong>~144€/Jahr (16%)</strong></div></div>
+</div>
+</div>`,
+    quiz: {
+      title: 'Lerncheck: Was ist Mieterstrom?',
+      questions: [
+        {type:'mc', text:'Was ist der Hauptgrund warum Mieterstrom günstiger ist als normaler Netzstrom?',
+          options:['Der Strom kommt aus einer billigeren Quelle','Netzentgelte entfallen für den lokal erzeugten und verbrauchten Solaranteil','Der Staat subventioniert Mieterstrom vollständig','ALVA macht keinen Gewinn'],
+          correct:1, ctx:'Netzentgelte (~25% der normalen Rechnung) entfallen wenn Strom direkt im Gebäude erzeugt und verbraucht wird — ohne das öffentliche Netz zu nutzen. Das ist die wirtschaftliche Grundlage von Mieterstrom. Mehrwertsteuer fällt aber immer an!'},
+        {type:'mc', text:'Eine PV-Anlage hat 15 kWp installierte Leistung. Wie viel Strom erzeugt sie ungefähr pro Jahr in Deutschland?',
+          options:['1.500 kWh','15.000 kWh','150.000 kWh','150 kWh'],
+          correct:1, ctx:'Faustformel: 1 kWp → ~900-1.000 kWh/Jahr in Deutschland. 15 kWp × ~1.000 = ~15.000 kWh/Jahr. Diese Faustformel hilft dir im Alltag schnell einzuschätzen ob eine Anlage für ein Gebäude passt.'},
+        {type:'open', text:'Erkläre in 2-3 Sätzen einem Mieter warum sein Strom über ALVA günstiger ist als beim normalen Versorger.',
+          keywords:['solar','dach','direkt','netz','netzentgelt','günstiger','lokal','fließt'],
+          ctx:'Gute Antwort: "Die Solaranlage auf dem Dach Ihres Hauses produziert Strom der direkt zu Ihnen in die Wohnung fließt — ohne den Umweg durch das öffentliche Stromnetz. Dadurch sparen wir die Netzgebühren (ca. 25% einer normalen Rechnung) und geben diese Ersparnis an Sie weiter. Gesetzlich müssen wir mindestens 10% günstiger sein als der lokale Versorger."'},
+        {type:'tf', text:'Wahr oder Falsch?',
+          statements:[
+            {text:'Wenn die Sonne nicht scheint haben Mieterstromkunden keinen Strom.', answer:false},
+            {text:'Die Mehrwertsteuer (19%) fällt auch beim Mieterstrom an.', answer:true},
+            {text:'1 kWp PV-Leistung entspricht ungefähr 900-1.000 kWh Jahresertrag in Deutschland.', answer:true},
+          ],
+          ctx:'1. Falsch — ALVA liefert Reststrom aus dem Netz wenn Solar nicht reicht (Vollversorgung). 2. Wahr — Mehrwertsteuer fällt immer an wenn Strom verkauft wird. 3. Wahr — die Faustformel 1 kWp ≈ 1.000 kWh/Jahr.'}
+      ]
+    }
+  },
+
+  {
+    id: 'stakeholder',
+    icon: '🏗️',
+    title: 'Die wichtigsten Akteure',
+    subtitle: 'Wer spielt welche Rolle? VNB, MSB, Lieferant & Co.',
+    chips: ['Stakeholder', 'Marktstruktur', '~12 Min'],
+    content: `
+<div class="lsec">
+<h2 class="lh2">Der Strommarkt — wer macht was?</h2>
+<p class="lp">Im deutschen Strommarkt gibt es klare Rollen. Das wichtigste Prinzip: <span class="kt">Unbundling</span> — Netz und Vertrieb sind seit 1998 gesetzlich getrennt. Wer das Netz betreibt, darf keinen Strom verkaufen. Das schafft fairen Wettbewerb.</p>
+
+<div class="stake-grid">
+<div class="stake-card highlight">
+<div class="stake-icon">⚡</div>
+<div class="stake-name">ALVA Energie = Lieferant</div>
+<div class="stake-desc">Kauft Strom ein, verkauft ihn an Mieter. Hat Liefervertrag mit Mieter. Stellt Rechnung. Das ist eure Rolle!</div>
+</div>
+<div class="stake-card">
+<div class="stake-icon">🔌</div>
+<div class="stake-name">VNB — Verteilnetzbetreiber</div>
+<div class="stake-desc">Betreibt das lokale Stromnetz (Leitungen, Trafos). Über 800 in Deutschland. Neutral — muss alle Lieferanten gleich behandeln.</div>
+</div>
+<div class="stake-card">
+<div class="stake-icon">📊</div>
+<div class="stake-name">MSB — Messstellenbetreiber</div>
+<div class="stake-desc">Baut und betreibt Stromzähler. Liefert Verbrauchsdaten. Oft identisch mit VNB (gMSB) oder freier Anbieter (wMSB).</div>
+</div>
+<div class="stake-card">
+<div class="stake-icon">🏠</div>
+<div class="stake-name">Anschlussnehmer</div>
+<div class="stake-desc">Der Gebäudeeigentümer. Hat den Netzanschlussvertrag mit dem VNB. Im Mieterstrom: der Vermieter.</div>
+</div>
+<div class="stake-card">
+<div class="stake-icon">👤</div>
+<div class="stake-name">Anschlussnutzer</div>
+<div class="stake-desc">Der Mieter. Hat den Stromliefervertrag (mit ALVA). Verbraucht den Strom. Ist unser direkter Kunde!</div>
+</div>
+<div class="stake-card">
+<div class="stake-icon">🏛️</div>
+<div class="stake-name">Grundversorger</div>
+<div class="stake-desc">Jede Region hat einen. Wer keinen Vertrag hat wird automatisch versorgt — zu höheren Preisen. Sicherheitsnetz.</div>
+</div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Der Verteilnetzbetreiber (VNB) — dein wichtigster Partner</h2>
+<p class="lp">Im Mieterstrom-Alltag habt ihr viel mit dem VNB zu tun. Er verwaltet alle <span class="kt">GPKE-Prozesse</span> — das sind die standardisierten Abläufe für Lieferantenwechsel, Ein- und Auszüge.</p>
+
+<div class="callout info">
+<div class="ci">ℹ️</div>
+<div class="cb"><div class="ct">Was ist GPKE?</div>
+<div class="cx"><strong>G</strong>eschäftsprozesse zur <strong>K</strong>undenbelieferung mit <strong>E</strong>lektrizität. Von der Bundesnetzagentur festgelegte Standardprozesse. Jeder Lieferantenwechsel, jeder Ein- und Auszug läuft über GPKE-Nachrichten zwischen Lieferant und VNB. Ohne GPKE kein funktionierender Wechselmarkt.</div></div>
+</div>
+
+<h3 class="lh3">Was macht der VNB konkret für euch?</h3>
+<div class="defs">
+<div class="def"><div class="dt">Lieferanmeldung</div><div class="dd">Wenn ein neuer Mieter einzieht und Mieterstromkunde wird, muss ALVA ihn beim VNB anmelden (GPKE-Prozess). Erst dann läuft der Lieferbeginn offiziell.</div></div>
+<div class="def"><div class="dt">Lieferabmeldung</div><div class="dd">Zieht ein Mieter aus oder kündigt, meldet ALVA ihn beim VNB ab. Zählerstand zum Stichtag wird erfasst.</div></div>
+<div class="def"><div class="dt">Lieferantenwechsel</div><div class="dd">Will ein Mieter zu einem anderen Anbieter wechseln, koordiniert der VNB den Übergang. ALVA muss die MaLo-ID herausgeben — gesetzliche Pflicht!</div></div>
+<div class="def"><div class="dt">Messkonzept bestätigen</div><div class="dd">Für neue Mieterstrom-Projekte muss der VNB das Messkonzept genehmigen (Summenzähler etc.). Ohne Bestätigung kein Go-Live.</div></div>
+</div>
+
+<div class="callout warn">
+<div class="ci">⚠️</div>
+<div class="cb"><div class="ct">Wichtig: MaLo-ID bei Kündigung</div>
+<div class="cx">Die <strong>Marktlokations-ID (MaLo-ID)</strong> ist die eindeutige Kennnummer jedes Stromanschlusses. Wenn ein Mieterstromkunde zu einem anderen Anbieter wechseln will, MUSS ALVA die MaLo-ID herausgeben. Das ist gesetzlich vorgeschrieben — kein Ermessensspielraum. Verweigern ist verboten!</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Der Messstellenbetreiber (MSB)</h2>
+<p class="lp">Der MSB ist für Zähler zuständig — Einbau, Betrieb, Wartung und Datenlieferung. Es gibt zwei Arten:</p>
+
+<div class="defs">
+<div class="def"><div class="dt">gMSB<br><small style="font-weight:400;color:var(--mid)">grundzuständig</small></div><div class="dd">Der lokale VNB. Automatisch zuständig wenn kein anderer gewählt wurde. Hat die Pflicht bis 2032 alle Zähler auf iMSys umzustellen.</div></div>
+<div class="def"><div class="dt">wMSB<br><small style="font-weight:400;color:var(--mid)">wettbewerblich</small></div><div class="dd">Freier Anbieter, bundesweit tätig. Für Mieterstrom-Projekte oft bevorzugt — kann das <strong>Liegenschaftsmodell</strong> anbieten: ein MSB für alle Zähler im Gebäude.</div></div>
+</div>
+
+<div class="callout tip">
+<div class="ci">🏢</div>
+<div class="cb"><div class="ct">Das Liegenschaftsmodell (MsbG)</div>
+<div class="cx">Statt für jede Wohnung einen anderen MSB zu haben, übernimmt ein <strong>wMSB</strong> alle Messstellen im Gebäude als "Lokationsbündel": alle Wohnungszähler + PV-Erzeugungszähler + Summenzähler. Ein Ansprechpartner, koordinierter Einbau, sauberere Daten. Viel einfacher für den Go-Live eines neuen Projekts!</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Das Zusammenspiel im Überblick</h2>
+<div class="diagram">
+<div class="diagram-title">Wer kommuniziert mit wem bei Mieterstrom?</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center;font-size:12px;">
+<div style="background:var(--navy);color:white;padding:16px;border-radius:8px;">
+<div style="font-size:20px;margin-bottom:6px;">🏠</div>
+<strong style="color:var(--yellow)">ALVA Energie</strong><br>
+<span style="color:rgba(255,255,255,.5);font-size:11px;">Lieferant, Vollversorger</span>
+</div>
+<div style="background:var(--grey2);padding:16px;border-radius:8px;display:flex;flex-direction:column;justify-content:center;">
+<div style="font-size:11px;color:var(--mid);margin-bottom:4px;">GPKE-Nachrichten</div>
+<div style="font-size:18px;">⟷</div>
+<div style="font-size:11px;color:var(--mid);margin-top:4px;">Messdaten</div>
+</div>
+<div style="background:var(--grey);padding:16px;border-radius:8px;">
+<div style="font-size:20px;margin-bottom:6px;">🔌</div>
+<strong>VNB</strong><br>
+<span style="color:var(--mid);font-size:11px;">Netzbetreiber</span><br><br>
+<div style="font-size:20px;margin-bottom:4px;">📊</div>
+<strong>MSB</strong><br>
+<span style="color:var(--mid);font-size:11px;">Zähler & Messdaten</span>
+</div>
+</div>
+<div style="margin-top:12px;text-align:center;padding:12px;background:var(--ok-bg);border-radius:8px;border:1px solid var(--ok);">
+<div style="font-size:20px;margin-bottom:4px;">👤</div>
+<strong style="color:var(--ok)">Mieter (Anschlussnutzer)</strong> — bekommt eine Rechnung, merkt vom Rest nichts
+</div>
+</div>
+</div>`,
+    quiz: {
+      title: 'Lerncheck: Die wichtigsten Akteure',
+      questions: [
+        {type:'mc', text:'Was bedeutet "Unbundling" im deutschen Strommarkt?',
+          options:['Bündelung aller Energieanbieter zu einem Konzern','Gesetzliche Trennung von Netz und Vertrieb','Zusammenschluss von Stadtwerken','Die monatliche Abschlagsregelung'],
+          correct:1, ctx:'Unbundling = Trennung von Netz und Vertrieb seit 1998. Wer das Netz betreibt darf keinen Strom verkaufen. Das ermöglicht fairen Wettbewerb: Jeder Lieferant kann das Netz nutzen ohne benachteiligt zu werden.'},
+        {type:'mc', text:'Was ist der Unterschied zwischen Anschlussnehmer und Anschlussnutzer bei Mieterstrom?',
+          options:['Kein Unterschied, beide sind der Mieter','Anschlussnehmer = Vermieter (Netzanschlussvertrag), Anschlussnutzer = Mieter (Liefervertrag)','Anschlussnehmer = Mieter, Anschlussnutzer = ALVA','Anschlussnehmer ist der VNB, Anschlussnutzer der MSB'],
+          correct:1, ctx:'Anschlussnehmer = Gebäudeeigentümer/Vermieter — hat den Vertrag mit dem VNB über den Netzanschluss des Gebäudes. Anschlussnutzer = Mieter — hat den Stromliefervertrag mit ALVA und verbraucht tatsächlich den Strom.'},
+        {type:'open', text:'Was ist GPKE und warum ist es wichtig für deinen Alltag bei ALVA?',
+          keywords:['geschäftsprozesse','kundenbelieferung','elektrizität','wechsel','einzug','auszug','vnb','standard'],
+          ctx:'GPKE = Geschäftsprozesse zur Kundenbelieferung mit Elektrizität. Standardisierte Regeln der Bundesnetzagentur für die Kommunikation zwischen Lieferanten und Netzbetreibern. Wichtig für ALVA weil: Jeder Einzug, Auszug, Lieferantenwechsel und Stammdatenänderung läuft über GPKE-Prozesse. Ohne diese Standards würde jeder Netzbetreiber anders vorgehen — Chaos.'},
+        {type:'tf', text:'Wahr oder Falsch?',
+          statements:[
+            {text:'ALVA muss die MaLo-ID herausgeben wenn ein Mieterstromkunde kündigt und wechseln will.', answer:true},
+            {text:'Es gibt in Deutschland nur einen Verteilnetzbetreiber.', answer:false},
+            {text:'Das Liegenschaftsmodell bedeutet: ein MSB übernimmt alle Zähler im Gebäude.', answer:true},
+          ],
+          ctx:'1. Wahr — gesetzliche Pflicht, kein Ermessensspielraum. 2. Falsch — über 800 VNBs in Deutschland! Jeder ist für sein Netzgebiet zuständig. 3. Wahr — Lokationsbündel nach MsbG.'}
+      ]
+    }
+  },
+
+  {
+    id: 'zähler',
+    icon: '📡',
+    title: 'Smart Meter, iMSys & Summenzähler',
+    subtitle: 'Warum normale Zähler nicht reichen und was stattdessen kommt',
+    chips: ['Messtechnik', 'iMSys', 'Summenzähler', '~10 Min'],
+    content: `
+<div class="lsec">
+<h2 class="lh2">Das Problem mit normalen Zählern</h2>
+<p class="lp">In den meisten Wohnungen hängt noch ein alter Zähler — der "Ferraris-Zähler". Der dreht seine Scheibe wenn Strom fließt, wird einmal im Jahr abgelesen und fertig. Das klingt erstmal einfach.</p>
+<p class="lp">Für Mieterstrom ist das aber ein Problem. Warum? Weil der Solarertrag <strong>ständig schwankt</strong>: Mittags bei Sonne viel, nachts null, im Winter 10x weniger als im Sommer. Um fair abzurechnen wer wann günstigen Solarstrom bekommen hat, braucht man <strong>zeitgenaue Daten</strong>.</p>
+
+<div class="callout warn">
+<div class="ci">⏰</div>
+<div class="cb"><div class="ct">Warum Jahresablesung nicht reicht</div>
+<div class="cx">Stell dir vor: Anna wohnt in Wohnung 1, Bob in Wohnung 2. Anna ist tagsüber im Homeoffice und verbraucht viel Solar (günstig). Bob ist Pendler und kommt erst abends nach Hause — dann ist die Sonne weg, er verbraucht Netzstrom (teurer). Ohne zeitgenaue Messung können wir nicht fair unterscheiden wer wann was bekommen hat. Das wäre für beide ungerecht!</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Die drei Zählertypen</h2>
+
+<div class="defs">
+<div class="def">
+<div class="dt">Ferraris-Zähler<br><span style="font-weight:400;color:var(--mid);font-size:11px">Alt, analog</span></div>
+<div class="dd">Die rotierende Scheibe im Kasten. Manuell ablesbar, keinerlei Datenkommunikation. Für Mieterstrom: <strong>ungeeignet</strong>. Wird bis 2032 komplett ersetzt.</div>
+</div>
+<div class="def">
+<div class="dt">mME<br><span style="font-weight:400;color:var(--mid);font-size:11px">Moderne Mess-einrichtung</span></div>
+<div class="dd">Digitaler Zähler mit Display. Zeigt Verbrauchskurven an, präziser als Ferraris. ABER: kein Kommunikationsmodul. Muss immer noch manuell abgelesen werden. Für Mieterstrom: <strong>nicht ausreichend</strong>.</div>
+</div>
+<div class="def">
+<div class="dt">iMSys / Smart Meter<br><span style="font-weight:400;color:var(--mid);font-size:11px">Intelligent, vernetzt</span></div>
+<div class="dd">mME + <strong>Smart Meter Gateway (SMGW)</strong>. Überträgt Viertelstundenwerte (alle 15 Min!) automatisch, verschlüsselt, BSI-zertifiziert. Für Mieterstrom: <strong>Standard und notwendig</strong>.</div>
+</div>
+</div>
+
+<div class="callout dark">
+<div class="ci">📡</div>
+<div class="cb"><div class="ct">Warum Viertelstundenwerte so wichtig sind</div>
+<div class="cx">12:00 Uhr: PV erzeugt 15 kW, alle Wohnungen verbrauchen insgesamt 10 kW → 10 kW Solar, 0 kW Netz.<br>
+20:00 Uhr: PV erzeugt 0 kW, alle verbrauchen 8 kW → 8 kW Netz.<br><br>
+Nur mit Viertelstundenwerten kann ALVA jedem Mieter fair zuweisen: "Du hast in diesem Zeitraum X kWh günstigen Solarstrom bekommen." Ohne iMSys: unmöglich.</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Summenzähler — physisch und virtuell</h2>
+<p class="lp">Jetzt kommt das Herzstück des technischen Messkonzepts. Bei Mieterstrom müssen wir wissen: Wie viel Solarstrom hat das Gebäude insgesamt verbraucht (und nicht ins Netz eingespeist)?</p>
+
+<h3 class="lh3">Physischer Summenzähler (Z1)</h3>
+<p class="lp">Ein klassischer Zwei-Richtungs-Zähler am Netzanschlusspunkt des Gebäudes. Er misst:</p>
+<div class="defs">
+<div class="def"><div class="dt">Netzbezug →</div><div class="dd">Wieviel Strom fließt vom öffentlichen Netz ins Gebäude rein (wenn Solar nicht reicht).</div></div>
+<div class="def"><div class="dt">Netzeinspeisung ←</div><div class="dd">Wieviel Überschuss-Solarstrom fließt aus dem Gebäude ins Netz zurück (wenn Solar mehr produziert als verbraucht wird).</div></div>
+</div>
+<p class="lp"><strong>Formel:</strong> PV-Erzeugung − Netzeinspeisung = Im Gebäude verbrauchter Solarstrom</p>
+<p class="lp">Problem: Installation kostet mehrere Tausend Euro — bei Bestandsbauten oft aufwändig.</p>
+
+<h3 class="lh3">Virtueller Summenzähler (vZ1) — die moderne Lösung</h3>
+<p class="lp">Seit Mai 2023 im Gesetz verankert (EnWG §20) und gleichgestellt mit physischen Summenzählern. Kein teurer Umbau nötig!</p>
+
+<div class="diagram">
+<div class="diagram-title">So funktioniert ein virtueller Summenzähler</div>
+<div style="display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;">
+<div>
+<div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:8px;">MESSLOKATIONEN im Gebäude</div>
+<div style="display:flex;flex-direction:column;gap:6px;">
+<div style="background:var(--grey);border:1.5px solid var(--border);border-radius:6px;padding:8px 12px;font-size:12px;">📊 Zähler Wohnung 1</div>
+<div style="background:var(--grey);border:1.5px solid var(--border);border-radius:6px;padding:8px 12px;font-size:12px;">📊 Zähler Wohnung 2</div>
+<div style="background:var(--grey);border:1.5px solid var(--border);border-radius:6px;padding:8px 12px;font-size:12px;">📊 Zähler Wohnung 3...</div>
+<div style="background:var(--yellow);border:1.5px solid var(--yellow);border-radius:6px;padding:8px 12px;font-size:12px;font-weight:700;color:var(--navy);">☀️ PV-Erzeugungszähler</div>
+</div>
+</div>
+<div style="text-align:center;font-size:24px;color:var(--mid)">→<br><span style="font-size:11px;color:var(--mid)">Formel</span></div>
+<div>
+<div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:8px;">VIRTUELLER SUMMENZÄHLER</div>
+<div style="background:var(--navy);color:var(--white);border-radius:8px;padding:16px;font-size:12px;">
+<strong style="color:var(--yellow)">Σ Einzelverbrauch</strong><br>
+minus<br>
+<strong style="color:var(--yellow)">PV-Erzeugung</strong><br>
+gleich<br>
+<strong style="color:var(--yellow)">= Netzbezug (rechnerisch)</strong>
+</div>
+</div>
+</div>
+<div style="margin-top:12px;padding:10px;background:var(--ok-bg);border-radius:6px;font-size:12px;color:var(--ok);font-weight:600;">
+✅ Kein physischer Einbau nötig · Günstiger · Seit 2023 rechtlich gleichgestellt
+</div>
+</div>
+
+<div class="callout info">
+<div class="ci">⚠️</div>
+<div class="cb"><div class="ct">Voraussetzung: iMSys in ALLEN Wohnungen</div>
+<div class="cx">Der virtuelle Summenzähler rechnet aus verschiedenen Zählerständen einen Gesamt-Wert. Das funktioniert nur wenn alle Zähler <strong>zur selben Zeit</strong> messen — also Viertelstundenwerte liefern. Deshalb braucht man iMSys in allen Wohnungen. Ohne iMSys stimmen die Zeitstempel nicht überein → falsche Abrechnung.</div></div>
+</div>
+</div>`,
+    quiz: {
+      title: 'Lerncheck: Zähler & Messtechnik',
+      questions: [
+        {type:'mc', text:'Warum reicht ein normaler (Ferraris-)Zähler für Mieterstrom nicht aus?',
+          options:['Er ist zu teuer','Er kann keine Viertelstundenwerte liefern die für faire Solar-Abrechnung nötig sind','Er misst zu ungenau','Er ist zu groß für Mehrfamilienhäuser'],
+          correct:1, ctx:'Mieterstrom braucht zeitgenaue Daten weil die Solarproduktion ständig schwankt. Nur mit Viertelstundenwerten (alle 15 Min) kann man fair zuweisen wer wann günstigen Solarstrom hatte. Ein Ferraris-Zähler wird einmal im Jahr abgelesen — das reicht nicht.'},
+        {type:'mc', text:'Was ist der Unterschied zwischen mME und iMSys?',
+          options:['Kein Unterschied, beide sind gleich','mME ist digital aber ohne Kommunikation; iMSys = mME + Smart Meter Gateway für automatische Datenübertragung','iMSys ist älter als mME','mME kostet mehr als iMSys'],
+          correct:1, ctx:'mME = digitaler Zähler, präzise, aber kein Kommunikationsmodul — muss noch abgelesen werden. iMSys = mME + Smart Meter Gateway (SMGW), überträgt Viertelstundenwerte automatisch, verschlüsselt, BSI-zertifiziert. Das ist der Standard für Mieterstrom.'},
+        {type:'open', text:'Was ist ein virtueller Summenzähler und welchen Vorteil hat er gegenüber einem physischen Summenzähler?',
+          keywords:['rechnerisch','formel','kein umbau','imsys','viertelstunde','günstig','lokation','bündel','kosten'],
+          ctx:'Virtueller Summenzähler: kein physischer Einbau am Netzanschluss nötig. Stattdessen rechnerisch: Σ Einzelverbrauch aller Zähler − PV-Erzeugung = Netzbezug. Voraussetzung: iMSys in allen Wohnungen für synchrone Viertelstundenwerte. Vorteil: spart tausende Euro Installationskosten, geht auch in Bestandsbauten ohne Platz, seit 2023 rechtlich gleichgestellt.'},
+        {type:'tf', text:'Wahr oder Falsch?',
+          statements:[
+            {text:'Ein virtueller Summenzähler wurde 2023 im Energierecht mit physischen Summenzählern gleichgestellt.', answer:true},
+            {text:'Für einen virtuellen Summenzähler brauchen nur die Wohnungen im Erdgeschoss iMSys.', answer:false},
+            {text:'Der Summenzähler sitzt am Netzanschlusspunkt und misst Netzbezug und Netzeinspeisung.', answer:true},
+          ],
+          ctx:'1. Wahr — GNDEW Mai 2023, §20 EnWG. 2. Falsch — ALLE Zähler im Gebäude müssen iMSys haben für synchrone Viertelstundenwerte. 3. Wahr — am Netzanschlusspunkt (Übergabepunkt zwischen Hausnetz und öffentlichem Netz).'}
+      ]
+    }
+  },
+
+  {
+    id: 'abrechnung',
+    icon: '📋',
+    title: 'Abschläge & Jahresrechnung',
+    subtitle: 'Wie die Abrechnung funktioniert — und warum Kunden anrufen',
+    chips: ['Abrechnung', 'Abschläge', 'Jahresrechnung', '~12 Min'],
+    content: `
+<div class="lsec">
+<h2 class="lh2">Das Abschlagssystem — warum zahle ich monatlich gleich viel?</h2>
+<p class="lp">Das ist eine der häufigsten Kundenfragen: "Warum zahle ich im Sommer gleich viel wie im Winter, obwohl ich doch mehr Solar bekomme?" Hier ist die Erklärung:</p>
+
+<div class="flow">
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">1</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Jahresverbrauch schätzen</div>
+<div class="fdesc">Zu Vertragsbeginn schätzen wir den Jahresverbrauch — aus Vorjahresdaten oder Durchschnittswerten (Wohnungsgröße, Personenzahl). Für Neukunden ohne Vorjahresdaten: Standardwerte nutzen.</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">2</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Jahreskosten durch 12 teilen = Abschlag</div>
+<div class="fdesc">3.000 kWh × 26 ct = 780€/Jahr → Abschlag: 65€/Monat. Gleichmäßige monatliche Belastung — unabhängig davon ob im Juli mehr Solar oder im Dezember weniger kommt.</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">3</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Echter Verbrauch am Jahresende messen</div>
+<div class="fdesc">iMSys liefert automatisch die Jahressumme. Kein Ablesen nötig. Bei älteren Zählern: Selbstmitteilung oder Schätzung.</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">4</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Jahresrechnung erstellen & Differenz abrechnen</div>
+<div class="fdesc">Echter Verbrauch × Preis = tatsächliche Kosten. Abzüglich gezahlter Abschläge. Positiver Saldo → Gutschrift. Negativer Saldo → Nachzahlung. Neuer Abschlag wird angepasst.</div>
+</div></div>
+</div>
+
+<div class="callout eg">
+<div class="ci">🧮</div>
+<div class="cb"><div class="ct">Beispielrechnung</div>
+<div class="cx">Anna, Wohnung 3, geschätzt 3.000 kWh/Jahr.<br>
+Abschlag: 3.000 × 26 ct ÷ 12 = <strong>65€/Monat</strong><br>
+Gezahlt: 65 × 12 = <strong>780€</strong><br>
+Echter Verbrauch: 3.400 kWh × 26 ct = <strong>884€</strong><br>
+Nachzahlung: 884 − 780 = <strong>104€</strong><br>
+Neuer Abschlag: 3.400 × 26 ÷ 12 = <strong>~74€/Monat</strong></div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Die Mieterstrom-Jahresrechnung im Detail</h2>
+<p class="lp">Bei Mieterstrom gibt es eine Besonderheit: Die Rechnung enthält zwei Preiskomponenten — den günstigeren Solaranteil und den teureren Netzstromanteil.</p>
+
+<div class="rechnung-box">
+<div class="rb-header">
+<div class="rb-title">ALVA Energie — Jahresabrechnung 2025</div>
+<div class="rb-sub">Max Mustermann · Musterstraße 1, Whg. 4 · München</div>
+</div>
+<div class="rb-row">
+<div><div class="rb-label">Abrechnungszeitraum</div><div class="rb-detail">01.01.2025 – 31.12.2025</div></div>
+<div class="rb-val">365 Tage</div>
+</div>
+<div class="rb-row">
+<div><div class="rb-label">Gesamtverbrauch</div><div class="rb-detail">Zählerstand: 12.450 kWh → 15.630 kWh</div></div>
+<div class="rb-val">3.180 kWh</div>
+</div>
+<div class="rb-row solar">
+<div><div class="rb-label">☀️ Solarstrom-Anteil (58%)</div><div class="rb-detail">1.844 kWh × 21,5 ct/kWh (inkl. MwSt)</div></div>
+<div class="rb-val">396,46 €</div>
+</div>
+<div class="rb-row">
+<div><div class="rb-label">🔌 Reststrom aus Netz (42%)</div><div class="rb-detail">1.336 kWh × 29,8 ct/kWh (inkl. MwSt)</div></div>
+<div class="rb-val">398,13 €</div>
+</div>
+<div class="rb-row">
+<div><div class="rb-label">Grundpreis</div><div class="rb-detail">12 Monate × 7,50 €</div></div>
+<div class="rb-val">90,00 €</div>
+</div>
+<div class="rb-row">
+<div><div class="rb-label"><strong>Gesamtbetrag</strong></div></div>
+<div class="rb-val"><strong>884,59 €</strong></div>
+</div>
+<div class="rb-row">
+<div><div class="rb-label">Geleistete Abschläge</div><div class="rb-detail">12 × 70,00 €</div></div>
+<div class="rb-val" style="color:var(--ok)">− 840,00 €</div>
+</div>
+<div class="rb-row total">
+<div><div class="rb-label">Nachzahlung</div></div>
+<div class="rb-val">44,59 €</div>
+</div>
+</div>
+
+<h3 class="lh3">Vergleich: Was hätte Max beim Grundversorger gezahlt?</h3>
+<div class="callout eg">
+<div class="ci">💰</div>
+<div class="cb"><div class="ct">Ersparnis durch Mieterstrom</div>
+<div class="cx">Grundversorger: 3.180 kWh × 32 ct = <strong>1.017,60€</strong><br>
+ALVA Mieterstrom: <strong>884,59€</strong><br>
+Ersparnis: <strong>133,01€ (13%)</strong> — und das ohne irgendwas ändern zu müssen!</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Die häufigsten Support-Fragen zur Abrechnung</h2>
+
+<div class="callout warn">
+<div class="ci">📞</div>
+<div class="cb"><div class="ct">"Meine Rechnung ist viel zu hoch!"</div>
+<div class="cx">Checkliste für dich:<br>
+1. Abschlag zu niedrig angesetzt? (Besonders nach Einzug ohne Vorjahresdaten)<br>
+2. Einzugs-Zählerstand falsch erfasst? (Vormieter-Verbrauch dem Mieter zugerechnet!)<br>
+3. Solarertrag schlechter als erwartet? (Bewölktes Jahr, Anlage kurzzeitig ausgefallen)<br>
+4. Mehr Verbrauch als erwartet? (Homeoffice, neues E-Auto geladen)<br>
+5. Preiserhöhung unterjährig?</div></div>
+</div>
+
+<div class="callout warn">
+<div class="ci">📞</div>
+<div class="cb"><div class="ct">"Warum bekomme ich kaum Solarstrom im Winter?"</div>
+<div class="cx">Das ist normal! Solare Einstrahlung in Deutschland: Im Dezember ca. 10x weniger als im Juli. Eine Anlage die im Sommer 60% des Verbrauchs deckt, deckt im Winter vielleicht nur 10-15%. Das war aber so kalkuliert und im Jahresschnitt stimmt der Durchschnitt. Kunden beruhigen: Der günstige Solaranteil kommt im Sommer stärker zum Tragen.</div></div>
+</div>
+
+<div class="callout dark">
+<div class="ci">🚨</div>
+<div class="cb"><div class="ct">Goldene Regel: Einzugs-Zählerstand</div>
+<div class="cx">Der <strong>Zählerstand beim Einzug ist heilig</strong>. Fehlt er oder ist er falsch, wird der Vormieter-Verbrauch dem neuen Mieter zugerechnet. Das gibt garantiert Streit. Immer sofort erfassen, am besten mit Foto. Das ist der häufigste und vermeidbarste Fehler im ES-Alltag!</div></div>
+</div>
+</div>`,
+    quiz: {
+      title: 'Lerncheck: Abschläge & Jahresrechnung',
+      questions: [
+        {type:'mc', text:'Warum zahlt ein Mieterstromkunde monatlich immer denselben Abschlag, obwohl er im Sommer mehr Solar bekommt?',
+          options:['Solar kostet immer gleich viel','Der geschätzte Jahresverbrauch wird auf 12 gleiche Monatsbeträge verteilt — unabhängig von saisonalen Schwankungen','Der VNB schreibt feste Monatsbeträge vor','Das ist gesetzlich so geregelt'],
+          correct:1, ctx:'Abschläge glätten den Jahresverbrauch: Geschätzter Jahresverbrauch × Preis ÷ 12 = monatlicher Abschlag. Das gibt Planbarkeit für Kunde und Lieferant. Am Jahresende wird mit dem echten Verbrauch abgerechnet — dann gibt es Gutschrift oder Nachzahlung.'},
+        {type:'open', text:'Stell dir vor: Ein Mieter ruft an und sagt er habe eine Nachzahlung von 180€ obwohl er nicht mehr verbraucht habe als sonst. Nenne 3 mögliche Ursachen die du prüfen würdest.',
+          keywords:['abschlag','niedrig','einzug','zählerstand','solar','ertrag','preis','erhöhung','schätzung'],
+          ctx:'Wichtigste Ursachen: 1) Abschlag zu niedrig angesetzt (z.B. Neukunde ohne Vorjahresdaten → Schätzung zu optimistisch). 2) Einzugs-Zählerstand falsch → Vormieter-Verbrauch dem Mieter zugerechnet. 3) Solarertrag schlechter als Vorjahr (weniger Sonnenstunden, Anlage kurzzeitig ausgefallen). 4) Unterjährige Preiserhöhung.'},
+        {type:'tf', text:'Wahr oder Falsch?',
+          statements:[
+            {text:'Bei Mieterstrom erhält der Mieter zwei separate Rechnungen — eine für Solar und eine für Netzstrom.', answer:false},
+            {text:'Der Solaranteil an der ALVA-Rechnung ist im Sommer höher als im Winter.', answer:true},
+            {text:'Ein fehlender Einzugs-Zählerstand kann dazu führen dass der Vormieter-Verbrauch dem neuen Mieter berechnet wird.', answer:true},
+          ],
+          ctx:'1. Falsch — eine einzige Rechnung von ALVA mit beiden Anteilen (Solar + Netz) ausgewiesen. 2. Wahr — Solarproduktion im Sommer viel höher als im Winter. 3. Wahr — der Einzugs-Zählerstand ist der absolute Startpunkt. Fehlt er, gibt es garantiert Streit.'}
+      ]
+    }
+  },
+
+  {
+    id: 'wechsel',
+    icon: '🔄',
+    title: 'Wechselprozesse & GPKE im Alltag',
+    subtitle: 'Einzug, Auszug, Kündigung — was du wissen und tun musst',
+    chips: ['Wechselprozesse', 'GPKE', 'Einzug/Auszug', '~10 Min'],
+    content: `
+<div class="lsec">
+<h2 class="lh2">Der Lieferantenwechsel — was passiert wirklich?</h2>
+<p class="lp">Viele Kunden denken: "Wenn ich den Anbieter wechsle, muss ein Techniker kommen." Das ist ein weit verbreiteter Irrtum! Beim Lieferantenwechsel passiert am Zähler <strong>gar nichts</strong>.</p>
+
+<div class="flow">
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">1</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Neuer Vertrag + MaLo-ID</div>
+<div class="fdesc">Mieter schließt Vertrag mit neuem Lieferanten. Der braucht die <span class="kt">MaLo-ID</span> — die eindeutige 33-stellige Kennnummer des Anschlusses. ALVA muss sie herausgeben (gesetzliche Pflicht!).</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">2</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Neuer Lieferant meldet sich beim VNB an (GPKE)</div>
+<div class="fdesc">Per standardisierter EDIFACT-Nachricht (UTILMD). VNB prüft und bestätigt den Lieferbeginn-Termin. Frist: i.d.R. 6 Wochen Vorlauf.</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">3</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">ALVA wird abgemeldet</div>
+<div class="fdesc">VNB informiert ALVA über das Lieferende. Zählerstand zum Stichtag wird automatisch vom iMSys erfasst — kein Techniker nötig.</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">4</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Wechsel abgeschlossen — nahtlos</div>
+<div class="fdesc">Ab dem Stichtag liefert der neue Anbieter. Kein Stromausfall, kein Zählertausch, kein Techniker. Alles rein administrativ über GPKE-Prozesse.</div>
+</div></div>
+</div>
+
+<div class="callout dark">
+<div class="ci">🚫</div>
+<div class="cb"><div class="ct">No-Goes beim Wechsel — das darf ALVA NIEMALS tun</div>
+<div class="cx">1. MaLo-ID verweigern — gesetzlich verboten (§42 Abs. 6 EnWG)<br>
+2. Wechsel behindern oder verzögern<br>
+3. Falsche Informationen über Wechselmöglichkeiten geben<br>
+4. Kündigung an den Mietvertrag koppeln (Kopplungsverbot!)<br><br>
+Das Wechselrecht ist ein Grundrecht des Verbrauchers. Verstöße können Bußgelder und Beschwerden bei der Bundesnetzagentur nach sich ziehen.</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Einzug — Schritt für Schritt</h2>
+<p class="lp">Ein neuer Mieter zieht ein und möchte Mieterstromkunde werden. Was tust du?</p>
+
+<div class="defs">
+<div class="def"><div class="dt" style="background:var(--yellow);color:var(--navy);">1. Zählerstand</div><div class="dd"><strong>Sofort und zwingend:</strong> Zählerstand beim Einzug erfassen — am besten mit Foto. Das ist der Startpunkt aller Abrechnungen. Fehlt er: garantierter Ärger bei der ersten Jahresrechnung!</div></div>
+<div class="def"><div class="dt">2. Vertrag</div><div class="dd">Mieterstromvertrag abschließen. Alle Kundendaten erfassen: Name, Adresse, Bankverbindung (SEPA-Mandat), Einzugsdatum.</div></div>
+<div class="def"><div class="dt">3. VNB anmelden</div><div class="dd">GPKE-Lieferanmeldung beim zuständigen VNB. Lieferbeginn = Einzugsdatum. Ohne Anmeldung beliefert der Grundversorger — teurer!</div></div>
+<div class="def"><div class="dt">4. Abschlag festlegen</div><div class="dd">Realistischen monatlichen Abschlag berechnen. Bei Neukunden: Vorjahresdaten erfragen oder Wohnungsgröße/Personenzahl nutzen.</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Auszug — Schritt für Schritt</h2>
+<div class="defs">
+<div class="def"><div class="dt" style="background:var(--yellow);color:var(--navy);">1. Zählerstand</div><div class="dd">Auszugs-Zählerstand erfassen. Basis für die Schlussrechnung und für den Nachmieter-Vertrag.</div></div>
+<div class="def"><div class="dt">2. VNB abmelden</div><div class="dd">GPKE-Lieferabmeldung. Ab diesem Datum liefert ALVA nicht mehr. Falls kein neuer Lieferant: Grundversorger springt automatisch ein.</div></div>
+<div class="def"><div class="dt">3. Schlussrechnung</div><div class="dd">Letzte Abrechnung erstellen. Abschläge verrechnen. Gutschrift auszahlen oder Restbetrag einziehen.</div></div>
+<div class="def"><div class="dt">4. MaLo-ID</div><div class="dd">Für den Nachmieter oder neuen Lieferanten bereitstellen. Pflicht!</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Kündigung — was gilt beim Mieterstrom?</h2>
+<div class="defs">
+<div class="def"><div class="dt">Erstlaufzeit</div><div class="dd">Mieterstromverträge können eine Erstlaufzeit von max. 2 Jahren haben. Während dieser Zeit kann der Mieter nicht kündigen (außer bei Umzug).</div></div>
+<div class="def"><div class="dt">Kündigungsfrist</div><div class="dd">Nach Erstlaufzeit: max. 1 Monat Kündigungsfrist (§42a Abs. 3 EnWG). Nicht länger!</div></div>
+<div class="def"><div class="dt">Kein Kopplungszwang</div><div class="dd">Der Mieterstromvertrag darf NICHT an den Mietvertrag gekoppelt sein. Mieter können bei ALVA kündigen und trotzdem in der Wohnung bleiben (dann kommt Strom vom Grundversorger oder selbst gewähltem Anbieter).</div></div>
+<div class="def"><div class="dt">MaLo-ID Pflicht</div><div class="dd">ALVA muss die MaLo-ID bei Kündigung immer herausgeben — ohne Wenn und Aber.</div></div>
+</div>
+
+<div class="callout tip">
+<div class="ci">💡</div>
+<div class="cb"><div class="ct">Neue Wechselprozesse seit Juni 2025</div>
+<div class="cx">Seit dem 06.06.2025 gelten einheitliche Standards für Wechselprozesse im Mieterstrom (UTILMD AHB 2.1). Wechsel laufen nun weitgehend automatisiert ab — ähnlich wie normale Lieferantenwechsel, zukünftig innerhalb von 24 Stunden. Das macht Mieterstrom skalierbarer.</div></div>
+</div>
+</div>`,
+    quiz: {
+      title: 'Lerncheck: Wechselprozesse',
+      questions: [
+        {type:'mc', text:'Was passiert technisch am Zähler wenn ein Mieterstromkunde zu einem anderen Anbieter wechselt?',
+          options:['Ein Techniker tauscht den Zähler aus','Der Zähler wird umprogrammiert','Nichts — alles läuft rein administrativ über GPKE-Prozesse','Der Strom wird kurz unterbrochen'],
+          correct:2, ctx:'Beim Lieferantenwechsel passiert am Zähler gar nichts. Kein Techniker, kein Austausch, kein Stromausfall. Alles läuft elektronisch über standardisierte GPKE-Nachrichten zwischen Lieferanten und VNB. Das ist ein häufiger Irrtum bei Kunden!'},
+        {type:'mc', text:'Was ist die maximale Kündigungsfrist nach der Erstlaufzeit bei einem Mieterstromvertrag?',
+          options:['3 Monate','6 Monate','1 Monat','Keine Frist — sofortige Kündigung möglich'],
+          correct:2, ctx:'§42a Abs. 3 EnWG: Max. 1 Monat Kündigungsfrist nach Ende der Erstlaufzeit. Das schützt Mieter und macht Mieterstrom wettbewerbsfähig. Keine Vertragsfallen!'},
+        {type:'open', text:'Ein neuer Mieter zieht morgen ein. Was sind die 4 wichtigsten Dinge die du heute noch erledigen solltest?',
+          keywords:['zählerstand','vertrag','vnb','anmeldung','abschlag','gpke','malo','einzug'],
+          ctx:'1) Zählerstand beim Einzug erfassen (sofort, mit Foto). 2) Mieterstromvertrag abschließen und alle Daten erfassen (Name, Bank, Einzugsdatum). 3) VNB per GPKE-Lieferanmeldung informieren. 4) Realistischen Abschlag festlegen. In dieser Reihenfolge!'},
+        {type:'tf', text:'Wahr oder Falsch?',
+          statements:[
+            {text:'ALVA darf die Herausgabe der MaLo-ID verweigern wenn ein Mieter kündigt.', answer:false},
+            {text:'Ein Mietersstromvertrag darf nicht verpflichtend mit dem Mietvertrag verknüpft werden.', answer:true},
+            {text:'Wenn kein neuer Lieferant gemeldet ist, springt der Grundversorger automatisch ein.', answer:true},
+          ],
+          ctx:'1. Falsch — gesetzliche Pflicht, MaLo-ID muss immer herausgegeben werden. 2. Wahr — Kopplungsverbot nach §42a EnWG. 3. Wahr — Grundversorgung ist das automatische Sicherheitsnetz.'}
+      ]
+    }
+  },
+
+  {
+    id: 'modelle',
+    icon: '🏘️',
+    title: 'Mieterstrom, GGV & andere Modelle',
+    subtitle: 'Was es alles gibt — und warum ALVA Mieterstrom bevorzugt',
+    chips: ['Modelle', 'GGV', 'Onsite PPA', '~8 Min'],
+    content: `
+<div class="lsec">
+<h2 class="lh2">Dezentrale Versorgungsmodelle im Vergleich</h2>
+<p class="lp">Es gibt mehrere Wege um Solarstrom lokal zu vermarkten. Für ALVA ist Mieterstrom das Hauptmodell — aber du solltest alle kennen wenn Kunden fragen.</p>
+
+<div class="vtable-wrap" style="overflow-x:auto;">
+<table class="vtable">
+<thead><tr><th>Merkmal</th><th>Mieterstrom (§42a)</th><th>GGV (§42b)</th><th>Onsite PPA</th></tr></thead>
+<tbody>
+<tr><td><strong>Was ist es?</strong></td><td>Direktlieferung Solar → Mieter. Lieferant übernimmt Vollversorgung.</td><td>Solar-Anteil über Nebenkosten. Mieter behalten eigenen Stromvertrag.</td><td>Langfristiger Direktliefervertrag. Anlage beim Abnehmer.</td></tr>
+<tr><td><strong>Netzentgelte</strong></td><td class="ok">Entfallen für Solar ✅</td><td class="ok">Entfallen für Solar ✅</td><td class="ok">Entfallen ✅</td></tr>
+<tr><td><strong>Mieterstromzuschlag</strong></td><td class="ok">Ja ✅</td><td class="no">Nein ❌</td><td class="no">Nein ❌</td></tr>
+<tr><td><strong>Vollversorgungspflicht</strong></td><td class="no">Ja (ALVA liefert Reststrom) ❌</td><td class="ok">Nein — Mieter selbst ✅</td><td>Je nach Vertrag</td></tr>
+<tr><td><strong>Eigener Liefervertrag</strong></td><td class="no">Ja (mehr Aufwand) ❌</td><td class="ok">Nein (einfacher) ✅</td><td class="no">Ja (10-20 Jahre) ❌</td></tr>
+<tr><td><strong>Typisch für</strong></td><td>Wohngebäude, maximale Marge</td><td>Gewerbe, flexible Mieter</td><td>Gewerbe, Industrie, große Anlagen</td></tr>
+<tr><td><strong>Ertragspotenzial</strong></td><td class="ok"><strong>Maximal</strong> ✅</td><td>Mittel</td><td>Mittel-hoch</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout dark">
+<div class="ci">⭐</div>
+<div class="cb"><div class="ct">Warum Mieterstrom das beste Modell für ALVA ist</div>
+<div class="cx">Mieterstrom hat das höchste Ertragspotenzial: Netzentgelte entfallen + Mieterstromzuschlag + Marge aus Reststrom. Solarize (führende Abrechnungsplattform) bestätigt: "Mieterstrom ist die klare Empfehlung für die Wohnungswirtschaft wenn Sie Erträge maximieren wollen."</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">GGV — das vereinfachte Modell (seit Mai 2024)</h2>
+<p class="lp">Eingeführt durch das Solarpaket I. Die GGV ist einfacher, aber weniger lukrativ.</p>
+
+<div class="defs">
+<div class="def"><div class="dt">Wie es funktioniert</div><div class="dd">Der Gebäudeeigentümer verteilt den Solarstrom auf Mieter — ohne selbst Energielieferant zu werden. Der Solar-Anteil wird über die Nebenkostenabrechnung gutgeschrieben. Mieter behalten ihren normalen Stromvertrag für den Reststrom.</div></div>
+<div class="def"><div class="dt">Vorteil für Eigentümer</div><div class="dd">Keine Energielieferanten-Pflichten, kein eigenes Abrechungssystem nötig, weniger regulatorischer Aufwand.</div></div>
+<div class="def"><div class="dt">Nachteil vs. Mieterstrom</div><div class="dd">Kein Mieterstromzuschlag, keine Grundgebühr, keine Marge aus Reststrom. Wirtschaftlich weniger attraktiv.</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Onsite PPA — für Gewerbekunden</h2>
+<p class="lp">Power Purchase Agreement — ein langfristiger Direktliefervertrag zwischen Anlagenbetreiber und Abnehmer.</p>
+
+<div class="defs">
+<div class="def"><div class="dt">Laufzeit</div><div class="dd">Typischerweise 10-20 Jahre. Fixer Preis gibt Planungssicherheit für beide Seiten.</div></div>
+<div class="def"><div class="dt">Anlage direkt beim Abnehmer</div><div class="dd">"Onsite" = Anlage auf dem Dach oder Grundstück des Abnehmers. Kein öffentliches Netz nötig — keine Netzentgelte.</div></div>
+<div class="def"><div class="dt">Typische Kunden</div><div class="dd">Gewerbe, Industrie, Logistikzentren mit großen Dachflächen. Weniger Regulierung als Mieterstrom (kein §42a EnWG).</div></div>
+</div>
+</div>`,
+    quiz: {
+      title: 'Lerncheck: Modelle & Vergleich',
+      questions: [
+        {type:'mc', text:'Was ist der Hauptunterschied zwischen Mieterstrom und GGV?',
+          options:['GGV ist nur für Neubauten erlaubt','Bei GGV gibt es keinen eigenen Liefervertrag — der Solar-Anteil wird über Nebenkosten abgerechnet und Mieter behalten eigenen Stromvertrag','GGV ist teurer als Mieterstrom','Kein Unterschied — nur andere Bezeichnung'],
+          correct:1, ctx:'Mieterstrom = eigener Liefervertrag, ALVA als Vollversorger, Mieterstromzuschlag möglich, höchste Marge. GGV (seit 2024) = kein Liefervertrag, Solar-Anteil über Nebenkosten, Mieter behalten eigenen Stromvertrag für Reststrom, kein Zuschlag. Wirtschaftlich ist Mieterstrom deutlich attraktiver.'},
+        {type:'open', text:'Warum ist Mieterstrom wirtschaftlich attraktiver als GGV für ALVA als Anbieter?',
+          keywords:['zuschlag','grundgebühr','reststrom','marge','netzentgelt','vollversorgung','ertrag'],
+          ctx:'Mieterstrom hat drei Ertragsquellen: 1) Netzentgelte entfallen für Solar-Anteil (Ersparnis weitergeben und trotzdem mehr als GGV verdienen). 2) Mieterstromzuschlag (staatliche Förderung pro kWh Solar). 3) Marge aus Reststrom-Belieferung. GGV hat nur Quelle 1. Mieterstrom = maximales Ertragspotenzial.'},
+        {type:'tf', text:'Wahr oder Falsch?',
+          statements:[
+            {text:'Bei einem Onsite PPA läuft der Strom typischerweise durch das öffentliche Netz.', answer:false},
+            {text:'Bei Mieterstrom ist ALVA verpflichtet auch Reststrom zu liefern wenn Solar nicht reicht.', answer:true},
+            {text:'GGV wurde 2024 durch das Solarpaket I eingeführt.', answer:true},
+          ],
+          ctx:'1. Falsch — "Onsite" bedeutet Anlage direkt beim Abnehmer, Strom fließt direkt ohne öffentliches Netz. "Offsite" wäre mit Netz. 2. Wahr — Vollversorgungspflicht bei Mieterstrom. 3. Wahr — GGV seit Mai 2024.'}
+      ]
+    }
+  },
+
+  {
+    id: 'support',
+    icon: '📞',
+    title: 'Customer Support — der Alltag',
+    subtitle: 'Die wichtigsten Szenarien, No-Goes und wie du reagierst',
+    chips: ['Support', 'Szenarien', 'Praxis', '~10 Min'],
+    content: `
+<div class="lsec">
+<h2 class="lh2">Deine Rolle im Customer Support</h2>
+<p class="lp">Du bist für Mieterstromkunden (Mieter) die erste Anlaufstelle. Jede Interaktion prägt das Bild von ALVA. Das klingt nach viel Verantwortung — aber mit dem richtigen Wissen aus dieser Schulung wirst du die meisten Fragen locker beantworten können.</p>
+
+<div class="callout dark">
+<div class="ci">⭐</div>
+<div class="cb"><div class="ct">Die 3 ALVA-Werte im Support</div>
+<div class="cx"><strong style="color:var(--yellow)">Professionalität:</strong> Fakten kennen, klar kommunizieren, Versprechen nur wenn du sie halten kannst.<br>
+<strong style="color:var(--yellow)">Verbindlichkeit:</strong> Rückruftermine einhalten, Fälle nachverfolgen, keine offenen Enden.<br>
+<strong style="color:var(--yellow)">Einfachheit:</strong> Komplexe Energiethemen einfach erklären — kein Fachjargon ohne Erklärung.</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Die 8 häufigsten Kundenkontakte</h2>
+
+<div class="defs">
+<div class="def"><div class="dt">📥 Einzug</div><div class="dd">Zählerstand sofort erfassen (mit Foto!) · Vertrag abschließen · Alle Daten aufnehmen · VNB anmelden · Abschlag festlegen. <em>Faustregel: Zählerstand ist heilig.</em></div></div>
+<div class="def"><div class="dt">📤 Auszug</div><div class="dd">Auszugs-Zählerstand erfassen · VNB abmelden · Schlussrechnung erstellen · MaLo-ID für Nachmieter bereitstellen.</div></div>
+<div class="def"><div class="dt">🔄 Kündigung/Wechsel</div><div class="dd">Erstlaufzeit prüfen · Max. 1 Monat Frist · MaLo-ID herausgeben (immer!) · Schlussrechnung · Kein Behindern!</div></div>
+<div class="def"><div class="dt">💸 Hohe Rechnung</div><div class="dd">Checkliste: Abschlag zu niedrig? · Einzugs-ZS falsch? · Schlechter Solarertrag? · Preiserhöhung? · Mehr Verbrauch?</div></div>
+<div class="def"><div class="dt">☁️ Kein Solarstrom</div><div class="dd">Erklären: Solar schwankt! Im Winter normal weniger. Nie 100% garantiert. Anlage prüfen (Asset Mgmt). Bei echtem Ausfall eskalieren.</div></div>
+<div class="def"><div class="dt">📝 Vertragsänderung</div><div class="dd">Name/Adresse/Bank geändert → VNB per GPKE informieren · Intern Daten aktualisieren · SEPA-Mandat neu einholen bei Bankänderung.</div></div>
+<div class="def"><div class="dt">📞 Beschwerde</div><div class="dd">Zuhören, verständnisvoll reagieren, konkreten Lösungsweg anbieten. Wenn nötig eskalieren. Immer dokumentieren.</div></div>
+<div class="def"><div class="dt">❓ Allgemeine Fragen</div><div class="dd">"Warum ist mein Strom grün?" · "Was ist Mieterstrom?" · "Wie berechnet sich mein Preis?" → Du weißt das jetzt alles!</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Die absoluten No-Goes</h2>
+<div class="callout warn">
+<div class="ci">🚫</div>
+<div class="cb"><div class="ct">Diese 5 Dinge darfst du NIEMALS tun</div>
+<div class="cx">1. <strong>MaLo-ID verweigern</strong> wenn Kunde kündigt → gesetzlich verboten, sofort herausgeben<br>
+2. <strong>Suggerieren dass Wechsel nicht möglich ist</strong> → Wechselrecht ist Grundrecht<br>
+3. <strong>Einzugs-Zählerstand nicht erfassen</strong> → größter vermeidbarer Fehler<br>
+4. <strong>Versprechen die du nicht halten kannst</strong> (z.B. "Sie sparen garantiert 30%") → nur was vereinbart ist<br>
+5. <strong>Beschwerden ignorieren oder liegen lassen</strong> → immer bearbeiten und dokumentieren</div></div>
+</div>
+</div>
+
+<div class="lsec">
+<h2 class="lh2">Eskalationswege bei ALVA</h2>
+<div class="flow">
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">Du</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Customer Support (Gil's Team)</div>
+<div class="fdesc">Standard-Anfragen, Vertragsfragen, Abrechnungsfragen, Einzug/Auszug/Kündigung, allgemeine Erklärungen zu Mieterstrom</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">↑</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Customer Operations (Nataliia) / ES Team Lead</div>
+<div class="fdesc">Komplexe Fälle, Beschwerden die eskalieren, rechtliche Grenzfälle, Ausnahmen von Standardprozessen</div>
+</div></div>
+<div class="fstep">
+<div class="fstep-l"><div class="fnum">↑</div><div class="fline"></div></div>
+<div class="fcontent">
+<div class="ftitle">Andere Departments</div>
+<div class="fdesc">Technische Probleme → Installation/Asset Management · Abrechnungsfehler → Finance · Netzprobleme → direkt VNB</div>
+</div></div>
+</div>
+
+<div class="callout tip">
+<div class="ci">💬</div>
+<div class="cb"><div class="ct">Kommunikationstipp</div>
+<div class="cx">Wenn du eine Antwort nicht sofort weißt: "Das prüfe ich für Sie und melde mich bis [konkreter Termin] zurück." Dann aber auch wirklich melden! Nichts frustriert Kunden mehr als Aussitzen und Versprechen die nicht gehalten werden.</div></div>
+</div>
+</div>`,
+    quiz: {
+      title: 'Abschluss-Quiz: Alles zusammen',
+      questions: [
+        {type:'mc', text:'Ein Mieter sagt er habe seit 3 Wochen "kaum noch Solarstrom" und fordert eine Gutschrift. Was ist deine erste Reaktion?',
+          options:['Sofort Gutschrift zusagen','Erklären dass Solarproduktion schwankt und zunächst prüfen ob die Anlage wirklich ausgefallen ist','Zur Kündigung raten','An den VNB verweisen'],
+          correct:1, ctx:'Richtig: Erstmal erklären (Solarproduktion schwankt, besonders im Winter/bei Bewölkung) und dann prüfen ob die Anlage wirklich ausgefallen ist. Erst wenn die Anlage tatsächlich ausgefallen war, ist eine Gutschrift berechtigt. Nie sofort Gutschrift versprechen ohne Prüfung!'},
+        {type:'open', text:'Nenn die 4 wichtigsten Schritte wenn ein neuer Mieter einzieht.',
+          keywords:['zählerstand','vertrag','vnb','abschlag','gpke','anmeldung','sepa','foto'],
+          ctx:'1) Zählerstand sofort erfassen (mit Foto). 2) Mieterstromvertrag abschließen und alle Daten erfassen (inkl. SEPA-Mandat). 3) VNB per GPKE-Lieferanmeldung informieren. 4) Abschlag festlegen.'},
+        {type:'mc', text:'Was ist die maximale Marge/Einsparung die Netzentgelte beim Solarstrom-Anteil ausmachen können?',
+          options:['Etwa 5%','Etwa 10%','Etwa 25%','Über 50%'],
+          correct:2, ctx:'Netzentgelte machen ~25% einer normalen Stromrechnung aus. Dieser Kostenblock entfällt für den lokal erzeugten und verbrauchten Solarstrom. Das ist der wirtschaftliche Haupthebel von Mieterstrom.'},
+        {type:'tf', text:'Abschluss-Check — bist du bereit?',
+          statements:[
+            {text:'Der Mieterstrompreis darf maximal 90% des lokalen Grundversorgungstarifs betragen.', answer:true},
+            {text:'ALVA muss die MaLo-ID nur herausgeben wenn der Mieter einen guten Grund für die Kündigung hat.', answer:false},
+            {text:'Virtueller Summenzähler und physischer Summenzähler sind seit 2023 rechtlich gleichgestellt.', answer:true},
+            {text:'iMSys überträgt Messwerte einmal pro Monat automatisch.', answer:false},
+          ],
+          ctx:'1. Wahr — §42a EnWG, mind. 10% Ersparnis. 2. Falsch — MaLo-ID muss IMMER herausgegeben werden, kein Ermessen. 3. Wahr — GNDEW Mai 2023. 4. Falsch — iMSys überträgt Viertelstundenwerte (alle 15 Minuten), nicht monatlich!'},
+        {type:'open', text:'Was nimmst du als wichtigste Erkenntnis aus dieser Schulung mit? Was willst du in deiner ersten Woche besonders beachten?',
+          keywords:['zählerstand','malo','wechsel','solar','abschlag','kommunikation','kunde','einfach'],
+          ctx:'Freie Antwort — ALVA Coach gibt individuelle Rückmeldung. Die wichtigsten Punkte sollten sein: Zählerstand beim Einzug immer sofort erfassen, MaLo-ID-Pflicht bei Kündigung, Wechselrecht respektieren, Solar schwankt (wichtig für Kundenerklärung), einfach und verständlich kommunizieren.'}
+      ]
+    }
+  }
+];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let STATE = {
+  currentSection: 0,
+  currentView: 'lesson', // 'lesson' | 'quiz'
+  sectionState: {}, // per section: {lessonDone, quizDone, quizScore}
+  quizState: null
+};
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('alva_es_state');
+    if (s) STATE = JSON.parse(s);
+  } catch(e){}
+}
+function saveState() {
+  localStorage.setItem('alva_es_state', JSON.stringify(STATE));
+}
+loadState();
+
+// ══════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════
+function init() {
+  renderSidebar();
+  renderSection(STATE.currentSection);
+  updateProgress();
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar');
+  let html = '';
+  html += `<div class="sidebar-section">
+    <div class="sidebar-track">Einstieg in den Mieterstrom</div>`;
+  
+  SECTIONS.forEach((sec, i) => {
+    const ss = STATE.sectionState[i] || {};
+    const isActive = STATE.currentSection === i && STATE.currentView === 'lesson';
+    const isQuizActive = STATE.currentSection === i && STATE.currentView === 'quiz';
+    const done = ss.quizDone;
+    const quizScore = ss.quizDone ? (ss.quizScore + '/' + sec.quiz?.questions.length + ' Punkte') : 'Noch nicht gemacht';
+    const lessonStatus = ss.lessonDone ? (ss.quizDone ? '✅ Abgeschlossen' : '📝 Quiz offen') : '📖 Lerneinheit';
+    
+    html += '<div class="sidebar-item ' + (isActive?'active':'') + ' ' + (done?'done':'') + '" data-section="' + i + '" style="cursor:pointer">' +
+      '<div class="si-icon">' + sec.icon + '</div>' +
+      '<div class="si-text">' +
+        '<div class="si-title">' + (i+1) + '. ' + sec.title + '</div>' +
+        '<div class="si-sub">' + lessonStatus + '</div>' +
+      '</div>' +
+      (done ? '<div class="si-check">✓</div>' : '') +
+    '</div>';
+    if (sec.quiz) {
+      html += '<div class="sidebar-item ' + (isQuizActive?'active':'') + '" data-quiz="' + i + '" style="padding-left:40px;cursor:pointer">' +
+        '<div class="si-icon">📝</div>' +
+        '<div class="si-text">' +
+          '<div class="si-title" style="font-size:12px">Quiz — ' + sec.quiz.title + '</div>' +
+          '<div class="si-sub">' + (ss.quizDone ? quizScore : 'Noch nicht gemacht') + '</div>' +
+        '</div>' +
+      '</div>';
+    }
+  });
+  
+  html += '</div>';
+  sb.innerHTML = html;
+  
+  // Event delegation - attach once after innerHTML set
+  sb.onclick = function(e) {
+    const item = e.target.closest('[data-section]');
+    const quiz = e.target.closest('[data-quiz]');
+    if (quiz) { showQuizView(parseInt(quiz.dataset.quiz)); return; }
+    if (item) { showSection(parseInt(item.dataset.section)); return; }
+  };
+}
+
+function renderSection(idx) {
+  const sec = SECTIONS[idx];
+  STATE.currentSection = idx;
+  STATE.currentView = 'lesson';
+  
+  const main = document.getElementById('main-content');
+  document.getElementById('cert-screen').style.display = 'none';
+  
+  const ss = STATE.sectionState[idx] || {};
+  const isLast = idx === SECTIONS.length - 1;
+  const allDone = SECTIONS.every((s,i) => (STATE.sectionState[i]||{}).quizDone);
+  
+  // Nav buttons
+  let navHtml = `<div class="section-nav">
+    ${idx > 0 ? `<button class="nav-prev" onclick="showSection(${idx-1})">← ${SECTIONS[idx-1].title}</button>` : '<div></div>'}
+    ${sec.quiz ? `<button class="nav-next" onclick="showQuizView(${idx})">Quiz starten →</button>` :
+      idx < SECTIONS.length-1 ? `<button class="nav-next" onclick="showSection(${idx+1})">Weiter: ${SECTIONS[idx+1].title} →</button>` : 
+      allDone ? `<button class="nav-next" onclick="showCert()">🎓 Zertifikat ansehen</button>` : ''}
+  </div>`;
+  
+  var heroHtml = '<div class="section-hero">' +
+    '<div class="sh-track">' + (idx+1) + ' / ' + SECTIONS.length + ' — Energy Services Schulung</div>' +
+    '<div class="sh-title">' + sec.title + '</div>' +
+    '<div class="sh-sub">' + sec.subtitle + '</div>' +
+    '<div class="sh-chips">' + sec.chips.map(function(c){return '<div class="sh-chip">'+c+'</div>';}).join('') + '</div>' +
+  '</div>';
+  var bodyHtml = '<div class="content-body">' + sec.content + navHtml + '</div>';
+  var quizHtml = sec.quiz ? renderQuizSection(idx) : '';
+  main.innerHTML = heroHtml + bodyHtml + quizHtml;
+  
+  // Mark lesson as done immediately
+  if (!STATE.sectionState[idx]) STATE.sectionState[idx] = {};
+  STATE.sectionState[idx].lessonDone = true;
+  saveState();
+  renderSidebar();
+  updateProgress();
+  window.scrollTo(0,0);
+}
+
+function renderQuizSection(idx) {
+  const sec = SECTIONS[idx];
+  const ss = STATE.sectionState[idx] || {};
+  
+  return `<div class="quiz-view" id="quiz-section-${idx}" style="display:none">
+    <div class="quiz-header">
+      <div class="qh-title">📝 ${sec.quiz.title}</div>
+      <div class="qh-sub">${sec.quiz.questions.length} Fragen · ALVA Coach gibt Feedback zu jeder Antwort</div>
+      <div class="qh-prog">
+        <div class="qh-prog-bar"><div class="qh-prog-fill" id="qpf-${idx}" style="width:0%"></div></div>
+        <div class="qh-prog-text" id="qpt-${idx}">0 / ${sec.quiz.questions.length}</div>
+      </div>
+    </div>
+    <div id="quiz-body-${idx}" class="quiz-body"></div>
+  </div>`;
+}
+
+function showQuizView(idx) {
+  STATE.currentView = 'quiz';
+  // Always mark lesson as done when quiz is accessed
+  if (!STATE.sectionState[idx]) STATE.sectionState[idx] = {};
+  STATE.sectionState[idx].lessonDone = true;
+  saveState();
+  // Re-render section if not current
+  if (STATE.currentSection !== idx) {
+    renderSection(idx);
+  }
+  renderSidebar();
+  const qv = document.getElementById('quiz-section-' + idx);
+  if (!qv) { renderSection(idx); setTimeout(()=>showQuizView(idx), 150); return; }
+  qv.style.display = 'block';
+  STATE.quizState = {idx, qi:0, score:0, hist:{}};
+  renderQuestion(idx);
+  setTimeout(()=>qv.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+}
+
+let tfAnswers = {};
+function renderQuestion(idx) {
+  const sec = SECTIONS[idx];
+  const qs = STATE.quizState;
+  const q = sec.quiz.questions[qs.qi];
+  const total = sec.quiz.questions.length;
+  const pct = ((qs.qi+1)/total)*100;
+  
+  document.getElementById(`qpf-${idx}`).style.width = pct+'%';
+  document.getElementById(`qpt-${idx}`).textContent = `${qs.qi+1} / ${total}`;
+  
+  const body = document.getElementById(`quiz-body-${idx}`);
+  body.innerHTML = `
+    <div class="q-num">Frage ${qs.qi+1} von ${total}</div>
+    <div class="q-text">${q.text}</div>
+    ${renderQBody(q)}
+    <div class="ai-panel" id="aip-${idx}">
+      <div class="ai-head"><div class="ai-dot"></div><div class="ai-lbl">ALVA Coach</div></div>
+      <div class="ai-msgs" id="aim-${idx}"></div>
+      <div class="ai-inp-row">
+        <input class="ai-inp" id="ai-in-${idx}" placeholder="Rückfrage stellen..." onkeydown="if(event.key==='Enter')followup(${idx})"/>
+        <button class="ai-sbtn" id="ai-sb-${idx}" onclick="followup(${idx})">↑</button>
+      </div>
+    </div>
+    <div class="quiz-actions">
+      <button class="check-btn" id="chk-${idx}" onclick="checkAnswer(${idx})">Antwort prüfen →</button>
+      <button class="next-q-btn" id="nxt-${idx}" onclick="nextQuestion(${idx})">${qs.qi+1<total?'Nächste Frage →':'Ergebnis ansehen 🎓'}</button>
+    </div>`;
+}
+
+function renderQBody(q) {
+  if (q.type==='mc') return `<div class="opts">${q.options.map((o,i)=>`<button class="opt" data-i="${i}" onclick="selOpt(this)"><span class="opt-l">${'ABCD'[i]}</span>${o}</button>`).join('')}</div>`;
+  if (q.type==='open') return `<p class="q-hint">Schreib in eigenen Worten — ALVA Coach gibt dir ausführliches, persönliches Feedback.</p><textarea class="qta" id="qta" placeholder="Deine Antwort hier..."></textarea>`;
+  if (q.type==='tf') {
+    tfAnswers={};
+    return `<div class="tfl">${q.statements.map((s,si)=>`<div class="tfi"><div class="tfs">${s.text}</div><div class="tfbs"><button class="tfb" data-si="${si}" data-v="1" onclick="selTF(this)">✅ Wahr</button><button class="tfb" data-si="${si}" data-v="0" onclick="selTF(this)">❌ Falsch</button></div></div>`).join('')}</div>`;
+  }
+}
+
+function selOpt(btn){document.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+function selTF(btn){const si=btn.dataset.si;btn.closest('.tfbs').querySelectorAll('.tfb').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');tfAnswers[si]=btn.dataset.v==='1';}
+
+function checkAnswer(idx) {
+  const sec = SECTIONS[idx];
+  const qs = STATE.quizState;
+  const q = sec.quiz.questions[qs.qi];
+  let ua='', ok=false;
+  
+  if(q.type==='mc'){
+    const s=document.querySelector('.opt.sel');if(!s){showToast('Bitte wähle eine Antwort!');return;}
+    const i=parseInt(s.dataset.i);document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+    if(i===q.correct){s.classList.add('correct');ok=true;qs.score++;}
+    else{s.classList.add('wrong');document.querySelectorAll('.opt')[q.correct].classList.add('correct');}
+    ua=`Option ${'ABCD'[i]}: ${q.options[i]}`;
+  }
+  if(q.type==='open'){
+    const v=document.getElementById('qta')?.value?.trim();if(!v){showToast('Bitte schreib eine Antwort!');return;}
+    document.getElementById('qta').disabled=true;
+    ok=q.keywords.filter(k=>v.toLowerCase().includes(k)).length>=Math.max(1,Math.ceil(q.keywords.length*.22));
+    if(ok)qs.score++;ua=v;
+  }
+  if(q.type==='tf'){
+    if(Object.keys(tfAnswers).length<q.statements.length){showToast('Beantworte alle Aussagen!');return;}
+    let c=0;
+    document.querySelectorAll('.tfi').forEach((item,si)=>{
+      const btns=item.querySelectorAll('.tfb');btns.forEach(b=>{b.disabled=true;b.classList.remove('sel');});
+      const ui=tfAnswers[si]?0:1,ci=q.statements[si].answer?0:1;
+      if(tfAnswers[si]===q.statements[si].answer){btns[ui].classList.add('correct');c++;}
+      else{btns[ui].classList.add('wrong');btns[ci].classList.add('reveal');}
+    });
+    ok=c===q.statements.length;if(ok)qs.score++;
+    ua=q.statements.map((s,si)=>`"${s.text}" → ${tfAnswers[si]?'Wahr':'Falsch'}`).join(' | ');
+  }
+  
+  document.getElementById(`chk-${idx}`).style.display='none';
+  document.getElementById(`nxt-${idx}`).className='next-q-btn show';
+  askCoach(idx, q, ua, ok);
+}
+
+async function askCoach(idx, q, answer, ok) {
+  document.getElementById(`aip-${idx}`).className='ai-panel show';
+  const prompt=`Du bist ALVA Coach — Lerncoach für neue Customer Support Mitarbeiter bei ALVA Energie (Mieterstrom, Energiewirtschaft).
+
+Hintergrund & korrekte Antwort: ${q.ctx}
+
+Antwort des Lernenden: "${answer}"
+Bewertet als: ${ok?'RICHTIG ✅':'FALSCH ❌'}
+
+Gib konkretes, lehrreiches Feedback (150-200 Wörter):
+1. Direkt sagen ob richtig oder falsch
+2. WARUM — konkretes Fachwissen aus dem Strommarkt
+3. Was bedeutet das konkret im ALVA Customer Support Alltag?
+4. Merkhilfe wenn hilfreich
+
+Ton: direkt, freundlich-professionell, konkret. Auf Deutsch. Kein Fachjargon ohne Erklärung.`;
+
+  if(!qs_hist[qs_key(idx)]) qs_hist[qs_key(idx)] = [];
+  qs_hist[qs_key(idx)].push({role:'user',content:prompt});
+  
+  const tid='T'+Date.now();
+  addCoachMsg(idx,'<div class="typing"><span></span><span></span><span></span></div>',tid,'coach');
+  
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:'Du bist ALVA Coach für neue ALVA Energie Mitarbeiter. Erkläre Mieterstrom und Energiewirtschaft verständlich, direkt und praxisnah. Auf Deutsch.',
+        messages:qs_hist[qs_key(idx)]})});
+    const d=await r.json();
+    const reply=d.content?.find(c=>c.type==='text')?.text||'Verbindungsfehler.';
+    document.getElementById(tid)?.remove();
+    addCoachMsg(idx,reply.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>'),'','coach');
+    qs_hist[qs_key(idx)].push({role:'assistant',content:reply});
+  }catch(e){document.getElementById(tid)?.remove();addCoachMsg(idx,'⚠️ Verbindungsfehler. Internetverbindung prüfen.','','coach');}
+}
+
+const qs_hist = {};
+function qs_key(idx) { return `${idx}_${STATE.quizState?.qi||0}`; }
+
+async function followup(idx) {
+  const inp=document.getElementById(`ai-in-${idx}`),msg=inp.value.trim();
+  if(!msg)return;inp.value='';document.getElementById(`ai-sb-${idx}`).disabled=true;
+  addCoachMsg(idx,msg,'','user');
+  const key=qs_key(idx);
+  if(!qs_hist[key])qs_hist[key]=[];
+  qs_hist[key].push({role:'user',content:msg});
+  const tid='T'+Date.now();
+  addCoachMsg(idx,'<div class="typing"><span></span><span></span><span></span></div>',tid,'coach');
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:'Du bist ALVA Coach für neue ALVA Energie Mitarbeiter. Auf Deutsch.',
+        messages:qs_hist[key]})});
+    const d=await r.json();
+    const reply=d.content?.find(c=>c.type==='text')?.text||'Fehler.';
+    document.getElementById(tid)?.remove();
+    addCoachMsg(idx,reply.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>'),'','coach');
+    qs_hist[key].push({role:'assistant',content:reply});
+  }catch(e){document.getElementById(tid)?.remove();addCoachMsg(idx,'⚠️ Verbindungsfehler.','','coach');}
+  document.getElementById(`ai-sb-${idx}`).disabled=false;
+}
+
+function addCoachMsg(idx, html, id, role) {
+  const el=document.createElement('div');el.className=`aimsg ${role}`;if(id)el.id=id;
+  el.innerHTML=`<div class="aimsg-av">${role==='coach'?'A':'👤'}</div><div class="aimsg-bub">${html}</div>`;
+  const msgs=document.getElementById(`aim-${idx}`);if(msgs){msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;}
+}
+
+function nextQuestion(idx) {
+  const sec = SECTIONS[idx];
+  const qs = STATE.quizState;
+  const total = sec.quiz.questions.length;
+  
+  if (qs.qi+1 >= total) {
+    showQuizScore(idx);
+  } else {
+    qs.qi++;
+    tfAnswers={};
+    renderQuestion(idx);
+    document.getElementById(`quiz-section-${idx}`).scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+function showQuizScore(idx) {
+  const sec = SECTIONS[idx];
+  const qs = STATE.quizState;
+  const total = sec.quiz.questions.length;
+  const pct = qs.score/total;
+  
+  // Save
+  if (!STATE.sectionState[idx]) STATE.sectionState[idx] = {};
+  STATE.sectionState[idx].quizDone = true;
+  STATE.sectionState[idx].quizScore = qs.score;
+  STATE.sectionState[idx].lessonDone = true;
+  saveState();
+  renderSidebar();
+  updateProgress();
+  
+  let em, title, sub;
+  if(pct===1){em='🏆';title='Perfekt!';sub='Alle Fragen richtig — ausgezeichnete Leistung!';}
+  else if(pct>=.75){em='✅';title='Sehr gut!';sub='Starke Leistung — du bist gut vorbereitet!';}
+  else if(pct>=.5){em='👍';title='Gut gemacht!';sub='Solide Basis — lies das Kapitel nochmal wenn du magst.';}
+  else{em='📖';title='Nochmal üben!';sub='Kein Problem — geh nochmal durch die Lerneinheit.';}
+  
+  const allDone = SECTIONS.every((s,i) => (STATE.sectionState[i]||{}).quizDone);
+  const nextIdx = idx+1;
+  const hasNext = nextIdx < SECTIONS.length;
+  
+  document.getElementById(`quiz-body-${idx}`).innerHTML = `
+    <div class="score-wrap">
+      <div class="score-em">${em}</div>
+      <div class="score-h">${title}</div>
+      <div class="score-sub">${sub}</div>
+      <div class="score-big">${qs.score}</div>
+      <div class="score-of">von ${total} Punkten — ${sec.quiz.title}</div>
+      <div class="score-btns">
+        ${allDone ? `<button class="score-next" onclick="showCert()">🎓 Zertifikat ansehen</button>` :
+          hasNext ? `<button class="score-next" onclick="showSection(${nextIdx})">Nächstes Kapitel →</button>` :
+          `<button class="score-next" onclick="showSection(0)">Zum Anfang</button>`}
+        <button class="score-retry" onclick="retryQuiz(${idx})">Wiederholen</button>
+      </div>
+    </div>`;
+}
+
+function retryQuiz(idx) {
+  STATE.quizState = {idx, qi:0, score:0, hist:{}};
+  renderQuestion(idx);
+}
+
+function showSection(idx) {
+  document.getElementById('cert-screen').style.display = 'none';
+  document.getElementById('main-content').style.display = 'block';
+  renderSection(idx);
+  window.scrollTo(0,0);
+}
+
+function showCert() {
+  document.getElementById('main-content').style.display = 'none';
+  document.getElementById('cert-screen').style.display = 'block';
+  window.scrollTo(0,0);
+  
+  const name = prompt('Dein Name für das Zertifikat:') || 'ALVA Mitarbeiter*in';
+  const today = new Date();
+  const dateStr = today.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const totalScore = SECTIONS.reduce((a,s,i)=>{const ss=STATE.sectionState[i]||{};return a+(ss.quizScore||0);},0);
+  const maxScore = SECTIONS.reduce((a,s)=>a+(s.quiz?s.quiz.questions.length:0),0);
+  const pct = Math.round((totalScore/maxScore)*100);
+  
+  document.getElementById('cert-card').innerHTML = `
+    <div class="cert-top">
+      <div class="cert-logo-row"><div class="cert-mark"></div><div class="cert-wm">ALVA Akademie</div></div>
+      <div class="cert-ey">Schulungszertifikat · Energy Services</div>
+      <div class="cert-title">Einstieg in den <span class="hl">B2C Strommarkt</span><br>& <span class="hl">Mieterstrom</span></div>
+    </div>
+    <div class="cert-body">
+      <div class="cert-pres">Hiermit bestätigen wir, dass</div>
+      <div class="cert-name">${name}</div>
+      <div class="cert-details">
+        <div><div class="cert-dl">Abschlussdatum</div><div class="cert-dv">${dateStr}</div></div>
+        <div><div class="cert-dl">Module</div><div class="cert-dv">${SECTIONS.length} / ${SECTIONS.length}</div></div>
+        <div><div class="cert-dl">Punkte</div><div class="cert-dv">${totalScore} / ${maxScore} (${pct}%)</div></div>
+      </div>
+      <div class="cert-modules">
+        <div class="cert-modules-title">Abgeschlossene Module</div>
+        <div class="cert-mod-list">
+          ${SECTIONS.map(s=>`<div class="cert-mod-item"><div class="cert-mod-check">✓</div>${s.icon} ${s.title}</div>`).join('')}
+        </div>
+      </div>
+      <div class="cert-footer">
+        <div>
+          <div class="cert-sig-line"></div>
+          <div class="cert-sig-name">ALVA Energie GmbH</div>
+          <div class="cert-sig-sub">ALVA Akademie · Energy Services Onboarding</div>
+        </div>
+        <div class="cert-seal"><div class="cert-seal-t">ALVA<br>AKADEMIE</div><div class="cert-seal-y">${today.getFullYear()}</div></div>
+      </div>
+    </div>`;
+}
+
+function updateProgress() {
+  const total = SECTIONS.filter(s=>s.quiz).length;
+  const done = SECTIONS.filter((s,i)=>s.quiz&&(STATE.sectionState[i]||{}).quizDone).length;
+  const pct = Math.round((done/total)*100);
+  document.getElementById('topbar-prog').style.width = pct+'%';
+  document.getElementById('topbar-text').innerHTML = `<strong>${pct}%</strong>`;
+}
+
+function showToast(msg) {
+  const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+  clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',2500);
+}
+
+document.addEventListener("DOMContentLoaded", function() { init(); });
+</script>
+</body>
+</html>

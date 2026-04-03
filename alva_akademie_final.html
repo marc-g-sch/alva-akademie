@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALVA Akademie — Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#0F1F3D;
+  --navy2:#162848;
+  --navy3:#1E3A5F;
+  --yellow:#FFFF00;
+  --white:#FFFFFF;
+  --grey:#F3F3F3;
+  --grey2:#E8E8E8;
+  --mid:#7A8A9A;
+  --dark:#1A2A3A;
+  --border:#D8E0E8;
+  --ok:#22C55E;
+  --ok-bg:#F0FDF4;
+  --err:#EF4444;
+  --err-bg:#FEF2F2;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+/* LOGIN */
+#screen-login{display:none;min-height:100vh;background:var(--navy);}
+.login-grid{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+.login-l{background:var(--navy);padding:56px;display:flex;flex-direction:column;justify-content:space-between;}
+.login-logo{display:flex;align-items:center;gap:10px;}
+.alva-mark{width:28px;height:28px;background:var(--yellow);clip-path:polygon(50% 0%,0% 100%,100% 100%);flex-shrink:0;}
+.alva-wordmark{font-size:18px;font-weight:900;color:var(--white);letter-spacing:-.03em;}
+.login-hero{flex:1;display:flex;flex-direction:column;justify-content:center;padding:60px 0;}
+.login-eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--yellow);margin-bottom:18px;}
+.login-h1{font-size:clamp(34px,4.5vw,56px);font-weight:900;line-height:1.05;letter-spacing:-.04em;color:var(--white);margin-bottom:18px;}
+.login-h1 .hl{color:var(--yellow);}
+.login-sub{font-size:16px;color:rgba(255,255,255,.45);line-height:1.6;max-width:400px;font-weight:300;}
+.login-stats{display:flex;gap:32px;}
+.lstat-n{font-size:28px;font-weight:900;color:var(--yellow);letter-spacing:-.03em;}
+.lstat-l{font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;font-weight:500;}
+.login-r{background:var(--white);display:flex;align-items:center;justify-content:center;padding:56px;}
+.login-card{width:100%;max-width:380px;}
+.login-card-title{font-size:24px;font-weight:900;letter-spacing:-.03em;margin-bottom:8px;color:var(--navy);}
+.login-card-sub{font-size:14px;color:var(--mid);margin-bottom:28px;line-height:1.5;}
+.login-input{width:100%;padding:14px 16px;font-size:15px;font-family:'Inter',sans-serif;border:1.5px solid var(--border);border-radius:6px;outline:none;transition:border-color .14s;margin-bottom:10px;color:var(--dark);}
+.login-input:focus{border-color:var(--navy);}
+.login-btn{width:100%;padding:16px;background:var(--navy);color:var(--white);border:none;border-radius:6px;font-size:15px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .18s;letter-spacing:-.01em;}
+.login-btn:hover{background:var(--yellow);color:var(--navy);}
+.login-err{margin-top:10px;padding:12px;background:var(--err-bg);border-radius:6px;font-size:13px;color:var(--err);display:none;}
+.login-note{margin-top:16px;font-size:12px;color:var(--mid);text-align:center;line-height:1.5;}
+@media(max-width:768px){.login-grid{grid-template-columns:1fr;}.login-l{min-height:50vh;padding:36px 24px;}.login-r{padding:36px 24px;}}
+
+/* TOPBAR */
+#screen-app{display:none;}
+.topbar{background:var(--navy);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:500;}
+.tb-l{display:flex;align-items:center;gap:8px;}
+.tb-mark{width:20px;height:20px;background:var(--yellow);clip-path:polygon(50% 0%,0% 100%,100% 100%);flex-shrink:0;}
+.tb-name{font-size:14px;font-weight:900;color:var(--white);letter-spacing:-.02em;}
+.tb-sep{width:1px;height:14px;background:rgba(255,255,255,.15);margin:0 8px;}
+.tb-sub{font-size:12px;color:rgba(255,255,255,.35);font-weight:500;}
+.tb-r{display:flex;align-items:center;gap:12px;}
+.tb-prog{font-size:12px;color:rgba(255,255,255,.35);font-weight:500;}
+.tb-prog strong{color:var(--yellow);}
+.tb-av-fb{width:30px;height:30px;border-radius:50%;background:var(--yellow);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;}
+.tb-out{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);font-size:12px;font-family:'Inter',sans-serif;font-weight:600;padding:5px 11px;border-radius:5px;cursor:pointer;transition:all .14s;}
+.tb-out:hover{border-color:rgba(255,255,255,.4);color:white;}
+
+/* HOME HERO */
+.home-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%);padding:72px 32px 96px;position:relative;overflow:hidden;}
+.home-hero::before{content:'';position:absolute;top:-100px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,0,.06) 0%,transparent 70%);pointer-events:none;}
+.hero-in{max-width:1100px;margin:0 auto;}
+.hero-ey{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--yellow);margin-bottom:18px;}
+.hero-h1{font-size:clamp(30px,5vw,60px);font-weight:900;letter-spacing:-.04em;line-height:1.05;color:var(--white);margin-bottom:16px;}
+.hero-h1 .hl{background:var(--yellow);color:var(--navy);padding:0 6px;display:inline-block;}
+.hero-p{font-size:16px;color:rgba(255,255,255,.45);max-width:560px;line-height:1.6;font-weight:300;margin-bottom:40px;}
+.hero-chips{display:flex;gap:10px;flex-wrap:wrap;}
+.chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);font-size:12px;font-weight:600;padding:7px 14px;border-radius:99px;}
+.chip.y{background:var(--yellow);border-color:var(--yellow);color:var(--navy);}
+
+/* HOME BODY */
+.home-body{max-width:1100px;margin:-44px auto 0;padding:0 32px 80px;position:relative;z-index:2;}
+.overall-bar-wrap{background:rgba(0,0,0,.06);border-radius:2px;height:3px;margin-bottom:44px;overflow:hidden;}
+.overall-bar-fill{height:100%;background:var(--yellow);transition:width .6s ease;}
+
+.section-group{margin-bottom:52px;}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--mid);margin-bottom:4px;}
+.section-h{font-size:22px;font-weight:900;letter-spacing:-.03em;margin-bottom:16px;color:var(--navy);}
+.section-divider{height:2px;background:var(--border);margin-bottom:20px;}
+
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+
+/* Chapter cards */
+.ch-card{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:22px;cursor:pointer;transition:all .16s;position:relative;overflow:hidden;}
+.ch-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;transition:background .16s;}
+.ch-card:hover:not(.locked):not(.placeholder-card){border-color:var(--navy);box-shadow:0 4px 18px rgba(15,31,61,.1);}
+.ch-card:hover:not(.locked):not(.placeholder-card)::before{background:var(--yellow);}
+.ch-card.done{background:var(--navy);border-color:var(--navy);}
+.ch-card.done::before{background:var(--yellow);}
+.ch-card.locked{opacity:.38;cursor:not-allowed;}
+.ch-card.placeholder-card{background:var(--grey);border-style:dashed;cursor:default;}
+
+.ch-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.ch-num{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);}
+.ch-card.done .ch-num{color:rgba(255,255,255,.35);}
+.ch-icon-big{font-size:22px;}
+.ch-title{font-size:15px;font-weight:800;letter-spacing:-.02em;margin-bottom:4px;line-height:1.2;color:var(--navy);}
+.ch-card.done .ch-title{color:var(--white);}
+.ch-sub{font-size:12.5px;color:var(--mid);line-height:1.4;}
+.ch-card.done .ch-sub{color:rgba(255,255,255,.35);}
+.ch-foot{margin-top:16px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.ch-card.done .ch-foot{border-color:rgba(255,255,255,.1);}
+.ch-score{font-size:12px;font-weight:600;color:var(--mid);}
+.ch-card.done .ch-score{color:rgba(255,255,255,.4);}
+.ch-cta{font-size:11px;font-weight:800;background:var(--yellow);color:var(--navy);padding:5px 11px;border-radius:3px;letter-spacing:.03em;}
+
+/* Deep dive cards */
+.deep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.deep-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:24px;cursor:pointer;transition:all .16s;text-align:center;}
+.deep-card:hover{border-color:var(--navy);transform:translateY(-2px);box-shadow:0 8px 24px rgba(15,31,61,.1);}
+.deep-card.active{border-color:var(--yellow);background:var(--navy);}
+.deep-card.active .deep-name{color:var(--white);}
+.deep-card.active .deep-sub{color:rgba(255,255,255,.4);}
+.deep-card.coming{opacity:.45;cursor:default;}
+.deep-card.coming:hover{transform:none;box-shadow:none;border-color:var(--border);}
+.deep-icon{font-size:36px;margin-bottom:12px;}
+.deep-name{font-size:14px;font-weight:800;letter-spacing:-.01em;margin-bottom:4px;color:var(--navy);}
+.deep-sub{font-size:11.5px;color:var(--mid);line-height:1.4;}
+.deep-badge{font-size:10px;font-weight:700;background:var(--yellow);color:var(--navy);padding:3px 8px;border-radius:99px;margin-top:8px;display:inline-block;}
+.deep-badge.coming-badge{background:var(--grey2);color:var(--mid);}
+
+/* Cert banner */
+.cert-banner{margin-top:36px;background:var(--navy);border-radius:8px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.cert-banner-ey{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-bottom:6px;}
+.cert-banner-h{font-size:20px;font-weight:900;color:var(--white);letter-spacing:-.02em;}
+.cert-banner-sub{font-size:13px;color:rgba(255,255,255,.4);margin-top:3px;}
+.cert-show-btn{background:var(--yellow);color:var(--navy);border:none;border-radius:6px;padding:14px 24px;font-size:13px;font-family:'Inter',sans-serif;font-weight:800;cursor:pointer;white-space:nowrap;transition:opacity .15s;}
+.cert-show-btn:hover{opacity:.88;}
+
+/* SCREEN */
+.screen{display:none;}
+.screen.active{display:block;}
+.subbar{background:var(--white);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;align-items:center;gap:12px;position:sticky;top:60px;z-index:100;}
+.back-btn{background:none;border:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--mid);font-family:'Inter',sans-serif;display:flex;align-items:center;gap:4px;padding:5px 0;transition:color .13s;}
+.back-btn:hover{color:var(--navy);}
+.bc strong{font-size:13px;color:var(--navy);}
+
+/* LESSON */
+.lesson-wrap{max-width:760px;margin:0 auto;padding:52px 32px 100px;}
+.lbadge{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;padding:5px 11px;border-radius:3px;margin-bottom:18px;}
+.lbadge.t1{background:var(--yellow);color:var(--navy);}
+.lbadge.t2{background:var(--navy);color:var(--yellow);}
+.lbadge.t3{background:var(--grey2);color:var(--dark);}
+.lbadge.t4{background:var(--navy);color:var(--yellow);border:1px solid var(--yellow);}
+.lh1{font-size:clamp(26px,4vw,42px);font-weight:900;letter-spacing:-.04em;line-height:1.06;margin-bottom:14px;color:var(--navy);}
+.lintro{font-size:17px;color:var(--mid);line-height:1.65;border-left:3px solid var(--yellow);padding-left:16px;margin-bottom:44px;font-weight:300;}
+.lsec{margin-bottom:44px;}
+.lh2{font-size:19px;font-weight:800;letter-spacing:-.03em;margin-bottom:14px;display:flex;align-items:center;gap:10px;color:var(--navy);}
+.lh2::before{content:'';display:block;width:4px;height:18px;background:var(--yellow);border-radius:2px;flex-shrink:0;}
+.lp{font-size:15.5px;line-height:1.75;color:#2A3A4A;margin-bottom:13px;}
+.kt{background:var(--yellow);color:var(--navy);padding:1px 5px;border-radius:3px;font-weight:700;font-size:.92em;}
+
+/* Callouts */
+.callout{border-radius:6px;padding:16px 18px;margin:18px 0;display:flex;gap:12px;border-left:3px solid;}
+.ci{font-size:19px;flex-shrink:0;margin-top:1px;}
+.cb{flex:1;}
+.ct{font-weight:700;font-size:13.5px;margin-bottom:4px;}
+.cx{font-size:13.5px;line-height:1.65;}
+.callout.tip{background:#FFFDE7;border-color:var(--yellow);}
+.callout.tip .ct{color:#7A6000;} .callout.tip .cx{color:#5A4000;}
+.callout.eg{background:var(--ok-bg);border-color:var(--ok);}
+.callout.eg .ct{color:#166534;} .callout.eg .cx{color:#14532D;}
+.callout.warn{background:#FFF7ED;border-color:#F97316;}
+.callout.warn .ct{color:#9A3412;} .callout.warn .cx{color:#7C2D12;}
+.callout.dark{background:var(--navy);border-color:var(--yellow);}
+.callout.dark .ct{color:var(--yellow);} .callout.dark .cx{color:rgba(255,255,255,.75);}
+.callout.info{background:var(--grey);border-color:var(--navy);}
+.callout.info .ct{color:var(--navy);} .callout.info .cx{color:#2A3A4A;}
+
+/* Defs */
+.defs{display:flex;flex-direction:column;gap:1px;margin:14px 0;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;}
+.def{display:grid;grid-template-columns:155px 1fr;background:var(--white);}
+.def:nth-child(odd){background:var(--grey);}
+.dt{font-size:13px;font-weight:700;padding:13px 15px;border-right:1px solid var(--border);color:var(--navy);}
+.dd{font-size:13.5px;line-height:1.65;padding:13px 15px;color:#2A3A4A;}
+@media(max-width:560px){.def{grid-template-columns:1fr;}.dt{border-right:none;border-bottom:1px solid var(--border);padding-bottom:6px;}}
+
+/* Flow */
+.flow{display:flex;flex-direction:column;margin:14px 0;}
+.fstep{display:flex;gap:14px;padding-bottom:22px;}
+.fstep:last-child{padding-bottom:0;}
+.fstep-l{display:flex;flex-direction:column;align-items:center;}
+.fnum{width:30px;height:30px;border-radius:50%;background:var(--yellow);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0;}
+.fline{width:2px;flex:1;background:var(--border);margin-top:5px;}
+.fstep:last-child .fline{display:none;}
+.fcontent{padding-top:4px;flex:1;}
+.ftitle{font-size:14.5px;font-weight:700;margin-bottom:3px;letter-spacing:-.01em;color:var(--navy);}
+.fdesc{font-size:13px;color:var(--mid);line-height:1.55;}
+
+/* Source grid */
+.src-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px;margin:14px 0;}
+.src-card{border:1.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;background:var(--white);}
+.src-card.green{border-color:var(--ok);background:var(--ok-bg);}
+.src-card.grey2{border-color:#D4C5A0;background:#FAF8F3;}
+.src-icon{font-size:26px;margin-bottom:6px;}
+.src-name{font-size:12.5px;font-weight:700;margin-bottom:2px;color:var(--navy);}
+.src-desc{font-size:11px;color:var(--mid);line-height:1.4;}
+
+/* Stat boxes */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:16px 0;}
+.stat-box{background:var(--navy);border-radius:8px;padding:18px;text-align:center;}
+.stat-n{font-size:28px;font-weight:900;color:var(--yellow);letter-spacing:-.03em;margin-bottom:4px;}
+.stat-l{font-size:12px;color:rgba(255,255,255,.5);line-height:1.4;}
+
+/* Org chart */
+.org{display:flex;flex-direction:column;align-items:center;gap:0;margin:20px 0;}
+.org-top{background:var(--navy);color:var(--white);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:800;text-align:center;}
+.org-top span{font-size:11px;color:rgba(255,255,255,.5);display:block;margin-top:2px;}
+.org-line{width:2px;height:24px;background:var(--border);margin:0 auto;}
+.org-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.org-branch{display:flex;flex-direction:column;align-items:center;gap:0;}
+.org-node{background:var(--grey);border:1.5px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:700;text-align:center;color:var(--navy);}
+.org-node span{font-size:11px;color:var(--mid);display:block;margin-top:2px;font-weight:400;}
+.org-node.highlight{background:var(--yellow);border-color:var(--yellow);color:var(--navy);}
+.org-node.moving{background:#FFF7ED;border-color:#F97316;}
+
+/* Dept cards */
+.dept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:16px 0;}
+.dept-card{border:1.5px solid var(--border);border-radius:8px;padding:16px;background:var(--white);}
+.dept-icon{font-size:24px;margin-bottom:8px;}
+.dept-name{font-size:14px;font-weight:800;letter-spacing:-.01em;margin-bottom:4px;color:var(--navy);}
+.dept-desc{font-size:12px;color:var(--mid);line-height:1.4;}
+.dept-card.focus{border-color:var(--yellow);background:#FFFDE7;}
+
+/* Lesson next */
+.lnext{margin-top:52px;background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:16px 32px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .16s;display:inline-flex;align-items:center;gap:8px;letter-spacing:-.01em;}
+.lnext:hover{background:var(--yellow);color:var(--navy);}
+
+/* QUIZ */
+.quiz-wrap{max-width:760px;margin:0 auto;padding:44px 32px 100px;}
+.qprog-wrap{margin-bottom:32px;}
+.qprog-top{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--mid);margin-bottom:9px;text-transform:uppercase;letter-spacing:.08em;}
+.qprog-top strong{color:var(--navy);}
+.qprog-bar{background:var(--border);border-radius:2px;height:3px;overflow:hidden;}
+.qprog-fill{height:100%;background:var(--yellow);transition:width .4s;}
+.qcard{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:28px;margin-bottom:14px;}
+.qnum{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--mid);margin-bottom:10px;}
+.qtext{font-size:19px;font-weight:800;letter-spacing:-.03em;line-height:1.25;margin-bottom:22px;color:var(--navy);}
+.qhint{font-size:13px;color:var(--mid);margin-bottom:16px;font-style:italic;}
+.opts{display:flex;flex-direction:column;gap:8px;}
+.opt{background:var(--grey);border:1.5px solid transparent;border-radius:6px;padding:13px 16px;font-size:14px;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;text-align:left;transition:all .12s;display:flex;align-items:center;gap:11px;color:var(--dark);}
+.opt-l{width:26px;height:26px;border-radius:4px;background:var(--white);border:1.5px solid var(--border);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s;color:var(--mid);}
+.opt:hover:not(:disabled){border-color:var(--navy);background:var(--white);}
+.opt:hover:not(:disabled) .opt-l{background:var(--navy);color:var(--yellow);border-color:var(--navy);}
+.opt.sel{border-color:var(--navy);background:var(--white);}
+.opt.sel .opt-l{background:var(--navy);color:var(--yellow);border-color:var(--navy);}
+.opt.correct{border-color:var(--ok);background:var(--ok-bg);}
+.opt.correct .opt-l{background:var(--ok);color:white;border-color:var(--ok);}
+.opt.wrong{border-color:var(--err);background:var(--err-bg);}
+.opt.wrong .opt-l{background:var(--err);color:white;border-color:var(--err);}
+.opt:disabled{cursor:default;}
+.qta{width:100%;background:var(--grey);border:1.5px solid transparent;border-radius:6px;padding:14px;font-size:14.5px;font-family:'Inter',sans-serif;color:var(--dark);resize:vertical;min-height:110px;outline:none;transition:border-color .12s;}
+.qta:focus{border-color:var(--navy);background:var(--white);}
+.qta:disabled{opacity:.65;}
+.tfl{display:flex;flex-direction:column;gap:8px;}
+.tfi{background:var(--grey);border-radius:6px;padding:14px;}
+.tfs{font-size:14px;font-weight:600;margin-bottom:9px;line-height:1.4;letter-spacing:-.01em;color:var(--navy);}
+.tfbs{display:flex;gap:7px;}
+.tfb{flex:1;padding:9px;background:var(--white);border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .12s;color:var(--mid);}
+.tfb:hover:not(:disabled){border-color:var(--navy);color:var(--navy);}
+.tfb.sel{border-color:var(--navy);color:var(--navy);background:var(--white);}
+.tfb.correct{border-color:var(--ok);color:var(--ok);background:var(--ok-bg);}
+.tfb.wrong{border-color:var(--err);color:var(--err);background:var(--err-bg);}
+.tfb.reveal{border-color:var(--ok);color:var(--ok);background:var(--ok-bg);}
+.tfb:disabled{cursor:default;}
+
+/* AI Panel */
+.ai-panel{background:var(--navy);border-radius:8px;overflow:hidden;margin-bottom:14px;display:none;}
+.ai-panel.show{display:block;}
+.ai-head{padding:11px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:9px;}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:var(--yellow);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.ai-lbl{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--yellow);}
+.ai-msgs{padding:16px 18px;max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:11px;}
+.aimsg{display:flex;gap:9px;}
+.aimsg-av{width:26px;height:26px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;font-weight:900;}
+.aimsg.claude .aimsg-av{background:var(--yellow);color:var(--navy);}
+.aimsg.user .aimsg-av{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);}
+.aimsg-bub{font-size:13.5px;line-height:1.68;color:rgba(255,255,255,.85);flex:1;padding-top:3px;}
+.aimsg.user .aimsg-bub{color:rgba(255,255,255,.45);}
+.typing{display:flex;gap:4px;padding-top:7px;}
+.typing span{width:5px;height:5px;background:var(--yellow);border-radius:50%;animation:bounce 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.2s;} .typing span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
+.ai-inp-row{border-top:1px solid rgba(255,255,255,.07);padding:11px 18px;display:flex;gap:8px;}
+.ai-inp{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:8px 12px;color:white;font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .13s;}
+.ai-inp:focus{border-color:var(--yellow);}
+.ai-inp::placeholder{color:rgba(255,255,255,.22);}
+.ai-sbtn{background:var(--yellow);border:none;border-radius:5px;width:36px;height:36px;color:var(--navy);font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity .12s;flex-shrink:0;}
+.ai-sbtn:hover{opacity:.85;} .ai-sbtn:disabled{opacity:.3;cursor:default;}
+
+.qactions{display:flex;gap:9px;margin-top:14px;}
+.check-btn{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:14px 26px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .13s;flex:1;letter-spacing:-.01em;}
+.check-btn:hover{background:var(--yellow);color:var(--navy);}
+.check-btn:disabled{opacity:.4;cursor:default;}
+.next-btn{background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:6px;padding:14px 26px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .13s;display:none;letter-spacing:-.01em;}
+.next-btn.show{display:block;}
+.next-btn:hover{border-color:var(--navy);}
+
+/* SCORE */
+.score-wrap{max-width:580px;margin:0 auto;padding:68px 32px;text-align:center;}
+.score-em{font-size:60px;margin-bottom:18px;}
+.score-h{font-size:34px;font-weight:900;letter-spacing:-.04em;margin-bottom:7px;color:var(--navy);}
+.score-sub{font-size:14px;color:var(--mid);margin-bottom:32px;line-height:1.5;}
+.score-big{font-size:76px;font-weight:900;letter-spacing:-.06em;line-height:1;color:var(--navy);}
+.score-of{font-size:13px;color:var(--mid);margin-top:4px;margin-bottom:44px;font-weight:600;}
+.score-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.score-cont{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:15px 30px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .14s;}
+.score-cont:hover{background:var(--yellow);color:var(--navy);}
+.score-retry{background:none;color:var(--mid);border:1.5px solid var(--border);border-radius:6px;padding:15px 30px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .14s;}
+.score-retry:hover{border-color:var(--navy);color:var(--navy);}
+
+/* CERT */
+#screen-cert{display:none;background:var(--grey);min-height:100vh;}
+.cert-page{max-width:900px;margin:0 auto;padding:52px 32px;}
+.cert-actions{display:flex;gap:11px;margin-bottom:36px;justify-content:center;}
+.cert-print-btn{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:13px 26px;font-size:13.5px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .14s;}
+.cert-print-btn:hover{background:var(--yellow);color:var(--navy);}
+.cert-back-btn{background:none;color:var(--mid);border:1.5px solid var(--border);border-radius:6px;padding:13px 26px;font-size:13.5px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;}
+.cert-card{background:var(--white);border:2px solid var(--navy);border-radius:8px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.1);}
+.cert-top{background:var(--navy);padding:44px 52px 38px;}
+.cert-logo-row{display:flex;align-items:center;gap:10px;margin-bottom:36px;}
+.cert-mark{width:32px;height:32px;background:var(--yellow);clip-path:polygon(50% 0%,0% 100%,100% 100%);}
+.cert-wm{font-size:20px;font-weight:900;color:var(--white);letter-spacing:-.03em;}
+.cert-ey{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--yellow);margin-bottom:10px;}
+.cert-title{font-size:clamp(26px,4vw,42px);font-weight:900;color:var(--white);letter-spacing:-.04em;line-height:1.05;}
+.cert-title .hl{color:var(--yellow);}
+.cert-body{padding:44px 52px 52px;}
+.cert-pres{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--mid);margin-bottom:7px;}
+.cert-name{font-size:clamp(30px,5vw,50px);font-weight:900;letter-spacing:-.04em;border-bottom:3px solid var(--yellow);padding-bottom:18px;margin-bottom:22px;color:var(--navy);}
+.cert-details{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-bottom:32px;}
+.cert-dl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:3px;}
+.cert-dv{font-size:16px;font-weight:800;letter-spacing:-.02em;color:var(--navy);}
+.cert-chs{margin-bottom:32px;}
+.cert-chs-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mid);margin-bottom:12px;}
+.cert-ch-list{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.cert-ch-item{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--navy);}
+.cert-ch-check{width:18px;height:18px;border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;flex-shrink:0;color:var(--navy);}
+.cert-footer{display:flex;align-items:flex-end;justify-content:space-between;padding-top:24px;border-top:2px solid var(--border);}
+.cert-sig-line{width:130px;height:2px;background:var(--navy);margin-bottom:5px;}
+.cert-sig-name{font-size:12.5px;font-weight:700;color:var(--navy);}
+.cert-sig-title{font-size:11.5px;color:var(--mid);}
+.cert-seal{width:76px;height:76px;border-radius:50%;border:3px solid var(--navy);background:var(--yellow);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.cert-seal-t{font-size:7.5px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;line-height:1.4;color:var(--navy);}
+.cert-seal-y{font-size:13px;font-weight:900;color:var(--navy);}
+@media print{.cert-actions,.topbar,.subbar{display:none;}.cert-card{box-shadow:none;}}
+
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:var(--white);padding:11px 22px;border-radius:6px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.2);display:none;pointer-events:none;border-left:3px solid var(--yellow);}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="screen-login">
+  <div class="login-grid">
+    <div class="login-l">
+      <div class="login-logo"><div class="alva-mark"></div><div class="alva-wordmark">ALVA Akademie</div></div>
+      <div class="login-hero">
+        <div class="login-eyebrow">Onboarding · Schulungsprogramm</div>
+        <h1 class="login-h1">Willkommen<br>bei <span class="hl">ALVA</span></h1>
+        <p class="login-sub">Dein strukturierter Einstieg — ALVA als Unternehmen, der Strommarkt, und dein Bereich. Mit Live-Feedback und Zertifikat am Ende.</p>
+      </div>
+      <div class="login-stats">
+        <div><div class="lstat-n">4</div><div class="lstat-l">Tracks</div></div>
+        <div><div class="lstat-n">~90 Min</div><div class="lstat-l">Dauer</div></div>
+        <div><div class="lstat-n">Zertifikat</div><div class="lstat-l">Am Ende</div></div>
+      </div>
+    </div>
+    <div class="login-r">
+      <div class="login-card">
+        <div class="login-card-title">Anmelden</div>
+        <div class="login-card-sub">Gib deinen Namen und das Team-Passwort ein.</div>
+        <input class="login-input" id="name-inp" type="text" placeholder="Dein Name (z.B. Anna Müller)" onkeydown="if(event.key==='Enter')document.getElementById('pw-inp').focus()">
+        <input class="login-input" id="pw-inp" type="password" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()">
+        <button class="login-btn" onclick="doLogin()">Loslegen →</button>
+        <div class="login-err" id="login-err"></div>
+        <div class="login-note">Passwort: alva2026 · Fortschritt wird auf diesem Gerät gespeichert.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="screen-app">
+  <nav class="topbar">
+    <div class="tb-l">
+      <div class="tb-mark"></div><div class="tb-name">ALVA Akademie</div>
+      <div class="tb-sep"></div><div class="tb-sub">Onboarding</div>
+    </div>
+    <div class="tb-r">
+      <div class="tb-prog" id="tb-prog"><strong>0%</strong> abgeschlossen</div>
+      <div class="tb-av-fb" id="tb-av-fb">M</div>
+      <button class="tb-out" onclick="doLogout()">Abmelden</button>
+    </div>
+  </nav>
+
+  <div id="view-home">
+    <div class="home-hero">
+      <div class="hero-in">
+        <div class="hero-ey">Onboarding · Dein erster Tag</div>
+        <h1 class="hero-h1">Willkommen bei<br><span class="hl">ALVA</span></h1>
+        <p class="hero-p">4 Tracks — von ALVA als Unternehmen über den Strommarkt bis zu deinem Department. ALVA Coach erklärt jede Antwort live.</p>
+        <div class="hero-chips">
+          <div class="chip y">4 Tracks</div>
+          <div class="chip">Track 1: ALVA & Kultur</div>
+          <div class="chip">Track 2: Strommarkt</div>
+          <div class="chip">Track 3: Departments</div>
+          <div class="chip">Track 4: Deep Dives</div>
+        </div>
+      </div>
+    </div>
+    <div class="home-body">
+      <div class="overall-bar-wrap"><div class="overall-bar-fill" id="overall-bar" style="width:0%"></div></div>
+      <div id="home-sections"></div>
+    </div>
+  </div>
+
+  <div id="view-lesson" class="screen">
+    <div class="subbar">
+      <button class="back-btn" onclick="goHome()">← Zurück</button>
+      <span style="color:var(--border)">·</span>
+      <span class="bc" id="lesson-bc"></span>
+    </div>
+    <div class="lesson-wrap" id="lesson-body"></div>
+  </div>
+
+  <div id="view-quiz" class="screen">
+    <div class="subbar">
+      <button class="back-btn" onclick="goHome()">← Zurück</button>
+      <span style="color:var(--border)">·</span>
+      <span class="bc" id="quiz-bc"></span>
+    </div>
+    <div class="quiz-wrap" id="quiz-body"></div>
+  </div>
+</div>
+
+<div id="screen-cert" style="display:none">
+  <nav class="topbar"><div class="tb-l"><div class="tb-mark"></div><div class="tb-name">ALVA Akademie</div></div>
+    <div class="tb-r"><button class="tb-out" onclick="doLogout()">Abmelden</button></div></nav>
+  <div class="cert-page">
+    <div class="cert-actions">
+      <button class="cert-print-btn" onclick="window.print()">⬇ Als PDF speichern</button>
+      <button class="cert-back-btn" onclick="goHome()">← Zurück</button>
+    </div>
+    <div class="cert-card" id="cert-card"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════
+const PW = 'alva2026';
+
+function doLogin() {
+  const name = document.getElementById('name-inp').value.trim();
+  const pw = document.getElementById('pw-inp').value;
+  if (!name) { showErr('Bitte gib deinen Namen ein.'); return; }
+  if (pw !== PW) { showErr('Falsches Passwort. Tipp: alva2026'); return; }
+  localStorage.setItem('alva_user', name);
+  window._userName = name;
+  document.getElementById('tb-av-fb').textContent = name[0].toUpperCase();
+  document.getElementById('screen-login').style.display = 'none';
+  document.getElementById('screen-app').style.display = 'block';
+  S.done = JSON.parse(localStorage.getItem('alva_done') || '{}');
+  S.scores = JSON.parse(localStorage.getItem('alva_scores') || '{}');
+  renderHome();
+}
+
+function showErr(msg) {
+  const e = document.getElementById('login-err');
+  e.textContent = msg; e.style.display = 'block';
+}
+
+function doLogout() {
+  localStorage.removeItem('alva_user');
+  location.reload();
+}
+
+// Auto-login
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('alva_user');
+  if (saved) {
+    window._userName = saved;
+    document.getElementById('tb-av-fb').textContent = saved[0].toUpperCase();
+    document.getElementById('screen-login').style.display = 'none';
+    document.getElementById('screen-app').style.display = 'block';
+    S.done = JSON.parse(localStorage.getItem('alva_done') || '{}');
+    S.scores = JSON.parse(localStorage.getItem('alva_scores') || '{}');
+    renderHome();
+  } else {
+    document.getElementById('screen-login').style.display = 'block';
+  }
+});
+
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const TRACKS = [
+  {
+    id:'t1', label:'Track 1', name:'ALVA — Unternehmen & Kultur',
+    chapters:[
+      { id:1, icon:'🏢', title:'ALVA — Mission, Vision & Geschäftsmodell', sub:'Was wir machen, warum, und wohin die Reise geht',
+        lesson:`<div class="lbadge t1">Track 1 · Kapitel 1</div>
+<h1 class="lh1">ALVA — Mission, Vision & Geschäftsmodell</h1>
+<p class="lintro">ALVA verwandelt Immobilien in rentable, nachhaltige Energie-Hubs. Hier lernst du wie das Geschäftsmodell funktioniert und wo ALVA hinwill.</p>
+<div class="lsec"><h2 class="lh2">Was macht ALVA konkret?</h2>
+<p class="lp">ALVA ist ein <span class="kt">One-Stop-Shop für Energie-Upgrades</span> von Immobilien. Wir kommen zum Eigentümer, installieren eine Solaranlage, und verkaufen den Strom direkt an die Mieter.</p>
+<div class="flow">
+<div class="fstep"><div class="fstep-l"><div class="fnum">1</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">PV-Anlage installieren</div><div class="fdesc">ALVA plant, finanziert und baut Solaranlagen auf Dächern — schlüsselfertig für den Vermieter.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">2</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Mieterstrom direkt liefern</div><div class="fdesc">Den erzeugten Solarstrom verkaufen wir direkt an die Mieter — günstiger als beim Grundversorger.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">3</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Vollversorger sein</div><div class="fdesc">Wir decken 100% des Bedarfs — wenn Solar nicht reicht, kaufen wir Reststrom aus dem Netz dazu.</div></div></div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Vision & Mission</h2>
+<div class="callout dark"><div class="ci">🎯</div><div class="cb"><div class="ct">Vision</div><div class="cx">„Dezentrale, digitale Energielösungen, die sich für alle lohnen" — für Eigentümer, Mieter, Umwelt und Gesellschaft.</div></div></div>
+<div class="callout info"><div class="ci">🚀</div><div class="cb"><div class="ct">Mission</div><div class="cx">"Wir entwickeln dezentrale Energieinfrastrukturen, die Eigentümer und Mieter dauerhaft mit grüner, günstiger Energie versorgen – von der Liegenschaft bis auf Portfolioebene."</div></div></div>
+<p class="lp" style="margin-top:12px">Unsere Werte: <strong>Professionalität · Verbindlichkeit · Einfachheit</strong></p></div>
+<div class="lsec"><h2 class="lh2">Wohin entwickelt sich ALVA?</h2>
+<div class="defs">
+<div class="def"><div class="dt">Heute</div><div class="dd">Solarenergie / Mieterstrom — PV-Anlage + Liefervertrag mit Mietern</div></div>
+<div class="def"><div class="dt">2025</div><div class="dd">Ladesäulen für E-Mobilität</div></div>
+<div class="def"><div class="dt">2026</div><div class="dd">Batteriespeicher + Wärmepumpen</div></div>
+<div class="def"><div class="dt">2027+</div><div class="dd">Energy Sharing / Virtual Power Plant — Portfolio-Optimierung auf Gebäudeebene</div></div>
+</div>
+<div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Der strategische Kern</div><div class="cx">ALVA wird zum "Gatekeeper" für alle Energiedaten in Immobilien. Wer die Daten hat, kann optimieren — und wer optimieren kann, schafft dauerhaften Mehrwert für alle.</div></div></div></div>`
+      },
+      { id:2, icon:'🌟', title:'Kultur & Wie wir arbeiten', sub:'Werte, Prozesse und was ALVA ausmacht',
+        lesson:`<div class="lbadge t1">Track 1 · Kapitel 2</div>
+<h1 class="lh1">Kultur & Wie wir arbeiten</h1>
+<p class="lintro">Start-ups sind anders als Konzerne. Bei ALVA: kurze Wege, hohe Eigenverantwortung, direktes Feedback. Und ein Team das gemeinsam aufbaut.</p>
+<div class="lsec"><h2 class="lh2">Der ALVA Prozess — von Marketing bis Energie</h2>
+<div class="flow">
+<div class="fstep"><div class="fstep-l"><div class="fnum">1</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Marketing generiert Leads</div><div class="fdesc">B2B-Kampagnen, Partnernetzwerk, Content — qualifizierte Interessenten kommen rein.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">2</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Sales konvertiert</div><div class="fdesc">Beratungsgespräch, Angebot, Vertragsabschluss mit dem Eigentümer.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">3</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Enablement prüft & plant</div><div class="fdesc">Baubarkeitsprüfung, Vor-Ort-Aufnahme, technische Planung.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">4</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Installation baut</div><div class="fdesc">PV-Anlage errichten, ans Netz anschließen, Messkonzept einrichten.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">5</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Energy Services übernimmt ⭐</div><div class="fdesc">Kundenverträge mit Mietern, Abrechnung, Customer Support — hier kommst du ins Spiel!</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">6</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Asset Management überwacht</div><div class="fdesc">Anlagenperformance, Eigentümerreporting, Refinanzierung.</div></div></div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Wie ALVA arbeitet</h2>
+<div class="defs">
+<div class="def"><div class="dt">OKR-Rhythmus</div><div class="dd">Quartalsweise Objectives & Key Results. Dein Department hat eigene OKRs — du weißt immer worauf du hinarbeitest.</div></div>
+<div class="def"><div class="dt">Direkte Komm.</div><div class="dd">Kurze Wege, direkte Ansprache. Probleme sofort ansprechen — nicht durch Hierarchien schleusen.</div></div>
+<div class="def"><div class="dt">Eigenverantwortung</div><div class="dd">Du übernimmst Themen selbstständig. Fragen stellen ist immer erwünscht.</div></div>
+<div class="def"><div class="dt">Tools</div><div class="dd">Slack (Kommunikation), Airtable (Daten/CRM), Google Workspace (Docs, Drive), Notion (Wissen).</div></div>
+</div></div>`
+      }
+    ]
+  },
+  {
+    id:'t2', label:'Track 2', name:'Strommarkt — Grundlagen',
+    chapters:[
+      { id:3, icon:'⚡', title:'Einführung: Der deutsche Strommarkt', sub:'Wie Strom erzeugt, transportiert und verkauft wird',
+        lesson:`<div class="lbadge t2">Track 2 · Kapitel 3</div>
+<h1 class="lh1">Einführung: Der deutsche Strommarkt</h1>
+<p class="lintro">Strom klingt einfach — ist er aber nicht. Um Kundenfragen zu beantworten, brauchst du das große Bild. Wie kommt Strom in die Steckdose und wer verdient woran?</p>
+<div class="lsec"><h2 class="lh2">Vom Kraftwerk zur Steckdose</h2>
+<div class="flow">
+<div class="fstep"><div class="fstep-l"><div class="fnum">1</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Erzeugung</div><div class="fdesc">Kraftwerke, Solaranlagen, Windparks erzeugen Strom. Deutschland hatte 2024 über 60% Anteil erneuerbarer Energien.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">2</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Übertragungsnetz (380 kV)</div><div class="fdesc">Die "Autobahn" quer durch Deutschland. 4 Betreiber: 50Hertz, Amprion, TenneT, TransnetBW.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">3</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Verteilnetz (Niederspannung)</div><div class="fdesc">Lokale Leitungen in Straßen und Gebäuden. 800+ regionale Verteilnetzbetreiber (VNB).</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">4</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Hausanschluss & Zähler</div><div class="fdesc">Netzanschluss am Gebäude. Stromzähler misst Verbrauch in kWh — Basis der Abrechnung.</div></div></div>
+</div>
+<div class="callout dark"><div class="ci">⚖️</div><div class="cb"><div class="ct">Das Kernprinzip: Unbundling</div><div class="cx">Netz und Vertrieb sind gesetzlich getrennt seit 1998. Den Lieferanten kannst du frei wählen — den Netzbetreiber nicht. Das ermöglicht fairen Wettbewerb.</div></div></div></div>
+<div class="lsec"><h2 class="lh2">Die wichtigsten Akteure (Player)</h2>
+<div class="defs">
+<div class="def"><div class="dt">EVU</div><div class="dd">Energieversorgungsunternehmen — jedes Unternehmen das Energie erzeugt, transportiert oder verkauft. ALVA ist ein EVU (Lieferant).</div></div>
+<div class="def"><div class="dt">Lieferant (LF)</div><div class="dd">Verkauft Strom an Endkunden. Hat Liefervertrag. Stellt Rechnung. ALVA ist Mieterstrom-Lieferant für Mieter.</div></div>
+<div class="def"><div class="dt">VNB</div><div class="dd">Verteilnetzbetreiber — betreibt das lokale Stromnetz. Neutral, muss alle Lieferanten gleich behandeln. 800+ in Deutschland.</div></div>
+<div class="def"><div class="dt">MSB</div><div class="dd">Messstellenbetreiber — installiert und betreibt Zähler. Oft identisch mit VNB, kann aber auch freier Anbieter (wMSB) sein.</div></div>
+<div class="def"><div class="dt">Grundversorger</div><div class="dd">Jede Region hat einen. Wer keinen Vertrag hat wird automatisch versorgt — zu höheren Preisen.</div></div>
+<div class="def"><div class="dt">Anschlussnehmer</div><div class="dd">Gebäudeeigentümer — hat den Netzanschlussvertrag mit dem VNB.</div></div>
+<div class="def"><div class="dt">Anschlussnutzer</div><div class="dd">Mieter — hat den Stromliefervertrag und verbraucht Strom.</div></div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Was steckt in der Stromrechnung?</h2>
+<div class="defs">
+<div class="def"><div class="dt">Energiekosten</div><div class="dd">Der kWh-Preis des Lieferanten. Wettbewerblich — variiert zwischen Anbietern.</div></div>
+<div class="def"><div class="dt">Netzentgelte</div><div class="dd">~25% der Rechnung. Nutzungsgebühr für das Stromnetz. Beim Mieterstrom-Solaranteil: entfällt!</div></div>
+<div class="def"><div class="dt">Stromsteuer</div><div class="dd">2,05 ct/kWh. Bundeseinheitlich. Geht an den Staat.</div></div>
+<div class="def"><div class="dt">Konzessionsabgabe</div><div class="dd">Für Leitungsnutzung im öffentlichen Raum. Geht an die Gemeinde.</div></div>
+<div class="def"><div class="dt">Mehrwertsteuer</div><div class="dd">19% auf alles — auch bei Mieterstrom.</div></div>
+<div class="def"><div class="dt">Messkosten</div><div class="dd">Zählermiete an den MSB.</div></div>
+</div></div>`
+      },
+      { id:4, icon:'🌱', title:'Erneuerbare Energien & aktuelle Zahlen', sub:'PV, Wind, Biomasse — und wo Deutschland heute steht',
+        lesson:`<div class="lbadge t2">Track 2 · Kapitel 4</div>
+<h1 class="lh1">Erneuerbare Energien & aktuelle Zahlen</h1>
+<p class="lintro">Deutschland ist mitten in der Energiewende. 2024 kamen bereits über 60% des Stroms aus erneuerbaren Quellen. Hier lernst du die Quellen kennen und was die aktuellen Zahlen bedeuten.</p>
+<div class="lsec"><h2 class="lh2">Die erneuerbaren Energiequellen</h2>
+<div class="src-grid">
+<div class="src-card green"><div class="src-icon">☀️</div><div class="src-name">Solar (PV)</div><div class="src-desc">Photovoltaik — Strom aus Sonnenlicht. Basis von Mieterstrom! Stark wachsend.</div></div>
+<div class="src-card green"><div class="src-icon">💨</div><div class="src-name">Wind</div><div class="src-desc">Onshore & Offshore. Größte erneuerbare Quelle in Deutschland.</div></div>
+<div class="src-card green"><div class="src-icon">💧</div><div class="src-name">Wasserkraft</div><div class="src-desc">Stauseen, Laufwasser. Konstant und planbar. Gut als Ausgleich.</div></div>
+<div class="src-card green"><div class="src-icon">🌿</div><div class="src-name">Biomasse</div><div class="src-desc">Holz, Biogas, organische Abfälle. Tag & Nacht nutzbar, regelbar.</div></div>
+<div class="src-card grey2"><div class="src-icon">🔥</div><div class="src-name">Erdgas</div><div class="src-desc">Noch wichtig als Backup wenn erneuerbare nicht reichen.</div></div>
+<div class="src-card grey2"><div class="src-icon">⬛</div><div class="src-name">Kohle</div><div class="src-desc">Ausstieg bis 2038 geplant. Anteil sinkt stark.</div></div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Aktuelle Zahlen — Deutschland 2024</h2>
+<div class="stat-grid">
+<div class="stat-box"><div class="stat-n">>62%</div><div class="stat-l">Anteil erneuerbarer Energien am Strommix</div></div>
+<div class="stat-box"><div class="stat-n">~90 GW</div><div class="stat-l">Installierte Solar-Leistung (kWp × 1.000.000)</div></div>
+<div class="stat-box"><div class="stat-n">150+</div><div class="stat-l">ALVA realisierte Projekte</div></div>
+<div class="stat-box"><div class="stat-n">2.000+</div><div class="stat-l">Zufriedene Stromkund*innen bei ALVA</div></div>
+<div class="stat-box"><div class="stat-n">215 GW</div><div class="stat-l">Deutsches Ausbauziel Solar bis 2030</div></div>
+<div class="stat-box"><div class="stat-n">2038</div><div class="stat-l">Geplantes Ende der Kohleverstromung</div></div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Das EEG — wichtigstes Gesetz für uns</h2>
+<p class="lp">Das <span class="kt">Erneuerbare-Energien-Gesetz (EEG)</span> regelt wie Solar, Wind und Co. gefördert werden. Für ALVA zentral:</p>
+<div class="defs">
+<div class="def"><div class="dt">Einspeisevergütung</div><div class="dd">Wer Strom ins Netz einspeist bekommt eine garantierte Vergütung pro kWh. Sinkt für neue Anlagen laufend.</div></div>
+<div class="def"><div class="dt">Mieterstromzuschlag</div><div class="dd">Extra-Förderung wenn Solarstrom direkt an Mieter verkauft wird statt ins Netz. Kernförderung für ALVA-Projekte.</div></div>
+<div class="def"><div class="dt">Marktstammdatenregister</div><div class="dd">Alle Energieanlagen müssen registriert werden — auch jede ALVA-PV-Anlage.</div></div>
+</div></div>`
+      },
+      { id:5, icon:'🔌', title:'Dezentrale Energie & Liefermodelle', sub:'Was es gibt: von Eigenverbrauch bis Mieterstrom',
+        lesson:`<div class="lbadge t2">Track 2 · Kapitel 5</div>
+<h1 class="lh1">Dezentrale Energie & Liefermodelle</h1>
+<p class="lintro">Dezentrale Energie bedeutet: Strom wird nah beim Verbraucher erzeugt — direkt vom Dach. Das ist ALVAs Kerngeschäft. Hier lernst du alle Modelle kennen.</p>
+<div class="lsec"><h2 class="lh2">Zentral vs. dezentral</h2>
+<div class="defs">
+<div class="def"><div class="dt">Zentral</div><div class="dd">Kraftwerk (weit weg) → Übertragungsnetz → Verteilnetz → Haushalt. Hohe Netzentgelte, lange Transportwege.</div></div>
+<div class="def"><div class="dt">Dezentral</div><div class="dd">PV-Anlage auf dem Dach → direkt zum Mieter. Keine Netzentgelte für den Solar-Anteil, kurze Wege. Das macht ALVA!</div></div>
+</div>
+<div class="callout dark"><div class="ci">💡</div><div class="cb"><div class="ct">Was entfällt bei dezentralem Strom?</div><div class="cx">✅ Netzentgelte (~25% der Rechnung) · ✅ Konzessionsabgabe · ❌ Mehrwertsteuer bleibt immer · ❌ Energiekosten bleiben</div></div></div></div>
+<div class="lsec"><h2 class="lh2">Die wichtigsten Modelle im Überblick</h2>
+<div class="defs">
+<div class="def"><div class="dt">Eigenverbrauch</div><div class="dd">Klassisch: Eigentümer hat PV-Anlage und verbraucht Strom selbst. Überschuss ins Netz → Einspeisevergütung. Kein Verkauf an Dritte.</div></div>
+<div class="def"><div class="dt">Mieterstrom</div><div class="dd">Solarstrom direkt vom Gebäude an Mieter verkauft. Mindestens 10% günstiger als Grundversorger. Lieferant (ALVA) übernimmt Vollversorgung.</div></div>
+<div class="def"><div class="dt">GGV</div><div class="dd">Gemeinschaftliche Gebäudeversorgung (seit 2024). Vereinfacht: Solar-Anteil über Nebenkosten abgerechnet. Kein eigener Liefervertrag nötig.</div></div>
+<div class="def"><div class="dt">Onsite PPA</div><div class="dd">Langfristiger Direktliefervertrag (10-20 Jahre). Anlage direkt beim Abnehmer. Oft für Gewerbe/Industrie. Kein Netz nötig.</div></div>
+<div class="def"><div class="dt">Offsite PPA</div><div class="dd">Anlage steht woanders (z.B. Windpark). Strom fließt durch das Netz. Abnehmer bekommt Grünstrom-Zertifikate.</div></div>
+<div class="def"><div class="dt">Direktlieferung</div><div class="dd">Erzeuger liefert Strom direkt ohne Netz an einen Verbraucher in unmittelbarer Nähe.</div></div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Wichtige Metriken — die musst du kennen</h2>
+<div class="defs">
+<div class="def"><div class="dt">kWp</div><div class="dd">Kilowattpeak = maximale Leistung einer PV-Anlage. "Wie groß ist die Anlage?" 1 kWp → ~850–1.000 kWh/Jahr in Deutschland.</div></div>
+<div class="def"><div class="dt">kWh</div><div class="dd">Kilowattstunde = tatsächlich produzierte oder verbrauchte Energiemenge. "Wie viel Strom?" Basis der Abrechnung.</div></div>
+<div class="def"><div class="dt">kW</div><div class="dd">Kilowatt = aktuelle Leistung (wie viel Strom gerade erzeugt/verbraucht wird). kW × Zeit = kWh.</div></div>
+<div class="def"><div class="dt">Eigenverbrauchsquote</div><div class="dd">Anteil des selbst erzeugten Stroms der direkt verbraucht wird (ohne Netz). Höher = besser = mehr Ersparnis.</div></div>
+<div class="def"><div class="dt">Autarkiequote</div><div class="dd">Anteil des Gesamtverbrauchs der aus eigener Erzeugung gedeckt wird. 60% Autarkie = 40% aus dem Netz.</div></div>
+<div class="def"><div class="dt">Volllaststunden</div><div class="dd">Wie viele Stunden eine Anlage theoretisch mit Maximalleistung laufen müsste um die Jahresproduktion zu erreichen. In Deutschland ca. 900-1.000 h/Jahr für Solar.</div></div>
+</div>
+<div class="callout eg"><div class="ci">🧮</div><div class="cb"><div class="ct">Beispiel</div><div class="cx">20 kWp Anlage auf einem 10-Parteien-Haus erzeugt ~18.000 kWh/Jahr. 10 Haushalte × 3.000 kWh = 30.000 kWh Bedarf. Anlage deckt ~60% → Autarkiequote 60%.</div></div></div></div>`
+      },
+      { id:6, icon:'🔄', title:'Lieferantenwechsel, GPKE & Abrechnung', sub:'Wie Wechselprozesse funktionieren und was in der Rechnung steckt',
+        lesson:`<div class="lbadge t2">Track 2 · Kapitel 6</div>
+<h1 class="lh1">Lieferantenwechsel, GPKE & Abrechnung</h1>
+<p class="lintro">Jeden Tag wechseln Kunden ihren Stromanbieter. Was passiert dabei im Hintergrund? Und wie funktioniert eigentlich die Jahresabrechnung?</p>
+<div class="lsec"><h2 class="lh2">Der Lieferantenwechsel</h2>
+<div class="flow">
+<div class="fstep"><div class="fstep-l"><div class="fnum">1</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Neuer Vertrag + MaLo-ID</div><div class="fdesc">Kunde schließt Vertrag mit neuem Lieferanten. Braucht die <span class="kt">Marktlokations-ID (MaLo-ID)</span> — eindeutige Kennnummer des Anschlusses.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">2</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Anmeldung beim VNB</div><div class="fdesc">Neuer Lieferant meldet sich per GPKE-Prozess beim Netzbetreiber an.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">3</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Alter Lieferant abgemeldet</div><div class="fdesc">VNB informiert alten Lieferanten. Zählerstand zum Stichtag wird erfasst.</div></div></div>
+<div class="fstep"><div class="fstep-l"><div class="fnum">4</div><div class="fline"></div></div><div class="fcontent"><div class="ftitle">Wechsel fertig — kein Techniker!</div><div class="fdesc">Alles rein administrativ. Kein Stromausfall, kein Zählertausch.</div></div></div>
+</div>
+<div class="callout warn"><div class="ci">⚠️</div><div class="cb"><div class="ct">MaLo-ID Pflicht bei ALVA</div><div class="cx">Wenn ein Mieterstrom-Kunde kündigt, muss ALVA die MaLo-ID herausgeben. Das ist gesetzlich vorgeschrieben — kein Ermessensspielraum.</div></div></div></div>
+<div class="lsec"><h2 class="lh2">GPKE — das Regelwerk</h2>
+<p class="lp"><span class="kt">GPKE</span> = Geschäftsprozesse zur Kundenbelieferung mit Elektrizität. Standardisierte Regeln der Bundesnetzagentur für alle Marktakteure.</p>
+<div class="defs">
+<div class="def"><div class="dt">Lieferantenwechsel</div><div class="dd">Standardisierter Ablauf mit festen Fristen und EDIFACT-Nachrichten.</div></div>
+<div class="def"><div class="dt">Ein-/Auszug</div><div class="dd">Einzug = Lieferanmeldung. Auszug = Abmeldung + Zählerstand.</div></div>
+<div class="def"><div class="dt">Stammdatenänderung</div><div class="dd">Name, Bank, Zähler — standardisiert dem VNB melden.</div></div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Abschläge & Jahresrechnung</h2>
+<div class="defs">
+<div class="def"><div class="dt">Abschlag</div><div class="dd">Monatliche Vorauszahlung: geschätzter Jahresverbrauch × Preis ÷ 12. Gleichmäßige Belastung.</div></div>
+<div class="def"><div class="dt">Jahresrechnung</div><div class="dd">Echter Verbrauch vs. gezahlte Abschläge. Differenz = Nachzahlung oder Gutschrift.</div></div>
+<div class="def"><div class="dt">Mieterstrom-Rechnung</div><div class="dd">Eine Rechnung mit zwei Anteilen: Solarstrom (günstig, kein Netzentgelt) + Reststrom aus Netz (teurer).</div></div>
+</div>
+<div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Goldene Regel im Support</div><div class="cx">Zählerstand beim Einzug immer sofort dokumentieren! Fehlt er, gibt es garantiert Streit bei der ersten Jahresrechnung.</div></div></div></div>`
+      }
+    ]
+  },
+  {
+    id:'t3', label:'Track 3', name:'ALVA Departments im Überblick',
+    chapters:[
+      { id:7, icon:'👥', title:'People & Culture', sub:'HR, Onboarding, Events und Office',
+        lesson:`<div class="lbadge t3">Track 3 · Kapitel 7</div>
+<h1 class="lh1">People & Culture</h1>
+<p class="lintro">People & Culture sorgt dafür dass ALVA als Arbeitgeber funktioniert — von Recruiting über Onboarding bis zum Office-Management.</p>
+<div class="lsec"><h2 class="lh2">Aufgabenbereiche</h2>
+<div class="defs">
+<div class="def"><div class="dt">Administration & Ops</div><div class="dd">Arbeitsverträge, Lohnabrechnung, Förderanträge, HRIS. Bei Fragen zu Vertrag oder Gehalt: direkt an P&C.</div></div>
+<div class="def"><div class="dt">Recruiting & Onboarding</div><div class="dd">Neue Mitarbeitende finden, Start vorbereiten, Begleitung am ersten Tag — wie heute!</div></div>
+<div class="def"><div class="dt">Kultur & Events</div><div class="dd">Team-Events, ALVA Crew, Kulturprojekte. P&C investiert in Zusammenhalt.</div></div>
+<div class="def"><div class="dt">Office Management</div><div class="dd">Bürobedarf, Bestellungen, Internet, Hausmeister, Reinigung.</div></div>
+</div>
+<div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Dein Kontakt</div><div class="cx">Fragen zu Urlaub, Vertrag, Gehaltsabrechnung oder Büroproblemen → direkt an People & Culture.</div></div></div></div>`
+      },
+      { id:8, icon:'💰', title:'Finance', sub:'Buchhaltung, Rechnungsstellung und Controlling',
+        lesson:`<div class="lbadge t3">Track 3 · Kapitel 8</div>
+<h1 class="lh1">Finance</h1>
+<p class="lintro">Finance sorgt für die Datengrundlage die ALVA steuert. Für Energy Services ist Finance ein wichtiger Partner — besonders bei Kundenabrechnungen.</p>
+<div class="lsec"><h2 class="lh2">Aufgabenbereiche</h2>
+<div class="defs">
+<div class="def"><div class="dt">Rechnungsstellung</div><div class="dd">Erstellung, Versand und Mahnung von Kundenrechnungen. Enge Abstimmung mit Energy Services.</div></div>
+<div class="def"><div class="dt">Jahresabschluss</div><div class="dd">Monatsabschluss, Jahresabschluss, Wirtschaftsprüfung, USt-Voranmeldungen.</div></div>
+<div class="def"><div class="dt">Reisekosten</div><div class="dd">Prüfung, Verbuchung und Erstattung von Reisekosten und Auslagen.</div></div>
+<div class="def"><div class="dt">Projektcontrolling</div><div class="dd">IST-Profitabilität von Projekten, Soll/Ist-Abweichungen.</div></div>
+</div>
+<div class="callout info"><div class="ci">🔗</div><div class="cb"><div class="ct">Schnittstelle mit Energy Services</div><div class="cx">Kundenabrechnungen, Gutschriften, Mahnungen und Projektprofitabilität berühren immer Finance und ES.</div></div></div></div>`
+      },
+      { id:9, icon:'💼', title:'Sales & Partnerships', sub:'Kommt vom Sales-Team',
+        lesson:`<div class="lbadge t3">Track 3 · Kapitel 9</div>
+<h1 class="lh1">Sales & Partnerships</h1>
+<p class="lintro">Das Sales-Team baut diesen Abschnitt selbst aus. Hier ist ein erster Überblick.</p>
+<div class="lsec"><h2 class="lh2">Was Sales macht</h2>
+<div class="defs">
+<div class="def"><div class="dt">Sales</div><div class="dd">Leads zu Neukunden konvertieren. Durch konsistente Aktivitäten Planbarkeit für ALVA schaffen.</div></div>
+<div class="def"><div class="dt">Partner Management</div><div class="dd">Neue Partner akquirieren, onboarden und aktivieren. Pipeline partnergenerierter Leads tracken.</div></div>
+<div class="def"><div class="dt">Account Management</div><div class="dd">Bestehende Kundenbeziehungen pflegen, Feedback in ALVA-Entwicklung einbringen.</div></div>
+</div>
+<div class="callout warn"><div class="ci">🔜</div><div class="cb"><div class="ct">Dieser Abschnitt wird erweitert</div><div class="cx">Das Sales-Team ergänzt: Pitch-Prozess, CRM-Nutzung, Kundensegmente, häufige Einwände, Gebietsstruktur.</div></div></div></div>`
+      },
+      { id:10, icon:'🔧', title:'Enablement', sub:'Kommt vom Enablement-Team',
+        lesson:`<div class="lbadge t3">Track 3 · Kapitel 10</div>
+<h1 class="lh1">Enablement</h1>
+<p class="lintro">Enablement sorgt dafür dass Sales sich aufs Verkaufen und Installation aufs Installieren konzentrieren kann.</p>
+<div class="lsec"><h2 class="lh2">Was Enablement macht</h2>
+<div class="defs">
+<div class="def"><div class="dt">Erste Projektierung</div><div class="dd">Schnelle, belastbare Ersteinschätzung als Grundlage für Kundenentscheidung.</div></div>
+<div class="def"><div class="dt">Vor-Ort-Aufnahme</div><div class="dd">Validierung der Realität: Dach, Netzanschluss, Zählerstruktur, bauliche Besonderheiten.</div></div>
+<div class="def"><div class="dt">Baubarkeitsprüfung</div><div class="dd">Technische, regulatorische und wirtschaftliche Machbarkeit — bevor Aufwand entsteht.</div></div>
+</div>
+<div class="callout warn"><div class="ci">🔜</div><div class="cb"><div class="ct">Wird vom Enablement-Team erweitert</div><div class="cx">Konkrete Projektphasen, Zeitpläne, technische Details, Eskalationswege.</div></div></div></div>`
+      },
+      { id:11, icon:'⚙️', title:'Installation', sub:'Kommt vom Installation-Team',
+        lesson:`<div class="lbadge t3">Track 3 · Kapitel 11</div>
+<h1 class="lh1">Installation</h1>
+<p class="lintro">Installation baut die PV-Anlagen und kümmert sich um die gesamte technische Umsetzung.</p>
+<div class="lsec"><h2 class="lh2">Was Installation macht</h2>
+<div class="defs">
+<div class="def"><div class="dt">Supply Chain</div><div class="dd">End-to-End Lieferkette: Procurement, Lager, Logistik. Material zur richtigen Zeit am richtigen Ort.</div></div>
+<div class="def"><div class="dt">Installationssteuerung</div><div class="dd">Disposition und Steuerung von Installationspartnern. Operative Verantwortung.</div></div>
+<div class="def"><div class="dt">Netz & Messprozesse</div><div class="dd">Zählerwechsel, Messstellenprozesse, MSB-Management. Reibungslose Netzintegration.</div></div>
+</div>
+<div class="callout warn"><div class="ci">🔜</div><div class="cb"><div class="ct">Wird vom Installation-Team erweitert</div><div class="cx">Projektabläufe, Partner, Zeitpläne, Qualitätssicherung.</div></div></div></div>`
+      },
+      { id:12, icon:'📈', title:'Asset Management', sub:'Anlagenperformance und Eigentümerreporting',
+        lesson:`<div class="lbadge t3">Track 3 · Kapitel 12</div>
+<h1 class="lh1">Asset Management</h1>
+<p class="lintro">Asset Management überwacht die wirtschaftliche und technische Performance der Solaranlagen — und sorgt für fristgerechte Eigentümerauszahlungen.</p>
+<div class="lsec"><h2 class="lh2">Aufgabenbereiche</h2>
+<div class="defs">
+<div class="def"><div class="dt">Anlagenperformance</div><div class="dd">Wirtschaftliche und technische Performance der Solar-Assets überwachen.</div></div>
+<div class="def"><div class="dt">Reporting</div><div class="dd">Eigentümer-, Banken- und internes Reporting aufsetzen und weiterentwickeln.</div></div>
+<div class="def"><div class="dt">Auszahlungen</div><div class="dd">Fristgerechte Eigentümerauszahlungen und Überwachung von Zins und Tilgung.</div></div>
+<div class="def"><div class="dt">Refinanzierung</div><div class="dd">Bankfähiges Produkt für Dachpachtprojekte strukturieren und Finanzierungspartner steuern.</div></div>
+</div>
+<div class="callout tip"><div class="ci">🔗</div><div class="cb"><div class="ct">Schnittstelle mit ES</div><div class="cx">Asset Management braucht akkurate Verbrauchsdaten von Energy Services für das Eigentümerreporting. Fehlerhafte Daten treffen direkt das Asset Management.</div></div></div></div>`
+      },
+      { id:13, icon:'⚡', title:'Energy Services — Überblick & Organigramm', sub:'Dein Department, deine Kollegen, deine Rolle',
+        lesson:`<div class="lbadge t3">Track 3 · Kapitel 13</div>
+<h1 class="lh1">Energy Services — Dein Department</h1>
+<p class="lintro">Energy Services ist das Herzstück der Kundenbeziehung bei ALVA. Hier lernst du wie ES aufgestellt ist, wer deine Kollegen sind und welche Rolle du spielst.</p>
+<div class="lsec"><h2 class="lh2">Das Ziel von Energy Services</h2>
+<p class="lp">Nachhaltiges Wachstum im ES-Geschäft auf Basis transparenter, verlässlicher Daten — für Kunden, Eigentümer und internes Performance-Management.</p>
+<div class="callout dark"><div class="ci">⭐</div><div class="cb"><div class="ct">ES ist die Kundenschnittstelle</div><div class="cx">Energy Services ist das einzige Department das täglich direkt mit Mietern (Endkunden) kommuniziert. Jede Interaktion prägt das Bild von ALVA beim Kunden.</div></div></div></div>
+<div class="lsec"><h2 class="lh2">Die neue ES-Struktur</h2>
+<div class="org">
+<div class="org-top">⚡ Energy Services<span>Alexis</span></div>
+<div class="org-line"></div>
+<div class="org-row">
+<div class="org-branch">
+<div class="org-node">Customer Acquisition<span>B2B Sales (Alexis) · B2C Sales (Pola)</span></div>
+</div>
+<div class="org-branch">
+<div class="org-node highlight">Customer Operations<span>Nataliia</span></div>
+<div class="org-line"></div>
+<div class="org-node highlight">Customer Support<span>Gil</span></div>
+</div>
+<div class="org-branch">
+<div class="org-node" style="border-style:dashed">Einspeisenmanagement<span>tbd — Jana (Clean-up)</span></div>
+</div>
+</div>
+<div style="margin-top:20px;background:var(--grey);border-radius:8px;padding:14px;font-size:13px;color:var(--mid);">
+<strong style="color:var(--dark)">Verschiebungen aus ES:</strong> Finance übernimmt Billing & Payment Ops · Asset Management übernimmt Reporting, Solarize, Data · Installation übernimmt Projektmanagement & Zählertausch
+</div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Customer Support — deine Rolle</h2>
+<div class="defs">
+<div class="def"><div class="dt">Einzug</div><div class="dd">Mieterstromvertrag abschließen, Zählerstand erfassen, VNB anmelden.</div></div>
+<div class="def"><div class="dt">Auszug</div><div class="dd">Zählerstand erfassen, Schlussrechnung, VNB abmelden, MaLo-ID bereitstellen.</div></div>
+<div class="def"><div class="dt">Kündigung</div><div class="dd">Frist prüfen, MaLo-ID herausgeben (Pflicht!), Schlussrechnung.</div></div>
+<div class="def"><div class="dt">Beschwerden</div><div class="dd">Zuhören, verstehen, Lösung anbieten, eskalieren wenn nötig, dokumentieren.</div></div>
+</div></div>`
+      }
+    ]
+  },
+  {
+    id:'t4', label:'Track 4', name:'Deep Dives — Department Details',
+    isDeepDive: true,
+    chapters:[
+      { id:14, icon:'⚡', title:'Energy Services — Deep Dive', sub:'Mieterstrom, Technik, Abrechnung und Support-Alltag', isESDeepDive: true,
+        lesson:`<div class="lbadge t4">Track 4 · Energy Services Deep Dive</div>
+<h1 class="lh1">Energy Services — Deep Dive</h1>
+<p class="lintro">Hier gehst du tief rein: Mieterstrom im Detail, Smart Meter, Summenzähler, Liegenschaftsmodell — und alle Support-Szenarien die dir täglich begegnen.</p>
+<div class="lsec"><h2 class="lh2">Mieterstrom — die Details</h2>
+<div class="defs">
+<div class="def"><div class="dt">Preis (§42a EnWG)</div><div class="dd">Max. 90% des Grundversorgungstarifs = mind. 10% günstiger. Gesetzlich vorgeschrieben.</div></div>
+<div class="def"><div class="dt">Vollversorgung</div><div class="dd">ALVA muss auch Reststrom liefern wenn Solar nicht reicht. Ein Vertrag, eine Rechnung.</div></div>
+<div class="def"><div class="dt">Kein Kopplungszwang</div><div class="dd">Mieterstromvertrag darf NICHT mit Mietvertrag verknüpft werden. Freie Anbieterwahl!</div></div>
+<div class="def"><div class="dt">Kündigung</div><div class="dd">Nach Erstlaufzeit (max. 2 Jahre): max. 1 Monat Frist. MaLo-ID Pflicht!</div></div>
+<div class="def"><div class="dt">Mieterstromzuschlag</div><div class="dd">Staatliche Förderung für jeden lokal verbrauchten kWh Solar. Geht an Anlagenbetreiber.</div></div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Smart Meter & iMSys</h2>
+<div class="defs">
+<div class="def"><div class="dt">Ferraris-Zähler</div><div class="dd">Alt, analog, manuell. Für Mieterstrom ungeeignet. Wird bis 2032 ersetzt.</div></div>
+<div class="def"><div class="dt">mME</div><div class="dd">Digitaler Zähler — aber kein Kommunikationsmodul. Muss noch abgelesen werden.</div></div>
+<div class="def"><div class="dt">iMSys / Smart Meter</div><div class="dd">mME + Smart Meter Gateway. Überträgt Viertelstundenwerte automatisch. Standard für Mieterstrom!</div></div>
+</div>
+<div class="callout tip"><div class="ci">💡</div><div class="cb"><div class="ct">Warum Viertelstundenwerte?</div><div class="cx">Solarproduktion schwankt stark. Nur mit 15-Minuten-Daten kann man fair abrechnen wer wann Solarstrom hatte (günstig) und wann Netzstrom (teurer).</div></div></div></div>
+<div class="lsec"><h2 class="lh2">Summenzähler & Liegenschaftsmodell</h2>
+<div class="defs">
+<div class="def"><div class="dt">Physischer Summenzähler</div><div class="dd">Am Netzanschlusspunkt. Misst Netzbezug und Einspeisung. PV-Erzeugung − Einspeisung = Solar im Gebäude verbraucht.</div></div>
+<div class="def"><div class="dt">Virtueller Summenzähler</div><div class="dd">Rechnerisch: Σ Einzelverbrauch − PV-Erzeugung = Netzbezug. Braucht iMSys in allen Wohnungen!</div></div>
+<div class="def"><div class="dt">Liegenschaftsmodell</div><div class="dd">Ein wMSB übernimmt alle Zähler im Gebäude als Lokationsbündel. Schnellerer Rollout, ein Ansprechpartner.</div></div>
+</div></div>
+<div class="lsec"><h2 class="lh2">Customer Support — die 6 wichtigsten Szenarien</h2>
+<div class="defs">
+<div class="def"><div class="dt">Einzug</div><div class="dd">Zählerstand fotografieren! · Vertrag abschließen · VNB anmelden · Abschlag festlegen</div></div>
+<div class="def"><div class="dt">Auszug</div><div class="dd">Zählerstand erfassen · Schlussrechnung · VNB abmelden · MaLo-ID bereitstellen</div></div>
+<div class="def"><div class="dt">Kündigung</div><div class="dd">Frist prüfen · MaLo-ID herausgeben (Pflicht!) · Schlussrechnung</div></div>
+<div class="def"><div class="dt">Hohe Rechnung</div><div class="dd">Abschlag zu niedrig? · Einzugs-ZS korrekt? · Solarertrag schlechter? · Preiserhöhung?</div></div>
+<div class="def"><div class="dt">Kein Solarstrom</div><div class="dd">Solar schwankt! Im Winter normal weniger. Nie 100% Solar garantiert.</div></div>
+<div class="def"><div class="dt">Wechsel-Wunsch</div><div class="dd">MaLo-ID herausgeben · Frist klären · KEIN Behindern des Wechsels!</div></div>
+</div>
+<div class="callout dark"><div class="ci">🚫</div><div class="cb"><div class="ct">Das darfst du NIEMALS</div><div class="cx">1. MaLo-ID verweigern wenn Kunde kündigt — gesetzlich verboten<br>2. Suggerieren dass Wechsel nicht möglich ist<br>3. Zählerstand beim Einzug nicht erfassen</div></div></div></div>`
+      }
+    ]
+  }
+];
+
+const ALL_CH = TRACKS.flatMap(t => t.chapters.map(ch => ({...ch, trackId:t.id})));
+
+// ═══════════════════════════════════════
+// QUIZZES
+// ═══════════════════════════════════════
+const QUIZZES = {
+  1:{title:'Quiz: ALVA Geschäftsmodell',questions:[
+    {type:'mc',text:'Was macht ALVA in welcher Reihenfolge?',options:['Strom kaufen → Weiterverkaufen → Zähler ablesen','PV-Anlage installieren → Mieterstrom liefern → Als Vollversorger auftreten','Netzanschluss bauen → Grundversorger werden → Mieter beliefern','Förderungen beantragen → Anlage bauen → Strom exportieren'],correct:1,ctx:'ALVA installiert PV-Anlagen (1), liefert Solarstrom direkt an Mieter (2), und übernimmt als Vollversorger auch Reststrom aus dem Netz wenn Solar nicht reicht (3). Das ist das Kerngeschäftsmodell.'},
+    {type:'mc',text:'Was sind ALVAs drei Kernwerte?',options:['Innovation, Nachhaltigkeit, Wachstum','Professionalität, Verbindlichkeit, Einfachheit','Qualität, Schnelligkeit, Preis','Transparenz, Verlässlichkeit, Expertise'],correct:1,ctx:'ALVAs drei Werte: Professionalität, Verbindlichkeit, Einfachheit. Diese sollen sich in jeder Kundenkommunikation und jedem Prozess widerspiegeln.'},
+    {type:'open',text:'Erkläre in 2-3 Sätzen was ALVAs Vision ist und was "für alle lohnen" konkret bedeutet.',keywords:['dezentral','digital','eigentümer','mieter','umwelt','gesellschaft','grün','günstig'],ctx:'ALVAs Vision: "Dezentrale, digitale Energielösungen, die sich für alle lohnen." Alle = Eigentümer (Rendite, Wertsteigerung), Mieter (günstiger Strom), Umwelt (erneuerbare Energie), Gesellschaft (Energiewende). Der Ansatz soll wirtschaftlich tragfähig sein, nicht auf Subventionen angewiesen.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'ALVA plant bis 2026 auch Batteriespeicher und Wärmepumpen anzubieten.',answer:true},{text:'ALVA ist nur im Bereich Wohngebäude tätig.',answer:false},{text:'Energy Services ist das Department das direkt mit Mietern kommuniziert.',answer:true}],ctx:'1. Wahr — Roadmap: 2025 Ladesäulen, 2026 Batteriespeicher & Wärmepumpen. 2. Falsch — ALVA bedient auch Gewerbe (Onsite PPA). 3. Wahr — ES ist die Kundenschnittstelle zu Mietern.'}
+  ]},
+  2:{title:'Quiz: Kultur & Prozesse',questions:[
+    {type:'mc',text:'Welches Department übernimmt nach der Installation die Kundenbeziehung mit Mietern?',options:['Asset Management','Enablement','Energy Services','Product & Digital'],correct:2,ctx:'Energy Services (ES) übernimmt nach der Installation — Mieterstromverträge, Abrechnung, Customer Support. Das ist dein Department!'},
+    {type:'open',text:'Beschreibe den ALVA-Prozess von Marketing bis zur Energielieferung in 4-5 Schritten.',keywords:['marketing','sales','enablement','installation','energy services','anlage','vertrag','mieter'],ctx:'1. Marketing generiert Leads. 2. Sales konvertiert Interessenten zu Kunden (Eigentümer). 3. Enablement prüft Baubarkeit und plant technisch. 4. Installation baut die PV-Anlage. 5. Energy Services übernimmt — Mieterverträge, Abrechnung, Support.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Bei ALVA arbeiten alle mit OKRs — quartalsweise Ziele.',answer:true},{text:'Asset Management ist für die Neukundengewinnung zuständig.',answer:false}],ctx:'1. Wahr — OKR-Rhythmus ist ein ALVA-Standard. 2. Falsch — Neukundengewinnung ist Sales & Partnerships. Asset Management überwacht Anlagenperformance.'}
+  ]},
+  3:{title:'Quiz: Strommarkt Grundlagen',questions:[
+    {type:'mc',text:'Was bedeutet Unbundling?',options:['Bündelung von Strom und Gas','Gesetzliche Trennung von Netz und Vertrieb','Zusammenschluss von Stadtwerken','Monatliche Abrechnung'],correct:1,ctx:'Unbundling = Trennung von Netz und Vertrieb. Netzbetreiber dürfen keinen Strom verkaufen, Lieferanten dürfen kein Netz betreiben. Ermöglicht fairen Wettbewerb seit 1998.'},
+    {type:'mc',text:'Wofür steht MSB?',options:['Marktstrombelieferung','Messstellenbetreiber','Marktstrombetreiber','Messstellenbeauftragter'],correct:1,ctx:'MSB = Messstellenbetreiber — zuständig für Einbau, Betrieb und Wartung von Stromzählern. Oft identisch mit dem VNB (gMSB), kann aber auch ein freier Anbieter sein (wMSB).'},
+    {type:'open',text:'Was sind die 4 wichtigsten Kostenbestandteile einer Stromrechnung?',keywords:['netzentgelt','energie','steuer','messkosten','mehrwertsteuer','konzessionsabgabe'],ctx:'1) Energiekosten (kWh-Preis des Lieferanten), 2) Netzentgelte (~25%, geht an VNB — beim Mieterstrom-Solaranteil entfällt das!), 3) Steuern & Abgaben (Stromsteuer, Konzessionsabgabe, MwSt 19%), 4) Messkosten (Zählermiete an MSB).'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Den Stromlieferanten kann ich frei wählen.',answer:true},{text:'Den Verteilnetzbetreiber kann ich auch frei wählen.',answer:false},{text:'ALVA ist ein EVU — konkret ein Stromlieferant.',answer:true}],ctx:'1. Wahr — freie Anbieterwahl seit 1998. 2. Falsch — VNB ist regionales Monopol. 3. Wahr — ALVA ist EVU (Lieferant).'}
+  ]},
+  4:{title:'Quiz: Erneuerbare Energien',questions:[
+    {type:'mc',text:'Wie hoch war der Anteil erneuerbarer Energien am deutschen Strommix 2024?',options:['Unter 30%','Etwa 45%','Über 60%','Über 90%'],correct:2,ctx:'2024 lag der Anteil erneuerbarer Energien in Deutschland bereits über 62%. Wind ist die größte Quelle, gefolgt von Solar und Biomasse. Deutschlands Ziel: bis 2030 mindestens 80% erneuerbare Energien.'},
+    {type:'mc',text:'Was bedeutet kWp bei einer PV-Anlage?',options:['Kilowatt pro Tag','Kilowattpeak — maximale Leistung unter Idealbedingungen','Kilowatt permanent','Kilowatt plus'],correct:1,ctx:'kWp = Kilowattpeak = maximale elektrische Leistung der PV-Anlage unter Standard-Testbedingungen. 1 kWp erzeugt in Deutschland ca. 850-1.000 kWh pro Jahr.'},
+    {type:'open',text:'Was ist der Unterschied zwischen kWp und kWh?',keywords:['leistung','menge','energie','produziert','verbraucht','anlage','größe'],ctx:'kWp = Leistung der PV-Anlage ("wie groß ist sie?") = Kapazität. kWh = tatsächlich produzierte oder verbrauchte Energiemenge ("wie viel Strom?") = Ergebnis. Beispiel: Eine 20 kWp Anlage erzeugt ca. 18.000 kWh/Jahr.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Biomasse kann auch nachts und bei bedecktem Himmel Strom erzeugen.',answer:true},{text:'Der Mieterstromzuschlag ist eine Förderung des deutschen Staates.',answer:true},{text:'Deutschland will die Kohleverstromung bis 2030 beenden.',answer:false}],ctx:'1. Wahr — Biomasse ist regelbar, Tag und Nacht nutzbar. 2. Wahr — Mieterstromzuschlag kommt über den Netzbetreiber, geregelt im EEG. 3. Falsch — das geplante Ende ist 2038, nicht 2030.'}
+  ]},
+  5:{title:'Quiz: Dezentrale Energie & Modelle',questions:[
+    {type:'mc',text:'Warum ist dezentral erzeugter Solarstrom günstiger für Mieter?',options:['Weil Solar kostenlos ist','Weil Netzentgelte für den lokal verbrauchten Anteil entfallen','Weil der Staat alles subventioniert','Weil ALVA keinen Gewinn macht'],correct:1,ctx:'Netzentgelte (~25% der normalen Rechnung) entfallen wenn Strom nicht durch das öffentliche Netz fließt. Das ist der wirtschaftliche Kern von Mieterstrom. Diese Ersparnis wird (gesetzlich vorgeschrieben) an Mieter weitergegeben.'},
+    {type:'mc',text:'Was ist der Hauptunterschied zwischen Mieterstrom und GGV?',options:['GGV ist nur für Neubauten','Bei GGV gibt es keinen Liefervertrag — Abrechnung über Nebenkosten','GGV ist immer günstiger','Kein Unterschied'],correct:1,ctx:'Mieterstrom = eigener Liefervertrag, ALVA als Vollversorger, Mieterstromzuschlag möglich. GGV (seit 2024) = kein Liefervertrag, Solar-Anteil über Nebenkosten, Mieter behalten eigenen Stromvertrag, kein Zuschlag.'},
+    {type:'open',text:'Erkläre den Unterschied zwischen Onsite PPA und Offsite PPA.',keywords:['anlage','netz','direkt','woanders','standort','herkunft','zertifikat'],ctx:'Onsite PPA: Anlage steht direkt beim Abnehmer (z.B. auf dem Dach). Strom fließt direkt, kein öffentliches Netz nötig. Typisch für Gewerbe mit großen Dachflächen. Offsite PPA: Anlage steht woanders (z.B. Windpark weit weg). Strom fließt durch das Netz. Abnehmer bekommt Grünstrom-Zertifikate aber keinen physischen Direktstrom.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Die Autarkiequote beschreibt welcher Anteil des Verbrauchs aus eigener Erzeugung gedeckt wird.',answer:true},{text:'Bei Mieterstrom entfällt auch die Mehrwertsteuer.',answer:false}],ctx:'1. Wahr — Autarkiequote = eigener Anteil am Gesamtverbrauch. 2. Falsch — Mehrwertsteuer (19%) fällt immer an wenn Strom verkauft wird, auch bei Mieterstrom.'}
+  ]},
+  6:{title:'Quiz: Wechsel & Abrechnung',questions:[
+    {type:'mc',text:'Was passiert am Zähler beim Lieferantenwechsel?',options:['Techniker tauscht Zähler aus','Zähler wird umprogrammiert','Nichts — alles administrativ','Strom wird kurz unterbrochen'],correct:2,ctx:'Beim Lieferantenwechsel passiert am Zähler NICHTS. Kein Techniker, kein Austausch, kein Stromausfall. Alles läuft elektronisch per GPKE-Prozess zwischen Lieferanten und VNB.'},
+    {type:'open',text:'Ein neuer Mieter zieht ein. Was sind die 3 wichtigsten Dinge die du sofort tun musst?',keywords:['zählerstand','vertrag','anmeldung','vnb','abschlag','malo'],ctx:'1) Zählerstand beim Einzug dokumentieren (fotografieren!) — das ist die Basis aller Abrechnungen. 2) Mieterstromvertrag abschließen und alle Kundendaten erfassen. 3) Kunden beim VNB per GPKE anmelden (Lieferbeginn). Außerdem: Abschlag festlegen.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'GPKE steht für Geschäftsprozesse zur Kundenbelieferung mit Elektrizität.',answer:true},{text:'Der Abschlag wird immer exakt nach dem tatsächlichen Verbrauch berechnet.',answer:false},{text:'Bei weniger Verbrauch als geschätzt gibt es eine Gutschrift.',answer:true}],ctx:'1. Wahr — korrekte Langform. 2. Falsch — Abschlag ist eine Schätzung (Vorjahr/Durchschnitt ÷ 12). Der echte Verbrauch wird erst am Jahresende abgerechnet. 3. Wahr — Gutschrift wenn Abschläge > echter Verbrauch.'}
+  ]},
+  7:{title:'Quiz: People & Culture',questions:[
+    {type:'mc',text:'An wen wendest du dich bei Fragen zu deinem Arbeitsvertrag?',options:['Finance','Asset Management','People & Culture','Sales'],correct:2,ctx:'People & Culture ist für alles rund um HR zuständig — Arbeitsverträge, Lohnabrechnung, Urlaub, Onboarding. Finance ist für Buchhaltung und Controlling zuständig, nicht für persönliche HR-Fragen.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Reisekostenerstattung läuft über Finance.',answer:true},{text:'People & Culture ist auch für Kundenabrechnungen zuständig.',answer:false}],ctx:'1. Wahr — Reisekosten prüfen und erstatten ist Finance. 2. Falsch — Kundenabrechnungen sind Energy Services und Finance, nicht P&C.'}
+  ]},
+  8:{title:'Quiz: Finance',questions:[
+    {type:'mc',text:'Warum ist Finance ein wichtiger Partner für Energy Services?',options:['Finance genehmigt alle Mieterstromverträge','Finance wickelt Kundenabrechnungen, Mahnungen und Projektcontrolling ab','Finance entscheidet über Tarifpreise','Finance ist für den Netzanschluss zuständig'],correct:1,ctx:'Finance und ES arbeiten eng zusammen bei: Kundenabrechnungen (Finance erstellt und versendet), Mahnungen bei Zahlungsverzug, und Projektcontrolling (IST-Profitabilität). Gute Daten von ES sind Voraussetzung für Finance.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Finance macht Monatsabschlüsse und arbeitet mit dem Wirtschaftsprüfer.',answer:true},{text:'Finance ist für die Kundenbetreuung von Mietern zuständig.',answer:false}],ctx:'1. Wahr — Jahresabschluss, Monatsabschluss und Wirtschaftsprüfung sind Finance. 2. Falsch — Kundenbetreuung der Mieter ist Energy Services.'}
+  ]},
+  9:{title:'Quiz: Sales & Partnerships',questions:[
+    {type:'mc',text:'Was ist die Hauptaufgabe von B2B Marketing bei ALVA?',options:['Mieterkommunikation','Lead-Generierung für Eigentümer und Steigerung der Conversion Rate','Installation von Solaranlagen','Anlagenmonitoring'],correct:1,ctx:'B2B Marketing generiert Leads bei Gebäudeeigentümern (nicht Mietern!) und verbessert die Conversion Rate. Mieterkommunikation macht Energy Services.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Sales konvertiert von Marketing generierte Leads zu Neukunden (Eigentümern).',answer:true},{text:'Marketing akquiriert direkt Mieter für Mieterstromverträge.',answer:false}],ctx:'1. Wahr — das ist die Kernaufgabe von Sales. 2. Falsch — Marketing adressiert Eigentümer (B2B), nicht Mieter. Mieter kommen zu ALVA weil ihr Vermieter ALVA gewählt hat.'}
+  ]},
+  10:{title:'Quiz: Enablement',questions:[
+    {type:'mc',text:'Was prüft Enablement vor einem ALVA-Projekt?',options:['Ob der Mieter kreditwürdig ist','Technische, regulatorische und wirtschaftliche Machbarkeit','Ob Marketing genug Leads hat','Das Budget'],correct:1,ctx:'Enablement führt die Baubarkeitsprüfung durch — technisch (Dach, Netz, Zähler), regulatorisch (Genehmigungen) und wirtschaftlich (lohnt es sich?). Nur realisierbare Projekte gehen weiter.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Enablement macht die Vor-Ort-Aufnahme am Gebäude.',answer:true},{text:'Die Baubarkeitsprüfung findet erst nach Vertragsunterzeichnung statt.',answer:false}],ctx:'1. Wahr — Vor-Ort: Dach, Netzanschluss, Zählerstruktur. 2. Falsch — Baubarkeitsprüfung VOR Vertragsschluss, damit keine unreasilisierbaren Projekte unterschrieben werden.'}
+  ]},
+  11:{title:'Quiz: Installation',questions:[
+    {type:'mc',text:'Was gehört zum Aufgabenbereich Installation bei ALVA?',options:['Kundenverträge mit Mietern','Supply Chain, Installationssteuerung und Netzprozesse','Jahresrechnungen erstellen','Eigentumsfinanzierung'],correct:1,ctx:'Installation: Supply Chain (Material), Installationssteuerung (Partner managen, Umsetzung), Netz & Messprozesse (Zählerwechsel, MSB). Kundenverträge und Rechnungen sind Energy Services und Finance.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Installation ist auch für Zählerwechsel und Messstellenprozesse zuständig.',answer:true}],ctx:'Wahr — Netz & Messstellenprozesse inkl. MSB-Management ist ein Kernbereich von Installation.'}
+  ]},
+  12:{title:'Quiz: Asset Management',questions:[
+    {type:'mc',text:'Wofür ist Asset Management bei ALVA hauptsächlich zuständig?',options:['Neukundengewinnung','Wirtschaftliche Performance der Solaranlagen und Eigentümerauszahlungen','Customer Support für Mieter','PV-Anlagen installieren'],correct:1,ctx:'Asset Management überwacht die wirtschaftliche und technische Performance der Solar-Assets, erstellt Reporting für Eigentümer und Banken, und steuert fristgerechte Eigentümerauszahlungen.'},
+    {type:'open',text:'Warum ist gute Datenqualität in Energy Services so wichtig für Asset Management?',keywords:['daten','verbrauch','performance','reporting','eigentümer','auszahlung'],ctx:'Asset Management braucht akkurate Verbrauchsdaten von ES für: Eigentümerreporting (wie viel Strom wurde erzeugt/verbraucht?), Wirtschaftlichkeitsanalyse und bankenfähige Unterlagen. Fehlerhafte ES-Daten machen das gesamte Reporting unbrauchbar.'}
+  ]},
+  13:{title:'Quiz: Energy Services Überblick',questions:[
+    {type:'mc',text:'Wer leitet Energy Services bei ALVA?',options:['Marc','Nataliia','Alexis','Gil'],correct:2,ctx:'Alexis leitet Energy Services. Darunter: Customer Acquisition (B2B Sales: Alexis, B2C Sales: Pola), Customer Operations (Nataliia), Customer Support (Gil), und Einspeisenmanagement (tbd).'},
+    {type:'mc',text:'Wer ist für Customer Support in ES zuständig?',options:['Alexis','Pola','Nataliia','Gil'],correct:3,ctx:'Gil leitet Customer Support in Energy Services, unter Customer Operations (Nataliia). Customer Support ist die direkte Schnittstelle zu Mietern bei Fragen, Problemen und Vertragsangelegenheiten.'},
+    {type:'open',text:'Was sind die 3 wichtigsten No-Goes im Customer Support bei ALVA?',keywords:['malo','maloId','wechsel','einzug','zählerstand','verweigern','behindern'],ctx:'1) MaLo-ID verweigern wenn Kunde kündigt — gesetzlich verboten, immer herausgeben. 2) Suggerieren dass Wechsel zu anderem Anbieter nicht möglich ist — Wechselrecht ist gesetzlich garantiert. 3) Zählerstand beim Einzug nicht erfassen — führt garantiert zu Streit bei der ersten Jahresrechnung.'},
+    {type:'tf',text:'Wahr oder Falsch?',statements:[{text:'Energy Services ist das einzige Department das täglich direkt mit Mietern kommuniziert.',answer:true},{text:'Billing und Payment Ops bleiben dauerhaft in Energy Services.',answer:false}],ctx:'1. Wahr — ES ist die Kundenschnittstelle zu Mietern. 2. Falsch — laut neuer Struktur verschiebt sich Billing & Payment Ops zu Finance.'}
+  ]},
+  14:{title:'Quiz: Energy Services Deep Dive',questions:[
+    {type:'mc',text:'Was gilt gesetzlich für den Mieterstrompreis?',options:['Max. 80% des Grundversorgungstarifs','Mindestens 10% unter dem Grundversorgungstarif (max. 90%)','Wird vom VNB festgelegt','Keine Vorgaben'],correct:1,ctx:'§42a EnWG: Max. 90% des Grundversorgungstarifs = mindestens 10% günstiger. Wenn der Grundversorger 30 ct/kWh hat, darf Mieterstrom maximal 27 ct/kWh kosten.'},
+    {type:'mc',text:'Was braucht ein virtueller Summenzähler zwingend?',options:['Einen physischen Zähler zusätzlich','iMSys in allen Wohnungen für synchrone Viertelstundenwerte','Mindestens 20 Wohnungen','Genehmigung der Bundesnetzagentur'],correct:1,ctx:'Virtuell = rechnerisch: Σ Einzelverbrauch − PV-Erzeugung = Netzbezug. Voraussetzung: alle Zähler müssen iMSys sein, weil zeitgleiche Viertelstundenwerte nötig sind. Ohne synchrone Daten stimmt die Verrechnung nicht.'},
+    {type:'open',text:'Ein Mieter ruft an: "Ich habe kaum Strom verbraucht aber trotzdem eine Nachzahlung von 200€." Nenne 3 mögliche Ursachen.',keywords:['abschlag','schätzung','einzug','zählerstand','solar','ertrag','preis'],ctx:'1) Abschlag zu niedrig angesetzt (z.B. nach Einzug ohne Vorjahresdaten). 2) Solarertrag schlechter als erwartet → mehr teurer Netzstrom. 3) Zählerstand beim Einzug falsch erfasst → Vormieter-Verbrauch dem neuen Mieter zugerechnet. 4) Strompreiserhöhung unterjährig.'},
+    {type:'tf',text:'Abschluss-Check',statements:[{text:'ALVA muss auch Netzstrom liefern wenn Solar nicht reicht (Vollversorgung).',answer:true},{text:'Der Mieterstromvertrag darf an den Mietvertrag gekoppelt werden.',answer:false},{text:'Das Liegenschaftsmodell erlaubt einem wMSB alle Zähler im Gebäude zu übernehmen.',answer:true},{text:'iMSys überträgt Viertelstundenwerte automatisch und verschlüsselt.',answer:true}],ctx:'1. Wahr — Vollversorgungspflicht. 2. Falsch — Kopplungsverbot! §42a EnWG. 3. Wahr — Lokationsbündel im MsbG. 4. Wahr — das ist der Kern des Smart Meter Gateways.'},
+    {type:'open',text:'Erkläre einem Mieter in 3 Sätzen warum sein Mieterstrom günstiger ist als beim Grundversorger.',keywords:['solar','dach','direkt','netz','netzentgelt','günstiger','lokal'],ctx:'Gute Antwort: "Die Solaranlage auf dem Dach Ihres Hauses produziert Strom der direkt zu Ihnen fließt — ohne den Umweg durch das öffentliche Stromnetz. Dadurch sparen wir Netzentgelte (ca. 25% einer normalen Stromrechnung) und diese Ersparnis geben wir an Sie weiter. Gesetzlich müssen wir mindestens 10% günstiger sein als der lokale Grundversorger."'}
+  ]}
+};
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let S = {done:{}, scores:{}};
+
+// ═══════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════
+function renderHome() {
+  const totalQuizCh = ALL_CH.filter(c => QUIZZES[c.id]).length;
+  const donePairs = ALL_CH.filter(c => S.done[`q${c.id}`]).length;
+  const pct = Math.round((donePairs/totalQuizCh)*100);
+  document.getElementById('tb-prog').innerHTML = `<strong>${pct}%</strong> abgeschlossen`;
+  document.getElementById('overall-bar').style.width = pct+'%';
+
+  const allDone = ALL_CH.filter(c=>QUIZZES[c.id]).every(c=>S.done[`q${c.id}`]);
+  let html = '';
+
+  TRACKS.forEach(track => {
+    html += `<div class="section-group">
+      <div class="section-label">${track.label}</div>
+      <div class="section-h">${track.name}</div>
+      <div class="section-divider"></div>`;
+
+    if (track.isDeepDive) {
+      // Deep dive track — show department tiles
+      html += `<div class="deep-grid">`;
+      const depts = [
+        {icon:'⚡', name:'Energy Services', sub:'Ausgebaut — jetzt starten', chId:14, active:true},
+        {icon:'💼', name:'Sales', sub:'Kommt vom Sales-Team', coming:true},
+        {icon:'🔧', name:'Enablement', sub:'Kommt vom Enablement-Team', coming:true},
+        {icon:'⚙️', name:'Installation', sub:'Kommt vom Installation-Team', coming:true},
+        {icon:'📈', name:'Asset Mgmt', sub:'Kommt vom AM-Team', coming:true},
+        {icon:'💻', name:'Product & Digital', sub:'Kommt vom Product-Team', coming:true},
+      ];
+      depts.forEach(d => {
+        if (d.coming) {
+          html += `<div class="deep-card coming"><div class="deep-icon">${d.icon}</div><div class="deep-name">${d.name}</div><div class="deep-sub">${d.sub}</div><div class="deep-badge coming-badge">Bald</div></div>`;
+        } else {
+          html += `<div class="deep-card active" onclick="window.open('https://coruscating-crostata-c5428c.netlify.app','_blank')">
+            <div class="deep-icon">${d.icon}</div>
+            <div class="deep-name">${d.name}</div>
+            <div class="deep-sub">${d.sub}</div>
+            <div class="deep-badge">Vollständige Schulung öffnen →</div>
+          </div>`;
+        }
+      });
+      html += `</div>`;
+    } else {
+      html += `<div class="card-grid">`;
+      track.chapters.forEach(ch => {
+        const lDone = S.done[`l${ch.id}`];
+        const qDone = S.done[`q${ch.id}`];
+        const hasQuiz = !!QUIZZES[ch.id];
+        // Lock only within same track
+        const locked = false;
+        const score = S.scores[ch.id];
+        const qLen = QUIZZES[ch.id]?.questions.length || 0;
+        let scoreText = qDone ? `${score||0}/${qLen} Punkte` : (lDone&&hasQuiz ? 'Quiz offen' : 'Offen');
+        let cta = locked ? '' : (qDone ? 'Wiederholen →' : (lDone&&hasQuiz ? 'Quiz →' : '📖 Lerneinheit →'));
+
+        html += `<div class="ch-card ${qDone?'done':''} ${locked?'locked':''}" onclick="openCh(${ch.id})">
+          <div class="ch-top"><div class="ch-num">Kapitel ${ch.id}</div><div class="ch-icon-big">${locked?'🔒':qDone?'✅':ch.icon}</div></div>
+          <div class="ch-title">${ch.title}</div>
+          <div class="ch-sub">${ch.sub}</div>
+          <div class="ch-foot">
+            <div class="ch-score">${scoreText}</div>
+            ${!locked&&cta?`<div class="ch-cta">${cta}</div>`:''}
+          </div>
+        </div>`;
+      });
+      html += `</div>`;
+    }
+    html += `</div>`;
+  });
+
+  if (allDone) {
+    const ts = Object.values(S.scores).reduce((a,b)=>a+b,0);
+    const ms = Object.values(QUIZZES).reduce((a,q)=>a+q.questions.length,0);
+    html += `<div class="cert-banner"><div><div class="cert-banner-ey">🎓 Onboarding abgeschlossen!</div><div class="cert-banner-h">Dein ALVA Akademie Zertifikat ist bereit</div><div class="cert-banner-sub">Gesamtpunkte: ${ts} / ${ms}</div></div><button class="cert-show-btn" onclick="showCert()">Zertifikat anzeigen →</button></div>`;
+  }
+
+  document.getElementById('home-sections').innerHTML = html;
+}
+
+function openCh(id) {
+  // Always show lesson first — quiz only after lesson completed
+  if (S.done[`l${id}`] && S.done[`q${id}`]) showQuiz(id); // if both done, allow re-quiz
+  else showLesson(id); // always start with lesson
+}
+
+// ═══════════════════════════════════════
+// LESSON
+// ═══════════════════════════════════════
+function showLesson(id) {
+  const ch = ALL_CH.find(c=>c.id===id);
+  document.getElementById('view-home').style.display='none';
+  document.getElementById('view-quiz').className='screen';
+  document.getElementById('view-lesson').className='screen active';
+  document.getElementById('lesson-bc').innerHTML=`<strong>${ch.title}</strong>`;
+  const hasQuiz = !!QUIZZES[id];
+  document.getElementById('lesson-body').innerHTML = ch.lesson +
+    (hasQuiz ? `<button class="lnext" onclick="doneLesson(${id}); showQuiz(${id})">Zum Quiz →</button>` :
+    `<button class="lnext" onclick="doneLesson(${id}); goHome()">Verstanden ✓</button>`);
+  window.scrollTo(0,0);
+}
+
+function doneLesson(id) {
+  S.done[`l${id}`]=1;
+  if(!QUIZZES[id]) { S.done[`q${id}`]=1; }
+  save();
+}
+
+function save() {
+  localStorage.setItem('alva_done', JSON.stringify(S.done));
+  localStorage.setItem('alva_scores', JSON.stringify(S.scores));
+}
+
+// ═══════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════
+let QS={};
+function showQuiz(id) {
+  document.getElementById('view-home').style.display='none';
+  document.getElementById('view-lesson').className='screen';
+  document.getElementById('view-quiz').className='screen active';
+  document.getElementById('quiz-bc').innerHTML=`<strong>${QUIZZES[id].title}</strong>`;
+  QS={id,qi:0,score:0,hist:{}};
+  renderQ(); window.scrollTo(0,0);
+}
+
+function renderQ() {
+  const quiz=QUIZZES[QS.id], q=quiz.questions[QS.qi], total=quiz.questions.length;
+  document.getElementById('quiz-body').innerHTML=`
+    <div class="qprog-wrap">
+      <div class="qprog-top"><span>Frage <strong>${QS.qi+1}</strong> / ${total}</span><span><strong>${QS.score}</strong> Punkte</span></div>
+      <div class="qprog-bar"><div class="qprog-fill" style="width:${((QS.qi+1)/total)*100}%"></div></div>
+    </div>
+    <div class="qcard">
+      <div class="qnum">Frage ${QS.qi+1} · ${quiz.title}</div>
+      <div class="qtext">${q.text}</div>
+      ${rQB(q)}
+    </div>
+    <div class="ai-panel" id="aip">
+      <div class="ai-head"><div class="ai-dot"></div><div class="ai-lbl">ALVA Coach erklärt</div></div>
+      <div class="ai-msgs" id="aim"></div>
+      <div class="ai-inp-row">
+        <input class="ai-inp" id="ai-in" placeholder="Rückfrage stellen..." onkeydown="if(event.key==='Enter')followup()"/>
+        <button class="ai-sbtn" id="ai-sb" onclick="followup()">↑</button>
+      </div>
+    </div>
+    <div class="qactions">
+      <button class="check-btn" id="chk" onclick="checkQ()">Antwort prüfen →</button>
+      <button class="next-btn" id="nxt" onclick="nextQ()">${QS.qi+1<total?'Nächste Frage':'Ergebnis 🎓'}</button>
+    </div>`;
+}
+
+let tfA={};
+function rQB(q) {
+  if(q.type==='mc') return`<div class="opts">${q.options.map((o,i)=>`<button class="opt" data-i="${i}" onclick="selOpt(this)"><span class="opt-l">${'ABCD'[i]}</span>${o}</button>`).join('')}</div>`;
+  if(q.type==='open') return`<p class="qhint">Schreib in eigenen Worten — ALVA Coach gibt dir ausführliches Feedback.</p><textarea class="qta" id="qta" placeholder="Deine Antwort..."></textarea>`;
+  if(q.type==='tf'){tfA={};return`<div class="tfl">${q.statements.map((s,si)=>`<div class="tfi"><div class="tfs">${s.text}</div><div class="tfbs"><button class="tfb" data-si="${si}" data-v="1" onclick="selTF(this)">✅ Wahr</button><button class="tfb" data-si="${si}" data-v="0" onclick="selTF(this)">❌ Falsch</button></div></div>`).join('')}</div>`;}
+}
+function selOpt(btn){document.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+function selTF(btn){const si=btn.dataset.si;btn.closest('.tfbs').querySelectorAll('.tfb').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');tfA[si]=btn.dataset.v==='1';}
+
+function checkQ() {
+  const quiz=QUIZZES[QS.id], q=quiz.questions[QS.qi];
+  let ua='', ok=false;
+  if(q.type==='mc'){
+    const s=document.querySelector('.opt.sel');if(!s){toast('Bitte wähle eine Antwort!');return;}
+    const i=parseInt(s.dataset.i);document.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+    if(i===q.correct){s.classList.add('correct');ok=true;QS.score++;}
+    else{s.classList.add('wrong');document.querySelectorAll('.opt')[q.correct].classList.add('correct');}
+    ua=`Option ${'ABCD'[i]}: ${q.options[i]}`;
+  }
+  if(q.type==='open'){
+    const v=document.getElementById('qta')?.value?.trim();if(!v){toast('Bitte schreib eine Antwort!');return;}
+    document.getElementById('qta').disabled=true;
+    ok=q.keywords.filter(k=>v.toLowerCase().includes(k)).length>=Math.max(1,Math.ceil(q.keywords.length*.22));
+    if(ok)QS.score++;ua=v;
+  }
+  if(q.type==='tf'){
+    if(Object.keys(tfA).length<q.statements.length){toast('Beantworte alle Aussagen!');return;}
+    let c=0;
+    document.querySelectorAll('.tfi').forEach((item,si)=>{
+      const btns=item.querySelectorAll('.tfb');btns.forEach(b=>{b.disabled=true;b.classList.remove('sel');});
+      const ui=tfA[si]?0:1,ci=q.statements[si].answer?0:1;
+      if(tfA[si]===q.statements[si].answer){btns[ui].classList.add('correct');c++;}
+      else{btns[ui].classList.add('wrong');btns[ci].classList.add('reveal');}
+    });
+    ok=c===q.statements.length;if(ok)QS.score++;
+    ua=q.statements.map((s,si)=>`"${s.text}" → ${tfA[si]?'Wahr':'Falsch'}`).join(' | ');
+  }
+  document.getElementById('chk').style.display='none';
+  document.getElementById('nxt').className='next-btn show';
+  askClaude(q,ua,ok);
+}
+
+async function askClaude(q,answer,ok) {
+  document.getElementById('aip').className='ai-panel show';
+  const prompt=`Du bist ALVA Coach — Lerncoach für neue Mitarbeiter bei ALVA Energie (Mieterstrom, Energiewirtschaft Deutschland).
+
+Fragen-Kontext & korrekte Antwort: ${q.ctx}
+Antwort des Lernenden: "${answer}"
+Systembewertung: ${ok?'RICHTIG ✅':'FALSCH ❌'}
+
+Feedback (150-200 Wörter):
+1. Direkt: richtig oder falsch — klar
+2. WARUM — konkretes Hintergrundwissen
+3. Was bedeutet das im ALVA-Alltag konkret?
+4. Optional: kurzes Merkhilfe-Beispiel
+
+Ton: direkt, freundlich-professionell, praxisnah. Auf Deutsch.`;
+
+  if(!QS.hist[QS.qi])QS.hist[QS.qi]=[];
+  QS.hist[QS.qi].push({role:'user',content:prompt});
+  const tid='T'+Date.now();
+  addMsg('claude','<div class="typing"><span></span><span></span><span></span></div>',tid);
+  try{
+    const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer YOUR_API_KEY'},
+      body:JSON.stringify({model:'gpt-4o-mini',max_tokens:1000,
+        messages:[{role:'system',content:'Du bist ALVA Coach — Lerncoach für neue ALVA Energie Mitarbeiter. Direkt, praxisnah, auf Deutsch.'},...QS.hist[QS.qi]]})});
+    const d=await r.json();
+    const reply=d.choices?.[0]?.message?.content||'Verbindungsfehler.';
+    document.getElementById(tid)?.remove();
+    addMsg('claude',reply.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>'));
+    QS.hist[QS.qi].push({role:'assistant',content:reply});
+  }catch(e){document.getElementById(tid)?.remove();addMsg('claude','⚠️ Verbindungsfehler. Bitte prüfe deine Internetverbindung.');}
+}
+
+async function followup() {
+  const inp=document.getElementById('ai-in'), msg=inp.value.trim();
+  if(!msg)return; inp.value=''; document.getElementById('ai-sb').disabled=true;
+  addMsg('user',msg);
+  const qi=QS.qi;
+  if(!QS.hist[qi])QS.hist[qi]=[];
+  QS.hist[qi].push({role:'user',content:msg});
+  const tid='T'+Date.now();
+  addMsg('claude','<div class="typing"><span></span><span></span><span></span></div>',tid);
+  try{
+    const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer YOUR_API_KEY'},
+      body:JSON.stringify({model:'gpt-4o-mini',max_tokens:1000,
+        messages:[{role:'system',content:'Du bist ALVA Coach für neue ALVA Energie Mitarbeiter. Auf Deutsch.'},...QS.hist[qi]]})});
+    const d=await r.json();
+    const reply=d.choices?.[0]?.message?.content||'Fehler.';
+    document.getElementById(tid)?.remove();
+    addMsg('claude',reply.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>'));
+    QS.hist[qi].push({role:'assistant',content:reply});
+  }catch(e){document.getElementById(tid)?.remove();addMsg('claude','⚠️ Verbindungsfehler.');}
+  document.getElementById('ai-sb').disabled=false;
+}
+
+function addMsg(role,html,id) {
+  const el=document.createElement('div');el.className=`aimsg ${role}`;if(id)el.id=id;
+  el.innerHTML=`<div class="aimsg-av">${role==='claude'?'A':'👤'}</div><div class="aimsg-bub">${html}</div>`;
+  const msgs=document.getElementById('aim');msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function nextQ() {
+  const total=QUIZZES[QS.id].questions.length;
+  if(QS.qi+1>=total)showScore();else{QS.qi++;tfA={};renderQ();window.scrollTo(0,0);}
+}
+
+function showScore() {
+  const quiz=QUIZZES[QS.id], total=quiz.questions.length, pct=QS.score/total;
+  S.done[`q${QS.id}`]=1; S.scores[QS.id]=QS.score; save();
+  let em,title,sub;
+  if(pct===1){em='🏆';title='Perfekt!';sub='Alle Fragen richtig!';}
+  else if(pct>=.75){em='✅';title='Sehr gut!';sub='Starke Leistung.';}
+  else if(pct>=.5){em='👍';title='Gut!';sub='Lies die Lerneinheit nochmal.';}
+  else{em='📖';title='Nochmal üben!';sub='Schau das Kapitel nochmal an.';}
+
+  const allDone=ALL_CH.filter(c=>QUIZZES[c.id]).every(c=>S.done[`q${c.id}`]);
+  const next=QS.id+1;
+  const nextCh=ALL_CH.find(c=>c.id===next);
+
+  document.getElementById('quiz-body').innerHTML=`
+    <div class="score-wrap">
+      <div class="score-em">${em}</div>
+      <div class="score-h">${title}</div>
+      <div class="score-sub">${sub}</div>
+      <div class="score-big">${QS.score}</div>
+      <div class="score-of">von ${total} Punkten</div>
+      <div class="score-btns">
+        ${allDone?`<button class="score-cont" onclick="showCert()">🎓 Zertifikat</button>`:
+          nextCh?`<button class="score-cont" onclick="openCh(${next})">Kapitel ${next} →</button>`:
+          `<button class="score-cont" onclick="goHome()">Zur Übersicht</button>`}
+        <button class="score-retry" onclick="showQuiz(${QS.id})">Wiederholen</button>
+      </div>
+    </div>`;
+  window.scrollTo(0,0);
+}
+
+// ═══════════════════════════════════════
+// CERT
+// ═══════════════════════════════════════
+function showCert() {
+  document.getElementById('screen-app').style.display='none';
+  document.getElementById('screen-cert').style.display='block';
+  const name=window._userName||'Mitarbeiter*in';
+  const today=new Date();
+  const dateStr=today.toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const ts=Object.values(S.scores).reduce((a,b)=>a+b,0);
+  const ms=Object.values(QUIZZES).reduce((a,q)=>a+q.questions.length,0);
+  const pct=Math.round((ts/ms)*100);
+
+  document.getElementById('cert-card').innerHTML=`
+    <div class="cert-top">
+      <div class="cert-logo-row"><div class="cert-mark"></div><div class="cert-wm">ALVA Akademie</div></div>
+      <div class="cert-ey">Onboarding Zertifikat</div>
+      <div class="cert-title">Einstieg in den <span class="hl">Strommarkt</span><br>& <span class="hl">ALVA</span></div>
+    </div>
+    <div class="cert-body">
+      <div class="cert-pres">Hiermit bestätigen wir, dass</div>
+      <div class="cert-name">${name}</div>
+      <div class="cert-details">
+        <div><div class="cert-dl">Datum</div><div class="cert-dv">${dateStr}</div></div>
+        <div><div class="cert-dl">Tracks</div><div class="cert-dv">4 / 4</div></div>
+        <div><div class="cert-dl">Punkte</div><div class="cert-dv">${ts} / ${ms} (${pct}%)</div></div>
+      </div>
+      <div class="cert-chs">
+        <div class="cert-chs-title">Abgeschlossene Module</div>
+        <div class="cert-ch-list">
+          <div class="cert-ch-item"><div class="cert-ch-check">✓</div>ALVA Mission, Vision & Geschäftsmodell</div>
+          <div class="cert-ch-item"><div class="cert-ch-check">✓</div>Kultur & Wie wir arbeiten</div>
+          <div class="cert-ch-item"><div class="cert-ch-check">✓</div>Einführung Strommarkt & Player</div>
+          <div class="cert-ch-item"><div class="cert-ch-check">✓</div>Erneuerbare Energien & Zahlen</div>
+          <div class="cert-ch-item"><div class="cert-ch-check">✓</div>Dezentrale Energie & Modelle</div>
+          <div class="cert-ch-item"><div class="cert-ch-check">✓</div>Lieferantenwechsel & Abrechnung</div>
+          <div class="cert-ch-item"><div class="cert-ch-check">✓</div>Alle ALVA Departments</div>
+          <div class="cert-ch-item"><div class="cert-ch-check">✓</div>Energy Services Deep Dive</div>
+        </div>
+      </div>
+      <div class="cert-footer">
+        <div><div class="cert-sig-line"></div><div class="cert-sig-name">ALVA Energie GmbH</div><div class="cert-sig-title">ALVA Akademie · Onboarding</div></div>
+        <div class="cert-seal"><div class="cert-seal-t">ALVA<br>AKADEMIE</div><div class="cert-seal-y">${today.getFullYear()}</div></div>
+      </div>
+    </div>`;
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  document.getElementById('view-lesson').className='screen';
+  document.getElementById('view-quiz').className='screen';
+  document.getElementById('view-home').style.display='';
+  renderHome(); window.scrollTo(0,0);
+}
+
+function toast(msg) {
+  const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+  clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',2500);
+}
+</script>
+</body>
+</html>
