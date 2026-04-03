@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ALVA Akademie — Onboarding</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy:#0F1F3D;
-  --navy2:#162848;
-  --navy3:#1E3A5F;
-  --yellow:#FFFF00;
+  --navy:#050b13;
+  --navy2:#0a1628;
+  --navy3:#0f1f3d;
+  --yellow:#FFFC2E;
   --white:#FFFFFF;
   --grey:#F3F3F3;
   --grey2:#E8E8E8;
@@ -23,40 +23,43 @@
   --err-bg:#FEF2F2;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);min-height:100vh;-webkit-font-smoothing:antialiased;}
+body{font-family:'Outfit',sans-serif;background:var(--white);color:var(--dark);min-height:100vh;-webkit-font-smoothing:antialiased;}
 
 /* LOGIN */
 #screen-login{display:none;min-height:100vh;background:var(--navy);}
-.login-grid{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
-.login-l{background:var(--navy);padding:56px;display:flex;flex-direction:column;justify-content:space-between;}
-.login-logo{display:flex;align-items:center;gap:10px;}
-.alva-mark{width:28px;height:28px;background:var(--yellow);clip-path:polygon(50% 0%,0% 100%,100% 100%);flex-shrink:0;}
-.alva-wordmark{font-size:18px;font-weight:900;color:var(--white);letter-spacing:-.03em;}
-.login-hero{flex:1;display:flex;flex-direction:column;justify-content:center;padding:60px 0;}
-.login-eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--yellow);margin-bottom:18px;}
-.login-h1{font-size:clamp(34px,4.5vw,56px);font-weight:900;line-height:1.05;letter-spacing:-.04em;color:var(--white);margin-bottom:18px;}
+.login-wrap{min-height:100vh;display:flex;flex-direction:column;}
+.login-nav{padding:28px 48px;display:flex;align-items:center;justify-content:space-between;}
+.login-logo{display:flex;align-items:center;gap:0;}
+.alva-logo-svg{height:28px;width:auto;}
+.login-main{flex:1;display:flex;align-items:center;justify-content:center;padding:0 48px 80px;}
+.login-center{max-width:1100px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.login-hero{display:flex;flex-direction:column;}
+.login-eyebrow{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--yellow);margin-bottom:24px;}
+.login-h1{font-family:'Outfit',sans-serif;font-size:clamp(32px,4vw,52px);font-weight:800;line-height:1.08;letter-spacing:-.03em;color:var(--white);margin-bottom:20px;}
 .login-h1 .hl{color:var(--yellow);}
-.login-sub{font-size:16px;color:rgba(255,255,255,.45);line-height:1.6;max-width:400px;font-weight:300;}
-.login-stats{display:flex;gap:32px;}
-.lstat-n{font-size:28px;font-weight:900;color:var(--yellow);letter-spacing:-.03em;}
-.lstat-l{font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;font-weight:500;}
-.login-r{background:var(--white);display:flex;align-items:center;justify-content:center;padding:56px;}
-.login-card{width:100%;max-width:380px;}
-.login-card-title{font-size:24px;font-weight:900;letter-spacing:-.03em;margin-bottom:8px;color:var(--navy);}
-.login-card-sub{font-size:14px;color:var(--mid);margin-bottom:28px;line-height:1.5;}
-.login-input{width:100%;padding:14px 16px;font-size:15px;font-family:'Inter',sans-serif;border:1.5px solid var(--border);border-radius:6px;outline:none;transition:border-color .14s;margin-bottom:10px;color:var(--dark);}
-.login-input:focus{border-color:var(--navy);}
-.login-btn{width:100%;padding:16px;background:var(--navy);color:var(--white);border:none;border-radius:6px;font-size:15px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .18s;letter-spacing:-.01em;}
-.login-btn:hover{background:var(--yellow);color:var(--navy);}
-.login-err{margin-top:10px;padding:12px;background:var(--err-bg);border-radius:6px;font-size:13px;color:var(--err);display:none;}
-.login-note{margin-top:16px;font-size:12px;color:var(--mid);text-align:center;line-height:1.5;}
-@media(max-width:768px){.login-grid{grid-template-columns:1fr;}.login-l{min-height:50vh;padding:36px 24px;}.login-r{padding:36px 24px;}}
+.login-sub{font-size:16px;color:rgba(255,255,255,.4);line-height:1.7;max-width:440px;font-weight:300;}
+.login-stats{display:flex;gap:40px;margin-top:48px;}
+.lstat-n{font-family:'Outfit',sans-serif;font-size:28px;font-weight:800;color:var(--yellow);letter-spacing:-.03em;}
+.lstat-l{font-size:13px;color:rgba(255,255,255,.3);margin-top:4px;font-weight:400;}
+.login-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:40px;backdrop-filter:blur(12px);width:100%;max-width:420px;justify-self:end;}
+.login-card-title{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;color:var(--white);}
+.login-card-sub{font-size:14px;color:rgba(255,255,255,.35);margin-bottom:28px;line-height:1.5;}
+.login-input{width:100%;padding:14px 16px;font-size:15px;font-family:'Outfit',sans-serif;border:1px solid rgba(255,255,255,.12);border-radius:8px;outline:none;transition:border-color .2s;margin-bottom:12px;color:var(--white);background:rgba(255,255,255,.06);}
+.login-input::placeholder{color:rgba(255,255,255,.25);}
+.login-input:focus{border-color:var(--yellow);background:rgba(255,255,255,.08);}
+.login-btn{width:100%;padding:16px;background:var(--yellow);color:var(--navy);border:none;border-radius:8px;font-size:15px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .2s;letter-spacing:-.01em;}
+.login-btn:hover{background:#fff;color:var(--navy);}
+.login-err{margin-top:10px;padding:12px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);border-radius:8px;font-size:13px;color:#f87171;display:none;}
+.login-note{margin-top:16px;font-size:12px;color:rgba(255,255,255,.25);text-align:center;line-height:1.5;}
+.cert-badge-login{width:110px;height:140px;flex-shrink:0;transform:rotate(6deg);opacity:.9;}
+.cert-badge-login svg{width:100%;height:100%;}
+@media(max-width:768px){.login-center{grid-template-columns:1fr;gap:40px;}.login-nav{padding:20px 24px;}.login-main{padding:0 24px 40px;}.login-card{justify-self:start;max-width:100%;}}
 
 /* TOPBAR */
 #screen-app{display:none;}
 .topbar{background:var(--navy);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:500;}
 .tb-l{display:flex;align-items:center;gap:8px;}
-.tb-mark{width:20px;height:20px;background:var(--yellow);clip-path:polygon(50% 0%,0% 100%,100% 100%);flex-shrink:0;}
+.tb-mark{width:auto;height:18px;flex-shrink:0;}
 .tb-name{font-size:14px;font-weight:900;color:var(--white);letter-spacing:-.02em;}
 .tb-sep{width:1px;height:14px;background:rgba(255,255,255,.15);margin:0 8px;}
 .tb-sub{font-size:12px;color:rgba(255,255,255,.35);font-weight:500;}
@@ -64,7 +67,7 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 .tb-prog{font-size:12px;color:rgba(255,255,255,.35);font-weight:500;}
 .tb-prog strong{color:var(--yellow);}
 .tb-av-fb{width:30px;height:30px;border-radius:50%;background:var(--yellow);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;}
-.tb-out{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);font-size:12px;font-family:'Inter',sans-serif;font-weight:600;padding:5px 11px;border-radius:5px;cursor:pointer;transition:all .14s;}
+.tb-out{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.4);font-size:12px;font-family:'Outfit',sans-serif;font-weight:600;padding:5px 11px;border-radius:5px;cursor:pointer;transition:all .14s;}
 .tb-out:hover{border-color:rgba(255,255,255,.4);color:white;}
 
 /* HOME HERO */
@@ -74,6 +77,9 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 .hero-ey{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--yellow);margin-bottom:18px;}
 .hero-h1{font-size:clamp(30px,5vw,60px);font-weight:900;letter-spacing:-.04em;line-height:1.05;color:var(--white);margin-bottom:16px;}
 .hero-h1 .hl{background:var(--yellow);color:var(--navy);padding:0 6px;display:inline-block;}
+.hero-title-row{display:flex;align-items:center;gap:28px;flex-wrap:wrap;}
+.cert-badge{width:120px;height:120px;position:relative;flex-shrink:0;}
+.cert-badge svg{width:100%;height:100%;}
 .hero-p{font-size:16px;color:rgba(255,255,255,.45);max-width:560px;line-height:1.6;font-weight:300;margin-bottom:40px;}
 .hero-chips{display:flex;gap:10px;flex-wrap:wrap;}
 .chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.6);font-size:12px;font-weight:600;padding:7px 14px;border-radius:99px;}
@@ -135,14 +141,14 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 .cert-banner-ey{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow);margin-bottom:6px;}
 .cert-banner-h{font-size:20px;font-weight:900;color:var(--white);letter-spacing:-.02em;}
 .cert-banner-sub{font-size:13px;color:rgba(255,255,255,.4);margin-top:3px;}
-.cert-show-btn{background:var(--yellow);color:var(--navy);border:none;border-radius:6px;padding:14px 24px;font-size:13px;font-family:'Inter',sans-serif;font-weight:800;cursor:pointer;white-space:nowrap;transition:opacity .15s;}
+.cert-show-btn{background:var(--yellow);color:var(--navy);border:none;border-radius:6px;padding:14px 24px;font-size:13px;font-family:'Outfit',sans-serif;font-weight:800;cursor:pointer;white-space:nowrap;transition:opacity .15s;}
 .cert-show-btn:hover{opacity:.88;}
 
 /* SCREEN */
 .screen{display:none;}
 .screen.active{display:block;}
 .subbar{background:var(--white);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;align-items:center;gap:12px;position:sticky;top:60px;z-index:100;}
-.back-btn{background:none;border:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--mid);font-family:'Inter',sans-serif;display:flex;align-items:center;gap:4px;padding:5px 0;transition:color .13s;}
+.back-btn{background:none;border:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--mid);font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:4px;padding:5px 0;transition:color .13s;}
 .back-btn:hover{color:var(--navy);}
 .bc strong{font-size:13px;color:var(--navy);}
 
@@ -234,7 +240,7 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 .dept-card.focus{border-color:var(--yellow);background:#FFFDE7;}
 
 /* Lesson next */
-.lnext{margin-top:52px;background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:16px 32px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .16s;display:inline-flex;align-items:center;gap:8px;letter-spacing:-.01em;}
+.lnext{margin-top:52px;background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:16px 32px;font-size:14px;font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;transition:all .16s;display:inline-flex;align-items:center;gap:8px;letter-spacing:-.01em;}
 .lnext:hover{background:var(--yellow);color:var(--navy);}
 
 /* QUIZ */
@@ -249,7 +255,7 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 .qtext{font-size:19px;font-weight:800;letter-spacing:-.03em;line-height:1.25;margin-bottom:22px;color:var(--navy);}
 .qhint{font-size:13px;color:var(--mid);margin-bottom:16px;font-style:italic;}
 .opts{display:flex;flex-direction:column;gap:8px;}
-.opt{background:var(--grey);border:1.5px solid transparent;border-radius:6px;padding:13px 16px;font-size:14px;font-family:'Inter',sans-serif;font-weight:500;cursor:pointer;text-align:left;transition:all .12s;display:flex;align-items:center;gap:11px;color:var(--dark);}
+.opt{background:var(--grey);border:1.5px solid transparent;border-radius:6px;padding:13px 16px;font-size:14px;font-family:'Outfit',sans-serif;font-weight:500;cursor:pointer;text-align:left;transition:all .12s;display:flex;align-items:center;gap:11px;color:var(--dark);}
 .opt-l{width:26px;height:26px;border-radius:4px;background:var(--white);border:1.5px solid var(--border);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s;color:var(--mid);}
 .opt:hover:not(:disabled){border-color:var(--navy);background:var(--white);}
 .opt:hover:not(:disabled) .opt-l{background:var(--navy);color:var(--yellow);border-color:var(--navy);}
@@ -260,14 +266,14 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 .opt.wrong{border-color:var(--err);background:var(--err-bg);}
 .opt.wrong .opt-l{background:var(--err);color:white;border-color:var(--err);}
 .opt:disabled{cursor:default;}
-.qta{width:100%;background:var(--grey);border:1.5px solid transparent;border-radius:6px;padding:14px;font-size:14.5px;font-family:'Inter',sans-serif;color:var(--dark);resize:vertical;min-height:110px;outline:none;transition:border-color .12s;}
+.qta{width:100%;background:var(--grey);border:1.5px solid transparent;border-radius:6px;padding:14px;font-size:14.5px;font-family:'Outfit',sans-serif;color:var(--dark);resize:vertical;min-height:110px;outline:none;transition:border-color .12s;}
 .qta:focus{border-color:var(--navy);background:var(--white);}
 .qta:disabled{opacity:.65;}
 .tfl{display:flex;flex-direction:column;gap:8px;}
 .tfi{background:var(--grey);border-radius:6px;padding:14px;}
 .tfs{font-size:14px;font-weight:600;margin-bottom:9px;line-height:1.4;letter-spacing:-.01em;color:var(--navy);}
 .tfbs{display:flex;gap:7px;}
-.tfb{flex:1;padding:9px;background:var(--white);border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .12s;color:var(--mid);}
+.tfb{flex:1;padding:9px;background:var(--white);border:1.5px solid var(--border);border-radius:5px;font-size:13px;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;transition:all .12s;color:var(--mid);}
 .tfb:hover:not(:disabled){border-color:var(--navy);color:var(--navy);}
 .tfb.sel{border-color:var(--navy);color:var(--navy);background:var(--white);}
 .tfb.correct{border-color:var(--ok);color:var(--ok);background:var(--ok-bg);}
@@ -294,17 +300,17 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 .typing span:nth-child(2){animation-delay:.2s;} .typing span:nth-child(3){animation-delay:.4s;}
 @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
 .ai-inp-row{border-top:1px solid rgba(255,255,255,.07);padding:11px 18px;display:flex;gap:8px;}
-.ai-inp{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:8px 12px;color:white;font-size:13.5px;font-family:'Inter',sans-serif;outline:none;transition:border-color .13s;}
+.ai-inp{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:8px 12px;color:white;font-size:13.5px;font-family:'Outfit',sans-serif;outline:none;transition:border-color .13s;}
 .ai-inp:focus{border-color:var(--yellow);}
 .ai-inp::placeholder{color:rgba(255,255,255,.22);}
 .ai-sbtn{background:var(--yellow);border:none;border-radius:5px;width:36px;height:36px;color:var(--navy);font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity .12s;flex-shrink:0;}
 .ai-sbtn:hover{opacity:.85;} .ai-sbtn:disabled{opacity:.3;cursor:default;}
 
 .qactions{display:flex;gap:9px;margin-top:14px;}
-.check-btn{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:14px 26px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .13s;flex:1;letter-spacing:-.01em;}
+.check-btn{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:14px 26px;font-size:14px;font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;transition:all .13s;flex:1;letter-spacing:-.01em;}
 .check-btn:hover{background:var(--yellow);color:var(--navy);}
 .check-btn:disabled{opacity:.4;cursor:default;}
-.next-btn{background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:6px;padding:14px 26px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .13s;display:none;letter-spacing:-.01em;}
+.next-btn{background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:6px;padding:14px 26px;font-size:14px;font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;transition:all .13s;display:none;letter-spacing:-.01em;}
 .next-btn.show{display:block;}
 .next-btn:hover{border-color:var(--navy);}
 
@@ -316,18 +322,18 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 .score-big{font-size:76px;font-weight:900;letter-spacing:-.06em;line-height:1;color:var(--navy);}
 .score-of{font-size:13px;color:var(--mid);margin-top:4px;margin-bottom:44px;font-weight:600;}
 .score-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
-.score-cont{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:15px 30px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .14s;}
+.score-cont{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:15px 30px;font-size:14px;font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;transition:all .14s;}
 .score-cont:hover{background:var(--yellow);color:var(--navy);}
-.score-retry{background:none;color:var(--mid);border:1.5px solid var(--border);border-radius:6px;padding:15px 30px;font-size:14px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .14s;}
+.score-retry{background:none;color:var(--mid);border:1.5px solid var(--border);border-radius:6px;padding:15px 30px;font-size:14px;font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;transition:all .14s;}
 .score-retry:hover{border-color:var(--navy);color:var(--navy);}
 
 /* CERT */
 #screen-cert{display:none;background:var(--grey);min-height:100vh;}
 .cert-page{max-width:900px;margin:0 auto;padding:52px 32px;}
 .cert-actions{display:flex;gap:11px;margin-bottom:36px;justify-content:center;}
-.cert-print-btn{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:13px 26px;font-size:13.5px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;transition:all .14s;}
+.cert-print-btn{background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:13px 26px;font-size:13.5px;font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;transition:all .14s;}
 .cert-print-btn:hover{background:var(--yellow);color:var(--navy);}
-.cert-back-btn{background:none;color:var(--mid);border:1.5px solid var(--border);border-radius:6px;padding:13px 26px;font-size:13.5px;font-family:'Inter',sans-serif;font-weight:700;cursor:pointer;}
+.cert-back-btn{background:none;color:var(--mid);border:1.5px solid var(--border);border-radius:6px;padding:13px 26px;font-size:13.5px;font-family:'Outfit',sans-serif;font-weight:700;cursor:pointer;}
 .cert-card{background:var(--white);border:2px solid var(--navy);border-radius:8px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.1);}
 .cert-top{background:var(--navy);padding:44px 52px 38px;}
 .cert-logo-row{display:flex;align-items:center;gap:10px;margin-bottom:36px;}
@@ -363,29 +369,62 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 
 <!-- LOGIN -->
 <div id="screen-login">
-  <div class="login-grid">
-    <div class="login-l">
-      <div class="login-logo"><div class="alva-mark"></div><div class="alva-wordmark">ALVA Akademie</div></div>
-      <div class="login-hero">
-        <div class="login-eyebrow">Onboarding · Schulungsprogramm</div>
-        <h1 class="login-h1">Willkommen<br>bei <span class="hl">ALVA</span></h1>
-        <p class="login-sub">Dein strukturierter Einstieg — ALVA als Unternehmen, der Strommarkt, und dein Bereich. Mit Live-Feedback und Zertifikat am Ende.</p>
+  <div class="login-wrap">
+    <nav class="login-nav">
+      <div class="login-logo">
+        <svg class="alva-logo-svg" viewBox="0 0 3000 1826" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1993.06 0H1694.44H1701.51L2510.59 1467.56L2699.74 1819.44H3000L1993.06 0ZM1701.51 0H1694.44L2510.59 1467.56L1701.51 0Z" fill="white" opacity=".85"/>
+          <path d="M1472.13 0H1000.87L0 1825.65H549.799L735.792 1472.57H1871.93L2057.93 1825.65H2612.63L1611.76 0H1472.13ZM735.792 1472.57L1304.14 392.599L1871.93 1472.57H735.792Z" fill="white"/>
+        </svg>
       </div>
-      <div class="login-stats">
-        <div><div class="lstat-n">4</div><div class="lstat-l">Tracks</div></div>
-        <div><div class="lstat-n">~90 Min</div><div class="lstat-l">Dauer</div></div>
-        <div><div class="lstat-n">Zertifikat</div><div class="lstat-l">Am Ende</div></div>
-      </div>
-    </div>
-    <div class="login-r">
-      <div class="login-card">
-        <div class="login-card-title">Anmelden</div>
-        <div class="login-card-sub">Gib deinen Namen und das Team-Passwort ein.</div>
-        <input class="login-input" id="name-inp" type="text" placeholder="Dein Name (z.B. Anna Müller)" onkeydown="if(event.key==='Enter')document.getElementById('pw-inp').focus()">
-        <input class="login-input" id="pw-inp" type="password" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()">
-        <button class="login-btn" onclick="doLogin()">Loslegen →</button>
-        <div class="login-err" id="login-err"></div>
-        <div class="login-note">Passwort: alva2026 · Fortschritt wird auf diesem Gerät gespeichert.</div>
+    </nav>
+    <div class="login-main">
+      <div class="login-center">
+        <div class="login-hero">
+          <div class="login-eyebrow">Onboarding · Schulungsprogramm</div>
+          <div style="display:flex;align-items:center;gap:24px;">
+            <h1 class="login-h1">Willkommen<br>bei <span class="hl">ALVA</span></h1>
+            <div class="cert-badge-login">
+              <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+                <!-- Ribbon tails -->
+                <path d="M70,155 L48,240 L70,218 L88,250 L85,155" fill="#FFFC2E" opacity=".7"/>
+                <path d="M130,155 L115,155 L112,250 L130,218 L152,240 L130,155" fill="#FFFC2E" opacity=".55"/>
+                <!-- Yellow circle background -->
+                <circle cx="100" cy="100" r="88" fill="#FFFC2E"/>
+                <!-- Dark inner circle -->
+                <circle cx="100" cy="100" r="76" fill="#050b13"/>
+                <!-- ALVA logo in center -->
+                <g transform="translate(40,56) scale(0.040)">
+                  <path d="M1993.06 0H1694.44H1701.51L2510.59 1467.56L2699.74 1819.44H3000L1993.06 0ZM1701.51 0H1694.44L2510.59 1467.56L1701.51 0Z" fill="white" opacity=".8"/>
+                  <path d="M1472.13 0H1000.87L0 1825.65H549.799L735.792 1472.57H1871.93L2057.93 1825.65H2612.63L1611.76 0H1472.13ZM735.792 1472.57L1304.14 392.599L1871.93 1472.57H735.792Z" fill="white"/>
+                </g>
+                <!-- Curved top text following circle -->
+                <defs>
+                  <path id="badge-arc" d="M 6,95 a 94,94 0 0,1 188,0"/>
+                </defs>
+                <text font-family="Outfit,sans-serif" font-size="12" font-weight="700" letter-spacing="3.5" fill="#FFFC2E" text-anchor="middle">
+                  <textPath href="#badge-arc" startOffset="50%">ALVA · EXPERT</textPath>
+                </text>
+              </svg>
+            </div>
+          </div>
+          <p class="login-sub">Dein strukturierter Einstieg — ALVA als Unternehmen, der Strommarkt, und dein Bereich. Mit Live-Feedback und Zertifikat am Ende.</p>
+          <div style="font-size:13px;font-weight:500;color:var(--yellow);margin-top:8px;opacity:.6;">➔ Hol dir dein ALVA Zertifikat</div>
+          <div class="login-stats">
+            <div><div class="lstat-n">4</div><div class="lstat-l">Tracks</div></div>
+            <div><div class="lstat-n">~90 Min</div><div class="lstat-l">Dauer</div></div>
+            <div><div class="lstat-n">Zertifikat</div><div class="lstat-l">Am Ende</div></div>
+          </div>
+        </div>
+        <div class="login-card">
+          <div class="login-card-title">Anmelden</div>
+          <div class="login-card-sub">Gib deinen Namen und das Team-Passwort ein.</div>
+          <input class="login-input" id="name-inp" type="text" placeholder="Dein Name (z.B. Anna Müller)" onkeydown="if(event.key==='Enter')document.getElementById('pw-inp').focus()">
+          <input class="login-input" id="pw-inp" type="password" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()">
+          <button class="login-btn" onclick="doLogin()">➔ Loslegen</button>
+          <div class="login-err" id="login-err"></div>
+          <div class="login-note">Passwort: alva2026 · Fortschritt wird auf diesem Gerät gespeichert.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -395,7 +434,7 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
 <div id="screen-app">
   <nav class="topbar">
     <div class="tb-l">
-      <div class="tb-mark"></div><div class="tb-name">ALVA Akademie</div>
+      <svg class="tb-mark" viewBox="0 0 3000 1826" xmlns="http://www.w3.org/2000/svg"><path d="M1993.06 0H1694.44H1701.51L2510.59 1467.56L2699.74 1819.44H3000L1993.06 0ZM1701.51 0H1694.44L2510.59 1467.56L1701.51 0Z" fill="white" opacity=".85"/><path d="M1472.13 0H1000.87L0 1825.65H549.799L735.792 1472.57H1871.93L2057.93 1825.65H2612.63L1611.76 0H1472.13ZM735.792 1472.57L1304.14 392.599L1871.93 1472.57H735.792Z" fill="white"/></svg><div class="tb-name">ALVA Akademie</div>
       <div class="tb-sep"></div><div class="tb-sub">Onboarding</div>
     </div>
     <div class="tb-r">
@@ -409,7 +448,38 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--dark);mi
     <div class="home-hero">
       <div class="hero-in">
         <div class="hero-ey">Onboarding · Dein erster Tag</div>
-        <h1 class="hero-h1">Willkommen bei<br><span class="hl">ALVA</span></h1>
+        <div class="hero-title-row">
+          <h1 class="hero-h1">Willkommen bei<br><span class="hl">ALVA</span></h1>
+          <div class="cert-badge">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <!-- Outer seal starburst -->
+              <g transform="translate(100,100)">
+                <polygon points="0,-95 11,-40 56,-78 22,-32 68,-42 38,-6 80,0 38,6 68,42 22,32 56,78 11,40 0,95 -11,40 -56,78 -22,32 -68,42 -38,6 -80,0 -38,-6 -68,-42 -22,-32 -56,-78 -11,-40" fill="var(--yellow)" opacity=".18"/>
+              </g>
+              <!-- Outer circle -->
+              <circle cx="100" cy="100" r="78" fill="none" stroke="var(--yellow)" stroke-width="2.5"/>
+              <!-- Inner circle -->
+              <circle cx="100" cy="100" r="68" fill="none" stroke="var(--yellow)" stroke-width="1" opacity=".5"/>
+              <!-- Top arc text -->
+              <defs>
+                <path id="arc-top" d="M 30,100 a 70,70 0 0,1 140,0"/>
+                <path id="arc-bot" d="M 170,108 a 70,70 0 0,1 -140,0"/>
+              </defs>
+              <text font-family="Outfit,sans-serif" font-size="10" font-weight="800" letter-spacing="3" fill="var(--yellow)" text-anchor="middle">
+                <textPath href="#arc-top" startOffset="50%">CERTIFIED</textPath>
+              </text>
+              <text font-family="Outfit,sans-serif" font-size="9" font-weight="700" letter-spacing="2.5" fill="var(--yellow)" text-anchor="middle" opacity=".7">
+                <textPath href="#arc-bot" startOffset="50%">EXPERT</textPath>
+              </text>
+              <!-- Center emblem -->
+              <polygon points="100,58 88,92 100,82 112,92" fill="var(--yellow)" opacity=".9"/>
+              <text x="100" y="108" font-family="Outfit,sans-serif" font-size="16" font-weight="900" fill="var(--yellow)" text-anchor="middle" letter-spacing="-0.5">ALVA</text>
+              <!-- Ribbon tails -->
+              <path d="M72,168 L62,195 L75,185 L88,195 L82,168" fill="var(--yellow)" opacity=".25"/>
+              <path d="M118,168 L112,195 L125,185 L138,195 L128,168" fill="var(--yellow)" opacity=".25"/>
+            </svg>
+          </div>
+        </div>
         <p class="hero-p">4 Tracks — von ALVA als Unternehmen über den Strommarkt bis zu deinem Department. ALVA Coach erklärt jede Antwort live.</p>
         <div class="hero-chips">
           <div class="chip y">4 Tracks</div>
