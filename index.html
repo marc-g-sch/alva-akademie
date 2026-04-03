@@ -78,7 +78,7 @@ body{font-family:'Outfit',sans-serif;background:var(--white);color:var(--dark);m
 .hero-h1{font-size:clamp(30px,5vw,60px);font-weight:900;letter-spacing:-.04em;line-height:1.05;color:var(--white);margin-bottom:16px;}
 .hero-h1 .hl{background:var(--yellow);color:var(--navy);padding:0 6px;display:inline-block;}
 .hero-title-row{display:flex;align-items:center;gap:28px;flex-wrap:wrap;}
-.cert-badge{width:120px;height:120px;position:relative;flex-shrink:0;}
+.cert-badge{width:110px;height:140px;flex-shrink:0;transform:rotate(6deg);opacity:.9;}
 .cert-badge svg{width:100%;height:100%;}
 .hero-p{font-size:16px;color:rgba(255,255,255,.45);max-width:560px;line-height:1.6;font-weight:300;margin-bottom:40px;}
 .hero-chips{display:flex;gap:10px;flex-wrap:wrap;}
@@ -451,32 +451,26 @@ body{font-family:'Outfit',sans-serif;background:var(--white);color:var(--dark);m
         <div class="hero-title-row">
           <h1 class="hero-h1">Willkommen bei<br><span class="hl">ALVA</span></h1>
           <div class="cert-badge">
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-              <!-- Outer seal starburst -->
-              <g transform="translate(100,100)">
-                <polygon points="0,-95 11,-40 56,-78 22,-32 68,-42 38,-6 80,0 38,6 68,42 22,32 56,78 11,40 0,95 -11,40 -56,78 -22,32 -68,42 -38,6 -80,0 -38,-6 -68,-42 -22,-32 -56,-78 -11,-40" fill="var(--yellow)" opacity=".18"/>
-              </g>
-              <!-- Outer circle -->
-              <circle cx="100" cy="100" r="78" fill="none" stroke="var(--yellow)" stroke-width="2.5"/>
-              <!-- Inner circle -->
-              <circle cx="100" cy="100" r="68" fill="none" stroke="var(--yellow)" stroke-width="1" opacity=".5"/>
-              <!-- Top arc text -->
-              <defs>
-                <path id="arc-top" d="M 30,100 a 70,70 0 0,1 140,0"/>
-                <path id="arc-bot" d="M 170,108 a 70,70 0 0,1 -140,0"/>
-              </defs>
-              <text font-family="Outfit,sans-serif" font-size="10" font-weight="800" letter-spacing="3" fill="var(--yellow)" text-anchor="middle">
-                <textPath href="#arc-top" startOffset="50%">CERTIFIED</textPath>
-              </text>
-              <text font-family="Outfit,sans-serif" font-size="9" font-weight="700" letter-spacing="2.5" fill="var(--yellow)" text-anchor="middle" opacity=".7">
-                <textPath href="#arc-bot" startOffset="50%">EXPERT</textPath>
-              </text>
-              <!-- Center emblem -->
-              <polygon points="100,58 88,92 100,82 112,92" fill="var(--yellow)" opacity=".9"/>
-              <text x="100" y="108" font-family="Outfit,sans-serif" font-size="16" font-weight="900" fill="var(--yellow)" text-anchor="middle" letter-spacing="-0.5">ALVA</text>
+            <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
               <!-- Ribbon tails -->
-              <path d="M72,168 L62,195 L75,185 L88,195 L82,168" fill="var(--yellow)" opacity=".25"/>
-              <path d="M118,168 L112,195 L125,185 L138,195 L128,168" fill="var(--yellow)" opacity=".25"/>
+              <path d="M70,155 L48,240 L70,218 L88,250 L85,155" fill="#FFFC2E" opacity=".7"/>
+              <path d="M130,155 L115,155 L112,250 L130,218 L152,240 L130,155" fill="#FFFC2E" opacity=".55"/>
+              <!-- Yellow circle background -->
+              <circle cx="100" cy="100" r="88" fill="#FFFC2E"/>
+              <!-- Dark inner circle -->
+              <circle cx="100" cy="100" r="76" fill="#050b13"/>
+              <!-- ALVA logo in center -->
+              <g transform="translate(40,56) scale(0.040)">
+                <path d="M1993.06 0H1694.44H1701.51L2510.59 1467.56L2699.74 1819.44H3000L1993.06 0ZM1701.51 0H1694.44L2510.59 1467.56L1701.51 0Z" fill="white" opacity=".8"/>
+                <path d="M1472.13 0H1000.87L0 1825.65H549.799L735.792 1472.57H1871.93L2057.93 1825.65H2612.63L1611.76 0H1472.13ZM735.792 1472.57L1304.14 392.599L1871.93 1472.57H735.792Z" fill="white"/>
+              </g>
+              <!-- Curved top text -->
+              <defs>
+                <path id="app-badge-arc" d="M 6,95 a 94,94 0 0,1 188,0"/>
+              </defs>
+              <text font-family="Outfit,sans-serif" font-size="12" font-weight="700" letter-spacing="3.5" fill="#FFFC2E" text-anchor="middle">
+                <textPath href="#app-badge-arc" startOffset="50%">ALVA · EXPERT</textPath>
+              </text>
             </svg>
           </div>
         </div>
